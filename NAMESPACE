@@ -1,0 +1,10 @@
+exportPattern("^[[:alpha:]]+")
+importFrom("utils", "install.packages")
+importFrom("graphics", "plot")
+importFrom("graphics", "axis", "lines", "text")
+importFrom("grDevices", "dev.hold", "gray")
+importFrom("graphics", "abline", "points")
+importFrom("stats", "df", "rnorm")
+importFrom("stats", "sd")
+importFrom("stats", "rlnorm", "uniroot")
+

@@ -1,0 +1,256 @@
+---
+title: 'CF: A _Stochastic_ Car-Following Package'
+author: Paul J. Ossenbruggen
+date: '2018-01-25'
+output:
+  html_document:
+    toc: yes
+    toc_depth: 2
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+    number_sections: no
+    theme: united
+    highlight: tango
+    vignette: >
+      %VignetteIndexEntry{Vignette Title}
+      %VignetteEngine{knitr::rmarkdown}
+      usepackage[utf8]{inputenc}
+header-includes:
+  - \usepackage{animate}
+---
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r, include = FALSE, warning = FALSE}
+library(Basic)
+```
+
+
+## Overview {.tabset}
+ 
+The CF package is designed for college students studying transportation engineering and for transportation professionals and researchers interested in understanding the complex relationships associated with freeway performance and traffic breakdown. Newton's Laws of dynamics, fundamentals of trafic flow theory (TFT) and probabilistic modeling are used in this package. Observational data, collected with loop detectors, radar and by other means, are often prohibitedly expensive to obtain. Thus, decision-makers are often  faced with challenging problems owing the lack of quality data. Our aim to overcome these difficulties by providing tools derived from classical theory, stochastic modeling and sound judgement. 
+
+```{r, echo = TRUE, fig.height=4, fig.width= 6}
+speedplot()
+```
+
+Traffic data are extremely noisy or _volatile_. By ignoring this volatility, theorists have been able to elequently describe traffic behavior by using deterministic models. Of course, there is the fear that important information about the complex nature of traffic behavior is lost. By using deterministic and stochastic models with the aid of  high-speed computing, we attempt to simulate reality.  That includes mimicing human and vehicle dynamics behavior as realistically as possible. For example, a varying acceleration model is used in place of constant velocity modeling. This model depicts vehicles accelerating and decelerating instanteously. The time-varying acceleration $\alpha(t)$ function overcomes this difficulty:
+
+$\alpha(t) = a - b t$
+
+where $t$ denotes time. The constants $a$ and $b$ are estimated by using boundary conditions. Knowing  $\alpha(t)$, speed $u(t) and distance $x(t)$ can be forecast. Forecasts from the  $\alpha(t)$ and the exponential model of speed,  $u(t) = exp(-\lambda t)$, prove effective in modeling _traffic breakdown_.  
+
+
+## Animation and Stochastic Processes {.tabset}
+
+A most effective tool for understanding various characteristics of traffic performance is the use of time-space $t-x$ trajectories. See the animation entitled _Vehicles entering a Bottleneck_ below. It shows the trajectories of three vehicles. The trajectories were derived from the time-varying acceleration $\alpha(t)$ model exclusively. 
+
+The reader cannot help notice that this vignette contains several panels including an input panel to the __zipper()__ function that produces the animation as well as an output panel with some details of the different trajectories. The other panels contain the names of the R packages and output comments. Readers interested in traffic engineering can disregard these panels.
+
+
+Before discussing the examples, we will clearly disinguish difference between _animation_ and a _stochastic process._ The function   produces an _animation_ as shown in the $t-x$ trajectory. Two lanes of traffic merge into one line forcing the drivers to merge. 
+
+        1. What is a bottleneck?
+        
+        2. What are the top speeds of vehicles 2 and 3 in passing vehicle 1?
+        
+        3. Are the drivers of these vehicles driving safely?
+        
+        4. Is this animation a reasonable description of reality?
+        
+
+The animation depicted here is an idealistic description of traffic behavior. T vehicles  are traveling side-by-side in close proxity to one another at the same exact speed of 70 mph. By the way, the $t-x$ trajectories for the two lanes are straight lines with the same slopes. Note that the vehicles reach a mile, 5280 feet, in less than 60 seconds. As can be seen, the vehicles are assumed to maintain the same speed before and after the merge. After the merge, the two vehicles are also shown to be very close together. The traffic density is doubled because the densities on each lane are assumed to be equal. In reality, this is a very unlikely situation. A type of merge could only happen  if vehicles were not traveling side-by-side, not traveling so close together, and not traveling at such a  high speed. Regardless, the animation is instructive.
+
+_Car-following_ models simulate traffic behavior much differently. After the merge, the driver in lane 2 becomes a _lead_  vehicle. The _lead_ vehicle driver affects all  drivers of lanes 1 and 2, the _following_ vehicles. To avoid a crash under the conditions described in the preceding paragraph, the driver in lane 1 will decelerate, which in turn will influence all vehicles following him or her especially when the traffic density is relatively large. 
+
+The animation depicted below is an idealistic description of a _zipper_ merge. To achieve a zipper merge, all drivers must be highly disciplined. Not only must they maintain the same exact speed and most importantly, must be perfectly aligned when merging. A situation that analogous to closing a zipper.  When the two halves of a zipper are joined together, it becomes securely fastened together because the zipper teeth are precisely aligned on zipper tape. Zippers work well regardless of how fast or slow the  zipper  is fastened together. Roadway zipper merges can be observed in the field but only at low speed.  
+
+
+The __zipper()__ function calls the two __R__  packages as shown. 
+
+```{r, fig.show = 'animate', ffmpeg.format ='gif', dev = 'jpeg', echo = TRUE, fig.height = 3, fig.width = 4}
+library(animation)
+library(dplyr)
+library(gganimate)
+library(gapminder)
+library(ggplot2)
+library(tidyverse)
+tstart <- 0
+tend   <- 10
+ustart1 <- 25
+uend1   <- 25
+xstart1 <- 0
+xend1   <- 250
+ustart2 <- 25
+uend2   <- 25
+xstart2 <- 0
+xend2   <- 300
+ustart3 <- 30
+uend3   <- 25
+xstart3 <- -50
+xend3   <- 275
+zipper(tstart,tend,ustart1,uend1,xstart1,xend1,ustart1,uend2,xstart2,xend2,ustart3,uend3,xstart3,xend3)
+```
+
+The __brownian.motion__ function is a _stochastic model_. The _animation_ shows 10 small particles, grains of pollen suspeneded in water. The particles are initially located at the point $(x = 0, y = 0)$, will randomly drift from this position. Clearly, the process is time-dependent process.  The particles become more dispersed over time.
+
+```{r brownian.motion, fig.show ='animate', ffmpeg.format='gif', dev='jpeg', fig.height = 4, fig.width = 4}
+library(animation)
+library(dplyr)
+library(gganimate)
+library(gapminder)
+library(ggplot2)
+library(tidyverse)
+ani.options(interval = 0.1, loop = TRUE)
+ani.pause(interval = 0.1)
+n <- 10
+xlim <- ylim <- c(-20, 20)
+brownian.motion(n, xlim, ylim, pch = 21, cex = 3, col = "blue", bg = "yellow")
+```
+
+The following trajectory is generated with a Brownian motion model of speed of the form: $u_t = \bar{u} + \sigma W$ where $u_t$ is the speed at time $t$, $\bar{u}$ is the average speed of vehicle at which the driver is attempting to maintain, $\sigma$ is the standard deviation of $u_t$, and $W_t$ is Brownian motion. Brownian motion model is defined as $W_t \sim \sqrt{\Delta t} Z$ where $Z \sim N(0,1)$, a standard normal probability distribution and $\Delta t$ is the time step. 
+ 
+
+```{r cfanim, fig.show='animate', ffmpeg.format='gif', dev='jpeg', fig.height = 4, fig.width = 6}
+library(animation)
+library(dplyr)
+library(gganimate)
+library(gapminder)
+library(ggplot2)
+library(tidyverse)
+set.seed(321)
+cfanim(60, 1, 30, 0.5)
+```
+
+The following three examples give a glimpse of the data analyses that can be performed with output from the package. 
+
+## 1: Ring-Road Congestion {.tabset}
+ 
+Now, we will take advantage of classical dynamics, deterministic and stochastic models and computer simulation to explain traffic behavior observed in the field.
+
+Here, drivers attempt to maintain an average speed $u$ of 10 miles per hour (mph) on a ring road. We investigate the trajectories of eleven vehicles. The traffic density $k$ is assumed to be 55 vehicles per mile (vpm), thus we are simulating congested traffic . The $t-x$ trajectory shows the drivers, whose vehicle are evenly spaced initially, are unable to maintain a constant headway after a few seconds. The vehicles interact and form clusters (moving queues) owing to their inability to maintain a constant speed of 10 mph. The traffic flow for this simulation is estimated to be 547 vehicle per hour.  This prediction matches the conditions observed in a full-scale experiment on a ring road.
+  
+
+  
+Input to the __rrtrials__ function for analyzing a ring road:
+ 
+```{r, echo = TRUE, fig.height=4, fig.width= 6}
+set.seed(124)
+output <- rrtrials(10, 3, 55, 40, 5, 14, 10, c(0, 40), c(-1000, 600))
+title("Example 1. Congested Flow", "Ring Road")
+```
+    
+The "output" from the __rrtrials__ function produces a $t-x$ trajectory and data for level-of-service estimation.
+    
+  |Mean headway $\bar{h}$ | Headway standard deviation $\hat{\sigma}_h$ |Estimated flow $\bar{q}$ |
+  |-----------------:|-------------------:| -----------------:|
+  | 4.5 seconds | 3.1 seconds | 547 vehicles per hour (vph)|
+
+## 2. Bottleneck Congestion. {.tabset}
+
+In this example, a freeway narrows from two-lanes to one. Again, the number of vehicles in the simulation remain fixed. The lead vehicle, denoted as 1 in the figure, approaches the bottleneck at speed of 63 mph and decelerates to a speed of 34 mph. The vehicle reaches this breakdown speed at $x$ = 0 as shown by the small solid circle. Drivers must reduce their speed to avoid colliding into the vehicle in front of them. 
+
+Over the time range of 60 seconds, the speed reduction in the lead vehicle forces the following vehicles to be more closely spaced. All drivers keep a safe headway, one vehicle length for each 10 mph of speed. The $t-x$ trajectory of the ten vehicles shown in the figure give the impression that the vehicles arrive with the same speed and headway. In fact, this is not the case. The vehicles entering the bottleneck, shown along the vertical axis at time $t_0$ = 0, range in speed from 56 to 80 mph. In addition, their headways are also quite variable. See the table below. Using traffic density as a surrogate measure of headway, they range from 50 to 64 vpm. The headways at $x$ = 0 are extremely volatile as shown by $\bar{h}$ and $\hat{\sigma}_h$ as shown below. Using basic princples of traffic flow theory, the estimated flow for these conditions is $\bar{q}$ = 540 vph. The slopes of the $t-x$ trajectory lines at $t_4$ = 60 seconds, measures of speed $u$, are declining. They range from 48 for vehicle 1 to 40 mph for vehicle 11. The headways at $t_4$ are not uniform as shown. The next figure gives a close up view of this simulation for vehicles 1 through 3.
+
+    
+Input to the __run__ function produces a collection of data frames, which we call the "cflist." The information from these data frames can be inspected to give a detailed look at the interaction between the lead and flowwing vehicles during a traffic breakdown. 
+ 
+ ```{r, echo = TRUE, fig.height=5, fig.width= 6}
+set.seed(123)
+nveh <- 10
+ulead <- 63
+ulead.sd <- 10
+ubrkdown <- 34
+ubrkdown.sd <- 0.1
+k <- 55
+k.sd <- 5
+d <- 15
+leff <- 14
+xlim <- c(0,60)
+ylim <- c(-2000, 4000)
+cflist <- run(nveh, ulead, ulead.sd, ubrkdown, ubrkdown.sd, k, k.sd, d, leff, xlim, ylim)
+title("Example 2. Breakdown", "Bottleneck")
+```
+   
+
+```{r cflist, as.is = TRUE, echo = FALSE}
+library(knitr)
+cflist <- run(10, 63, 10, 34, 0.1,  55, 5, 15, 14, c(0, 60),c(-2000, 4000))
+mat <- cflist[[2]]
+mat <- round(mat,0)
+df  <- data.frame(mat)
+colnames(df) <- c("Vehicle", "Speed at t0", "Speed at t3",   "Density at t1")
+kable(df, caption = "Traffic Characteristics", align = "c")
+```
+
+The above table shows the input to the __run__ function are stochastic. The level-of-service estimates at the $x = 0$ are:
+
+  |Mean headway $\bar{h}$ | Headway standard deviation $\hat{\sigma}_h$ |Estimated flow $\bar{q}$ |
+  |-----------------:|-------------------:| -----------------:|
+  | 6.7 seconds | 20 seconds | 540 vehicles per hour (vph)|
+  
+## 3. Explaining Breakdown. {.tabset}
+
+The above figure shows that each of the trajectories to be smooth curves to simulate reality.  This is achieved by using exponential and non-linear (two-parameter) speed models. By doing so, the drivers of each vehicle adjusts his or her speed independently. For example, lead vehicle 1 shows a concave trajectory from $t_0$ to $t_3$, which indicates it is declining in speed. Vehicle 2 and 3 have linear and convex trajectories. For vehicle 3, the driver is accelerating until reaches point $(t_1, x_2)$ where it begins to decelerate. 
+
+Inspection of the figure shows  the simulation range from  $t_0$ to $t_4$. Time $t_3$ is the time the lead vehicle reaches the bottleneck $x_0$. Times $t_1$ are the times the following vehicle drivers begin to decelerate. These times depend on several factors, including lead and  following vehicle speeds, vehicle spacing and driver response or driver sightlines, shown by broken lines connecting the points $(t_1, x_1)$ and $(t_2, x_2)$. Times $t_5$ are times the following vehicles reach the bottleneck at $x = 0$. The time headways are critical in estimating the traffic flow, reported above, and to estimate delay (not reported in this vignette).   
+
+```{r, echo = FALSE, fig.height = 4, fig.width = 6}
+set.seed(123)
+nveh <- 3
+ulead <- 63
+ulead.sd <- 10
+ubrkdown <- 34
+ubrkdown.sd <- 0.1
+k <- 55
+k.sd <- 5
+d <- 15
+leff <- 14
+xlim <- c(0,10)
+ylim <- c(-600, 500)
+run(nveh, ulead, ulead.sd, ubrkdown, ubrkdown.sd, k, k.sd, d, leff, xlim, ylim)[[1]]
+points(2.459226, -183.3195, pch = 8, cex = 0.5)
+points(7.069598, 177.2323 + hsafe(53.89641, 14), pch = 8, cex = 0.5)
+points(4.179863, -233.8204, pch = 8, cex = 0.5)
+points(9.047542, 219.6009 + hsafe(53.89641, 14), pch = 8, cex = 0.5)
+lines(c(4.179863,9.047542), c(-233.8204,219.6009  + hsafe(53.89641, 14)), lty = 5, col = gray(0.5))
+text(2.459226, -183.3195, labels = expression("("*t[1]*","*x[1]*")"),pos = 3, cex = 0.75)
+text(4.179863, -278.8204, labels = expression("("*t[1]*","*x[1]*")"),pos = 3, cex = 0.75)
+text(7.069598, 177.2323 + hsafe(53.89641, 14), labels = expression("("*t[2]*","*x[2]*")"),pos = 3, cex = 0.75)
+text(9.047542, 219.6009 + hsafe(53.89641, 14), labels = expression("("*t[2]*","*x[2]*")"),pos = 3, cex = 0.75)
+text(4.56, 0, labels = expression("("*t[5]*",0)"),pos = 3, cex = 0.75)
+text(6.7, 0, labels = expression("("*t[5]*",0)"),pos = 3, cex = 0.75)
+legend("topleft", legend = "driver sight-lines", bty = "n", lty = 5, col = gray(0.5))
+title("Example 3. Breakdown","Basic Concepts and Notation")
+```
+ 
+
+## CF Package Potential. {.tabset}
+
+The potential of the __CF__ package will be addressed with a question: What have we learned about traffic performance?
+
+* With strict driver discipline that it is _theoretically possble_ to maintain high speeds on a freeway under high traffic demand. See the __zipper merge__ animation.
+    
+* With classical traffic flow theory (deterministic models) coupled with stochastic models that it is possible to explain traffic behavior with relatively simple models. See the __brownian.motion__ and __cfanim__ animations.
+    
+* By modeling driver behavior as a stochastic process that it is possible to describe field observations with a simple Brownian motion of speed. See Example 1, the __rrtrials__ output.  
+
+* By treating incoming free-flow traffic demand and speed breakdown speed as random variables and introducing them into a deterministic car-following alogorithm helps explain traffic breakdown. See Example 2, the __run__ output.
+
+* By using the driver sight distance under the assumption that all drivers will drive safely, i.e., always maintain safe distance or headway, that it is possible to explain breakdown and measure traffic performance at a bottleneck. See Examples 2 and 3.
+
+## Next Steps. {.tabset}
+
+The potential of __CF__ package has been introduced in this vignette. There is no question that traffic is complex problem. To deal with myriad problems and issues associated with traffic congestion, a better understanding of the root causes of conditions that lead to conditions must be understood. This is proving to be a daunting task. Hopefully, this vignette shows that a deeper understanding can be achieved. 
+
+It is also recognized that the __CF__ package as it presently stands is difficult to use. This is especially true of people unfamiliar with __R__. Thus, my first task is add __R Markdown Shiny__ HTML widgets to my code. For example, take the __run__ function with its eight input variables. Instead of downloading the package and running it on one's computer. The user will be allowed to run it online using tools to input these variables. In Examples 2 and 3, the deceleration rate is assumed to  $d$ = 15 feet per second squared. Changing it, to say  $d$ = 32, will bring new insights to our understanding of traffic breakdown. In particular, queue formation with shock wave analysis
+
+Second, this package is open to the public, https://github.com/PJOssenbruggen/CF. In other words, I am inviting people to share their experiences with the package with me. GitHub promotes this activity, https://github.com/explore.
+
+
+
+
