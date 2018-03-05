@@ -1,0 +1,51 @@
+---
+title: 'CF: A _Stochastic_ Car-Following Package'
+author: Paul J. Ossenbruggen
+date: '2018-01-25'
+type: default
+output:
+  rmarkdown::html_document:
+    toc: yes
+    toc_depth: 2
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+    number_sections: no
+    theme: united
+    highlight: tango
+    vignette: >
+      %VignetteIndexEntry{CFmarkdown}
+      %VignetteEngine{knitr::rmarkdown}
+      usepackage[utf8]{inputenc}
+header-includes:
+  - \usepackage{animate}
+---
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r, include = FALSE, warning = FALSE}
+library(Basic)
+```
+
+
+## Animation and Stochastic Processes {.tabset}
+
+```{r brownian.motion, fig.show ='animate', ffmpeg.format='gif', dev='jpeg', fig.height = 4, fig.width = 4}
+library(animation)
+library(dplyr)
+library(gganimate)
+library(gapminder)
+library(ggplot2)
+library(tidyverse)
+ani.options(interval = 0.1, loop = TRUE)
+ani.pause(interval = 0.1)
+n <- 10
+xlim <- ylim <- c(-20, 20)
+brownian.motion(n, xlim, ylim, pch = 21, cex = 3, col = "blue", bg = "yellow")
+```
+
+
+
