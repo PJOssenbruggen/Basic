@@ -2,8 +2,9 @@
 title: 'CF: A _Stochastic_ Car-Following Package'
 author: Paul J. Ossenbruggen
 date: '2018-01-25'
+type: default
 output:
-  html_document:
+  rmarkdown::html_document:
     toc: yes
     toc_depth: 2
     toc_float:
@@ -13,7 +14,7 @@ output:
     theme: united
     highlight: tango
     vignette: >
-      %VignetteIndexEntry{Vignette Title}
+      %VignetteIndexEntry{CFmarkdown}
       %VignetteEngine{knitr::rmarkdown}
       usepackage[utf8]{inputenc}
 header-includes:
@@ -34,7 +35,7 @@ library(Basic)
  
 The CF package is designed for college students studying transportation engineering and for transportation professionals and researchers interested in understanding the complex relationships associated with freeway performance and traffic breakdown. Newton's Laws of dynamics, fundamentals of trafic flow theory (TFT) and probabilistic modeling are used in this package. Observational data, collected with loop detectors, radar and by other means, are often prohibitedly expensive to obtain. Thus, decision-makers are often  faced with challenging problems owing the lack of quality data. Our aim to overcome these difficulties by providing tools derived from classical theory, stochastic modeling and sound judgement. 
 
-```{r, echo = TRUE, fig.height=4, fig.width= 6}
+```{r, echo = TRUE, fig.height = 6, fig.width= 6}
 speedplot()
 ```
 
