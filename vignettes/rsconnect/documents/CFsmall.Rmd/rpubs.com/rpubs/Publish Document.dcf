@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/366834/08fed2edb95747948284d297420053a2
+bundleId: https://api.rpubs.com/api/v1/document/366834/08fed2edb95747948284d297420053a2
+url: http://rpubs.com/pjossenbruggen/366834/edit
+when: 1520280851.04208
