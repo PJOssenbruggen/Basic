@@ -7,4 +7,5 @@ importFrom("graphics", "abline", "points")
 importFrom("stats", "df", "rnorm")
 importFrom("stats", "sd")
 importFrom("stats", "rlnorm", "uniroot")
-
+importFrom("graphics", "box", "par", "boxplot")
+importFrom("utils", "head", "tail")
