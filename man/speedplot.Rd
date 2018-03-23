@@ -2,10 +2,10 @@
 % Please edit documentation in R/speedplot.R
 \name{speedplot}
 \alias{speedplot}
-\title{The function \code{speedplot} plots the data from a data frame \code{df}}
+\title{The function \code{speedplot} plots the data from the \code{quk}  data frame.}
 \usage{
 speedplot()
 }
 \description{
-The function \code{speedplot} plots the data from a data frame \code{df}
+The function \code{speedplot} plots the data from the \code{quk}  data frame.
 }
