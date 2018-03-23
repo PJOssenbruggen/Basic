@@ -306,6 +306,8 @@ To justify the  $Q = k * U(t)$ model for a bottleneck, consider a "thought exper
 
 The box plot will arguably resemble of  the __Box Plot of Density-Speed__ diagram of I-93 study data presented above in the __Exploratory Data Analysis__ section. Assuming the "thought experiment" and I-93 study data sufficiently similiar, inferences can be drawn from I-93 box-plot. By visual inspection, speed decreases as the traffic density increases. Since the bottleneck geometry is unchanged throughout the experiment, the number of vehicles $n_i$ and speed $u_i$ are strongly associated. Thus, the $Q = k * U(t)$ model holds.
 
+[pjo2017](https://github.com/PJOssenbruggen/Basic/blob/master/IEEE_MT-ITS.pdf)
+
 ## tfuhp Package Potential. 
 
 The potential of the __tfuhp__ package will be addressed with a question: What have we learned about traffic performance?
