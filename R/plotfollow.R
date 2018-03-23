@@ -52,6 +52,7 @@ plotfollow = function(L, F, t4) {
     col    <- gray(0)
     trajectoryab(tstart, tend, ustart, uend, xstart, xend, lty, lwd, col)
     F[1,3] <- F[1,4]
+
 # following vehicle trajectory follows a xab trajectory from t3 to t4
     lines(c(tend, t4), c(xend, xend + uend * (t4 - tend)), col = col)
 # Find t5

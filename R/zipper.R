@@ -97,7 +97,7 @@ zipper  <- function(tstart, tend,
                                                             time = dfu[dfu[,2] == min(dfu[dfu[,3] == "3",2]),1], a = a3, b = b3)
   if(a3 == 0) dfperf3 = dfperf3[1,]
   dfperf <- rbind(dfperf1, dfperf2, dfperf3)
-  print(dfperf)
+#  print(dfperf)
   len  <- dim(dfx)[1]/3
   step <- c(seq(1,len), seq(1,len), seq(1,len))
   o    <- order(step)

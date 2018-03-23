@@ -53,7 +53,6 @@ trial <- function(ul, ubk, k, uf, d, leff, xlim, ylim) {
   L[2,1] <- ul0;  L[2,2] <- NA;   L[2,3] <- NA;  L[2,4] <- ul3
   L[3,1] <- xl0;  L[3,2] <- NA;   L[3,3] <- NA;  L[3,4] <- xl3
   L[4,1] <- h0;   L[4,2] <- NA;   L[4,3] <- NA;  L[4,4] <- h3
-  print(L)
   plotlead(L, theta, leff, xlim, ylim)
 #  print("trial")
 #  print(data.frame(vehicle = 1))
@@ -64,9 +63,9 @@ trial <- function(ul, ubk, k, uf, d, leff, xlim, ylim) {
   rownames(F) <- c("t", "u", "x", "h")
 #  xl0 <- as.numeric(xl0); xf0 <- as.numeric(xf0); ul0 <- as.numeric(ul0);
 #  uf0 <- as.numeric(xf0); theta <- as.numeric(theta);
-  print("Sight line and finding t2: t2 is a response time where the following vehicle driver")
-  print("sees the location and speed of the lead vehicle and responds accordingly.")
-  print(c(xl0, xf0, ul0, uf0, theta, leff))
+#  print("Sight line and finding t2: t2 is a response time where the following vehicle driver")
+#  print("sees the location and speed of the lead vehicle and responds accordingly.")
+#  print(c(xl0, xf0, ul0, uf0, theta, leff))
 # Find t1
 # t1 is the time when the following vehicle responds to the deceleration of the lead vehicle.
   answer1 <- findt1(xl0, xf0, ul0, uf0, theta, leff)
@@ -99,5 +98,6 @@ trial <- function(ul, ubk, k, uf, d, leff, xlim, ylim) {
   output <- plotfollow(L, F, t4)
   LF     <- list(L, F)
   output <- as.matrix(output)
+
   return(list(LF, output))
 }

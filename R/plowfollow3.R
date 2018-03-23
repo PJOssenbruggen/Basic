@@ -14,6 +14,7 @@ plotfollow3 = function(cflist, vehicle, uf, kf, ub, leff, t4) {
   hf0    <- 2  / kf0
   ub0    <- ub * 5280 / 3600
 #  print(data.frame(uf0, ub0, hf0))
+#  browser()
   LF     <- cflist[[1]]
   output <- cflist[[2]]
 # Lead vehicle information
@@ -146,7 +147,8 @@ plotfollow3 = function(cflist, vehicle, uf, kf, ub, leff, t4) {
   output2 <- as.matrix(data.frame(vehicle = vehicle, t1, t2, t3, t4, t5))
   output <- rbind(output, output2)
   output <- as.matrix(output)
-  LF = c(LF, list(F))
+
+  LF     <- c(LF, list(F))
   cflist <- list(LF, output)
   return(cflist)
 }

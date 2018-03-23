@@ -45,7 +45,8 @@ run <- function(nveh, ulead, ulead.sd, ubrkdown, ubrkdown.sd, k, k.sd, d, leff, 
   cflist <- trial(ul, ubk, k, uf, d, leff, xlim, ylim)
 # trajectories for the next vehicles.
   t4 <- xlim[2]
-  if(nveh == 1) return(cflist)
+#  if(nveh == 1) return(cflist)
+
   for(i in 2:nveh) {
     if(nveh == i) {
       times  <- cflist[[2]]
@@ -63,4 +64,5 @@ run <- function(nveh, ulead, ulead.sd, ubrkdown, ubrkdown.sd, k, k.sd, d, leff, 
       cflist <- plotfollow3(cflist, vehicle = i, uf, kf, ub, leff, t4)
     }
   }
+  return(cflist)
 }
