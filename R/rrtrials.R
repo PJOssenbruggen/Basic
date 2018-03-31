@@ -18,6 +18,7 @@
 #' @examples
 #' rrtrials(10, 3, 55, 40, 5, 14, 10, c(0, 40), c(-1000, 600))
 #' rrtrials(2, 1, 55, 240, 5, 14, 20, c(0, 240), c(-2000, 600))
+#' rrtrials(20, 3, 55, 120, 5, 14, 100, c(0,100), c(-1000, 2000))
 rrtrials <- function(umn, usd, k0, T, dt, leff, nveh, xlim, ylim) {
   t0    <- 0
   input <- as.matrix(data.frame(umn, usd, k0, T, dt, leff, nveh))
@@ -103,6 +104,6 @@ rrtrials <- function(umn, usd, k0, T, dt, leff, nveh, xlim, ylim) {
                    flow.vph.speed = round(flow5,0),
                    sample.size = k)
         )
-  output = list(input, LF, LFu, expect, headway5, speed5)
+  output = list(input, LF, LFu, expect, headway5, speed5, hdwy)
   return(output)
 }

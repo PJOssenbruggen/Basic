@@ -4,6 +4,7 @@ author: "Paul J. Ossenbruggen"
 date: "2018-01-25"
 bibliography: "/Users/PJO/Desktop/Basic/CF.bib"
 output: html_document
+runtime: shiny
 ---
 
 
@@ -25,9 +26,16 @@ The __tfunhp__ package is designed for college students studying transportation 
 
 ##### Using stochastic models that explain breakdown.
 
-## Introduction {.tabset}
+The principal aim of this vignette is to explain highway performance as simply as possible. Topics are introduced in a  step-by-step manner.  Exploratory data analyses of a freeway bottleneck, inspecting a YouTube video of vehicles traveling on a ring road, and using the core assumptions of TFT are used for example.   The principal product of this effort is the development of a traffic flow model:
 
-A quick read of the __Overview__ may give the impression that the approach, a package of computer algorithms, will be difficult to understand and overwhelming to implement. Words, like complex, dynamics, theory, stochastic and model integration can be daunting. No question that designing and operating a transportation system are difficult problems. By disecting the problem into manageable pieces and synthesizing the  results from the individual pieces brings clarity to the process. 
+* $Q = f(k, u, \sigma, h)$
+
+where $k$ is traffic density, $u$ is  speed, and $h$ is a headway.  Since traffic is a noisy process, speed  is treated as a random variable $U$, a function of both $u$ and  $\sigma$. The overall  volatility observed in the process  is specifified by $\sigma$, a measure of driver group dynamics and other uncerainties.  The variable  $h$, _safe distance headway_,  reflects the drivers' aversion to risk and vehicle length. Since $h$ is a safe distance headway,  no crashes are permitted.  Thus,  $Q$ is a random variable and an important measure of highway performance. The  $Q$ model is a _parsimonius, stochastic model._
+
+
+## Introduction 
+
+A quick read of the __Overview__ may give the impression that the approach, a package of computer algorithms, will be difficult to understand and overwhelming to implement. Words, like complex, dynamics, theory, parsimonious, stochastic and model integration can be daunting. No question that designing and operating a transportation system are difficult problems. By disecting the problem into manageable pieces and synthesizing the  results from the individual pieces brings clarity to the process. 
 
 Consider a "toy" example using  _sequential-demand-forecasting. It is a 4-step approach. Questions associated with (1) _trip generation_, (2) _trip distribution_, (3) _modal-split_, and _trip assignment_ are asked.  Our task is to  improve an existing campus transporation system. This is no small task, especially when budgetary constraints are imposed. Suppose we obtained the following responses:
 
@@ -45,7 +53,7 @@ To build a system for a campus with hundreds or thousands of students, more peop
 
 The [trfhp](https://github.com/PJOssenbruggen/Basic) package is  a collection of [R](https://www.r-project.org) functions and libraries. This  wide variety of statistical and graphical techniques are made available through the open-source [cran](https://cran.r-project.org) network.  The aim is to use these tools to  better understand freeway performance and traffic breakdown.  Computer simulation, enhanced graphics including animation, and sensitivity analysis are  used in the [trfhp](https://github.com/PJOssenbruggen/Basic) package.  For example, [ggplot2](http://ggplot2.org) from [Rstudio](https://www.rstudio.com/products/rpackages/)  is used to produce the animation presented below. [Shiny](http://shiny.rstudio.com) is used to build interactive web applications for conducting sensitivity analyses. 
 
-Let's look again at trip generation. This time, we will incorporate visual imagry into the discussion. Before the interview, we don't know if the students will travel north, south, east or west or how far they will travel. We do know that they are all located at the same place initially and when the class ends that they will disperse. A [R](https://www.r-project.org) _brownian motion model_, a time-dependent stochastic model, can simulate this behavior.  At time $t$ = 0, the students are  located at the point $(x = 0, y = 0)$. They become more dispersed as time progresses. Robert Brown, a botanist, described this chaotic motion of a grain of pollen suspended in water. This model is used by economists and physicists [@sde] [@iacus]. 
+Let's look again at trip generation. This time, we will incorporate visual imagry into the discussion. Before the interview, we don't know if the students will travel north, south, east or west or how far they will travel. We do know that they are all located at the same place initially and when the class ends that they will disperse. A [R](https://www.r-project.org) _Brownian motion model_, a time-dependent stochastic model, can simulate this behavior.  At time $t$ = 0, the students are  located at the point $(x = 0, y = 0)$. They become more dispersed as time progresses. Robert Brown, a botanist, described this chaotic motion of a grain of pollen suspended in water. This model is used by economists and physicists [@sde] [@iacus]. 
 
 
 ```{r brownian.motion, fig.show =  'animate', ffmpeg.format='gif', dev='jpeg', fig.height = 4, fig.width = 4, echo = FALSE}
@@ -78,7 +86,7 @@ library(ggplot2)
 speedplot()
 ```
 
-We continue to explore the relationship between $k$ and $u$ with  the __Box Plot of Density-Speed__.   To construct the diagram, the speed were sorted and placed into bins. For example, the labeled as $k^*$ = 45 vpm consists of observations ranging 42.5 to 47.5 vpm. This value of $k^*$ is taken from the Highway Capacity Manual, which defines it to be the roadway capacity for this geometric design. Visual inspection reveals that the chance of driving in a free-flow state, $u^* > 50$,  is greater when $k^* \le 45$ vpm. The interquartile range of speed is extremely tight for $k^* \le 45$ vpm. Excluding outliners, a driver can be assured that speeds of 70 mph or more can be expected. With the exception of the bin at $k$ = 50 vpm, speeds considerably less than 25 mph is expected for $k^* \ge 55$ vpm.  It is impossible to explain why so many congested speed observations are located in the $0 < k \le k^* = 50$ range. For $k \le 50$ vpm, a better case can be made that a congested state will be observed. 
+We continue to explore the relationship between $k$ and $u$ with  the __Box Plot of Density-Speed__.   To construct the diagram, the speed were sorted and placed into bins. For example, the labeled as $k^*$ = 45 vpm consists of observations ranging 42.5 to 47.5 vpm. This value of $k^*$ is taken from the Highway Capacity Manual (HCM), which defines it to be the roadway capacity for this geometric design. Visual inspection reveals that the chance of driving in a free-flow state, $u^* > 50$,  is greater when $k^* \le 45$ vpm. The interquartile range of speed is extremely tight for $k^* \le 45$ vpm. Excluding outliners, a driver can be assured that speeds of 70 mph or more can be expected. With the exception of the bin at $k$ = 50 vpm, speeds considerably less than 25 mph is expected for $k^* \ge 55$ vpm.  It is impossible to explain why so many congested speed observations are located in the $0 < k \le k^* = 50$ range. For $k \le 50$ vpm, a better case can be made that a congested state will be observed. 
 
 
 ```{r, echo = FALSE, fig.height = 4, fig.width = 6}
@@ -94,7 +102,7 @@ Statistic summaries of the data reveal interesting facts. The total number of br
 
 Of course, these statistical summaries are important performance measurements. However, they do not explain why traffic breakdown is so prevelent at the site. The data used in the __Time-Speed Plot__,  a subset of the data used in the __Flow-Speed Plot__ and  __Box Plot of Density-Speed__ diagrams, gives a different perspective. Note that the horizontal axis is labelled with time indices $t = -1,0,1,2, ...$. The first breakdown in a string of initial breakdown events is denoted as  t = 0$. Thus, $u_0$ is called the breakdown speed and $u_{-1}$ is called the pre-breakdown speed. 
 
-The pre-breakdown $u_{-1}$ and breakdown $u_0$ speeds, even after filtering the data, are _extremely volatile_. Since $50 \le u_{-1} < 72$ mph is so wide a range, it cannot be used as an indicator or reliable predictor that a breakdown is likely to occure. 
+The pre-breakdown $u_{-1}$ and breakdown $u_0$ speeds, even after filtering the data, are _extremely volatile_. Since $50 \le u_{-1} < 72$ mph is so wide a range, it cannot be used as an indicator or reliable predictor that a breakdown is likely to occur. 
 
 The smooth blue curve,  a generalized additive model (gam), suggests that there may be a underlining structure associated with this chaos. Like above, the blue curve draws attention to the fact that congestion, $u \le 50$ mph,  can last a long time. It also draws attention to the fact that the average  speed drop is around 35 mph.
 
@@ -119,7 +127,7 @@ Drivers travelling around a loop road will attempt to optimize the situation. Th
 
 $U(t) = u + \sigma W(t) = u + \sigma \sqrt{\Delta t} Z$ 
 
-where initial speed $u$ and standard deviation of speed $\sigma$ are constants, $W(t) = \sqrt{\Delta t} Z$ is Brownian motion, and time $t$ is measured in seconds. $Z$ is defined to be a standard normal probability distribution  where $Z \sim N(0,1)$, a standard-normal probability model,  and $\Delta t$ is defined to be the time step. The simulation where  $u$ = 60 mph, $\sigma$ = 3 mph, and $\Delta t$ = 0.25 second, shows a driver has difficluty maintaining  a speed of 60 mph.
+where initial speed $u$ and standard deviation of speed $\sigma$ are constants, $W(t) = \sqrt{\Delta t} Z$ is Brownian motion, and time $t$ is measured in seconds. $Z$ is defined to be a standard normal probability distribution  where $Z \sim N(0,1)$, a standard-normal probability model,  and $\Delta t$ is defined to be the time step. The simulation where  $u$ = 30 mph, $\sigma$ = 3 mph, and $\Delta t$ = 0.5 second, shows a driver has difficluty maintaining  a speed of 30 mph.
 
 ```{r cfanim, echo = FALSE, fig.show='animate', ffmpeg.format='gif', dev='jpeg', fig.height = 4, fig.width = 6}
 library(animation)
@@ -129,7 +137,7 @@ library(gapminder)
 library(ggplot2)
 library(tidyverse)
 set.seed(321)
-cfanim(60, 1, 30, 0.5)
+cfanim(30, 3, 30, 0.5)
 ```
 
 Now, we turn our attention to modeling vehicular interaction, better known in the literature as _car following_. The deterministic _flow-density-speed_ relationship of $q = k * u$, is now treated as a random process of the form:
@@ -144,33 +152,122 @@ $Q = k * U(t) = n / l * U(t)$.
 
 The volatility in $Q$ is explained exclusively by the volatility in $U(t)$. That is, $u$ and $\sigma$. 
 
- [@1367-2630-10-3-033001] produced a YouTube video, https://www.youtube.com/watch?v=7wm-pZp_mi0. The results from the video inspired the $Q = n / l * U(t)$ model. The number of vehicles traveling around the ring road  in the video is fixed at $n$ = 22 vehicles. Most importantly, the drivers are instructed to maintain a constant speed and distance headway $h$, the distance between their front bumper and bumper of its lead vehicle.  They cannot follow instructions. After a few sections, the traffic breaks down.
+ [@1367-2630-10-3-033001] produced a YouTube video, https://www.youtube.com/watch?v=7wm-pZp_mi0. The results from the video inspired the $Q = n / l * U(t)$ model. The number of vehicles traveling around the ring road  in the video is fixed at $n$ = 22 vehicles. Most importantly, the drivers are instructed to maintain a constant speed and distance headway $h$, the distance between the front bumpers, say, of the lead and following vehicles.  They cannot follow instructions. After a few sections, the traffic breaks down.
 
-The $Q =  n / l * U(t)$ model exhibits the same behavior as shown in the YouTube video. Our results are shown as  time-distance $t-x$ trajectories  for $n$ = 11 vehicles. See the __Congested Flow: Ring Road__ diagram. A same instructions given to the drivers of the Yuki Sugiyama experiment are assumed for the computer simulation that produced the $t-x$ trajectories. Maintain a constant speed and headway $h$.  The simulated drivers are assigned the same initial speed of $u$ = 10 miles per hour (mph) and are evenly placed along the $x$ axis at $t$ = 0.  The traffic density is fixed, $k$ = 55 vehicles per mile (vpm). As in the full-scale experiment, the simulated drivers cannot maintain a constant speed or even spacing.  After a few seconds, the vehicles begin to interact and form clusters (moving queues) and the traffic breaks down. Setting $\sigma$ = 0, no clustering or breakdown can occur. _Clearly, traffic volatility plays an important role._
+The $Q =  k * U(t)$ model exhibits the same behavior as shown in the YouTube video. Our results are shown as  time-distance $t-x$ trajectories  for $k$ = 55 vehicles per mile (vpm). See the __Congested Flow: Ring Road__ diagram. A same instructions given to the drivers of the Yuki Sugiyama experiment are assumed for the computer simulation that produced the $t-x$ trajectories. Maintain a constant speed and headway $h$.  The simulated drivers are assigned the same initial speed of $u$ = 30 miles per hour (mph) and are evenly placed along the $x$ axis at $t$ = 0.  The traffic density is fixed at $k$ = 55 vph. As in the full-scale experiment, the simulated drivers cannot maintain a constant speed or even spacing.  After a few seconds, the vehicles begin to interact and form clusters (moving queues) and the traffic breaks down. Setting $\sigma$ = 0, no clustering or breakdown can occur. _Clearly, traffic volatility plays an important role._
 
 The __rrtrials__ computer simulation of the $Q =  n / l * U(t)$ model incorporates two important features not mentioned above: (1) _driver performance in a car-following situation_ and (2) _safety_. They are most easily explained with the use of the dotted and dashed lines shown in the figure. The dotted line is the trajectory of vehicle 1, the lead vehicle, assuming that its driver could maintain a constant speed. Since $x = u * t$, the slope of the dotted line is $u = 10$ mph. The dashed line is the trajectory of  vehicle 2  when vehicle 1  maintains the trajectory shown by the dotted line. Since vehicle 1 slows, vehicle 2 must slowdown to avoid a crash. The distance headways, measured by the distance between a lead/following pair, are safe distances. 
 
-Level-of-service estimates for the simulation are shown in the following table. The mean headway $\bar{h}$ is the averages of the distances between points along the $x = 0$ axis. The predicted flow  for the simulation is estmated as $\hat{Q}  = 1/\bar{h}$. The standard deviation estimate of $\hat{\sigma}_h$  is an indicator that a breakdown is triggered by a volatile process associated with vehicle speed exclusively. Assuming no volatility or a $q = n/l * u$ where $u$ = 10 mph, $q$ = 550 vph and $h$ = 6.55 seconds at $x$ = 0.
+Level-of-service estimates for the simulation are shown in the following table. The mean headway $\bar{h}$ is the averages of the distances between points along the $x = 0$ axis. The predicted flow  for the simulation is estmated as $\hat{Q}  = 1/\bar{h}$. The standard deviation estimate of $\hat{\sigma}_h$  is an indicator that a breakdown is triggered by a volatile process associated with vehicle speed exclusively. Assuming no volatility $\sigma$ = 0, $q = k * u$  = 1650 vph and $h$ = 2.2 seconds at $x$ = 0. 
     
   |Mean headway $\bar{h}$ | Headway standard deviation $\hat{\sigma}_h$ |Predicted flow $\hat{Q}$ |
   |-----------------:|-------------------:| -----------------:|
-  | 4.5 seconds | 3.1 seconds | 800 vehicles per hour (vph)|
+  | 2.2 seconds | 1.6 seconds | 1650 vehicles per hour (vph)|
  
 ```{r, echo = TRUE, fig.height=4, fig.width= 6}
 set.seed(124)
-output <- rrtrials(10, 3, 55, 40, 5, 14, 10, c(0, 40), c(-1000, 600))
+par(mfrow = c(1,2))
+output <- rrtrials(30, 3, 55, 120, 5, 14, 100, c(0,100), c(-1000, 2000))
 title("Congested Flow", "Ring Road")
+hist(output[[7]], xlab = "headway, seconds", col = gray(0.8), breaks = seq(0,10), main = "")
+box()
+title("Headway", "Ring Road")
 ```
     
-The $Q = k * U(t)$ model suggests a _cause-effect relationship_ exists:  $u$ and $\sigma$ are the causal factors and  $\hat{Q} = 1/ \bar{h}$ is the response variable. As illustrated, vehicle clustering occurs only when  density $k$ sufficiently dense. When there are fewer vehicles on the ring road, $k = n / l$ decreases resulting in longer time headways of $\bar{h}$. Under less dense conditions, drivers can vary their speeds without affecting one another, thus reducing the chance of breakdown.
+The $Q = k * U(t)$ model suggests a _cause-effect relationship_ exists:  $u$ and $\sigma$ are the causal factors and  $\hat{Q} = 1/ \bar{h}$ is the response variable. As illustrated, vehicle clustering occurs only when  density $k$ sufficiently dense. When there are fewer vehicles on the ring road, $k = n / l$ decreases resulting in longer time headways of $\bar{h}$. Under less dense conditions, drivers can vary their speeds without affecting one another, thus reducing the chance of breakdown. 
+
+Overall, the $Q$ model predicts poor performance.  $\hat{Q} \le c^*$ = 2250 vph with speeds $\bar{u} \pm \sigma_U = 29 \pm 5$ mph. High volatility in speed and headway $h$, shown in the __Headway__ histogram, suggests driving under these conditions is unpleasant.
+
+### Sensitivity Analysis
+
+---
+runtime: shiny
+output: html_document
+---
+
+
+
+```{r echo = FALSE,  fig.height = 18, fig.width = 6}
+library(shiny)
+server <- shinyServer(function(input, output){
+    output$myspeed       <- renderText(input$speed)
+    output$mydensity     <- renderText(input$density)
+    output$myvol         <- renderText(input$vol)
+    output$mytm          <- renderText(input$tm)
+    output$mytstep       <- renderText(input$tstep)
+    output$myleff        <- renderText(input$leff)
+    output$mynobs        <- renderText(input$nobs)
+    output$table         <- renderTable({
+      umn <- reactive(as.numeric(input$speed))
+      usd <- reactive(as.numeric(input$vol))
+      k0  <- reactive(as.numeric(input$density))
+      T   <- reactive(as.numeric(input$tm))
+      dt  <- reactive(as.numeric(input$tstep))
+      leff<- reactive(as.numeric(input$leff))
+      nveh<- reactive(as.numeric(input$nobs))
+      xlim<- c(0,60)
+      ylim<- c(-2000,1000)
+      headway <- rrtrials(umn(), usd(), k0(), T(), dt(), leff(), nveh(), xlim, ylim)[[7]][-1]
+      q <- 3600/headway
+      mn.headway <- round(mean(headway),2)
+      sd.headway <- round(sd(headway),2)
+      mn.q <- round(mean(q),0)
+      sd.q <- round(sd(q),0)
+      table <- data.frame(Headway.mean = mn.headway, Headway.SD = sd.headway, Flow.mean = mn.q, Flow.SD = sd.q)
+  #    row.names(table) <- c("Headway, seconds")
+    })
+    output$plot         <- renderPlot({
+      umn <- reactive(as.numeric(input$speed))
+      usd <- reactive(as.numeric(input$vol))
+      k0  <- reactive(as.numeric(input$density))
+      T   <- reactive(as.numeric(input$tm))
+      dt  <- reactive(as.numeric(input$tstep))
+      leff<- reactive(as.numeric(input$leff))
+      nveh<- reactive(as.numeric(input$nobs))
+      xlim<- c(0,60)
+      ylim<- c(-2000,1000)
+      headway <- rrtrials(umn(), usd(), k0(), T(), dt(), leff(), nveh(), xlim, ylim)[[7]][-1]
+      q <- 3600/headway
+      hist(q, col = gray(0.8))
+      par(mfrow = c(1,2))
+      hist(headway, col = gray(0.8), xlab = "h, seconds", main = "Headway", breaks = seq(min(headway),max(headway)+1),0.5)
+      length(headway)
+ #     curve(headway, add = TRUE, col = "blue")
+      hist(q, col = gray(0.8), xlab = "q, vph", main = "Flow", breaks = seq(min(q)-250,max(q)+250,250))
+  #    curve(q, add = TRUE, col = "blue")
+    })
+  }
+)
+
+ui <- shinyUI(fluidPage(
+  titlePanel("Traffic Flow Q: A Random Variable"),
+  sidebarLayout(
+    sidebarPanel((h4("Cause")),
+                 sliderInput("speed",    "Speed, mph",  min = 0, max = 100, value = 30, step = 5),
+                 sliderInput("density",  "Density, vpm", min = 5, max = 110, value = 55, step = 5),
+                 sliderInput("vol",      "Speed volatility, mph", min = 0, max = 20, value = 3, step = 0.5),
+                 sliderInput("tm",       "Time, seconds", min = 5, max = 120, value = 60, step = 5),
+                 sliderInput("tstep",    "Time step, seconds", min = 1, max = 10, value = 5, step = 0.5),
+                 sliderInput("leff",     "Vehicle length, feet", min = 5, max = 25, value = 14, step = 2.5),
+                 sliderInput("nobs",     "Number of observations", min = 30, max = 200, value = 100, step = 10)
+    ),
+    mainPanel((h4("Effects")),
+             tableOutput("table"),
+             plotOutput("plot", width = "100%", height = "400px")
+    )
+  )
+)
+)
+shinyApp(ui = ui, server = server)
+```
+
+
 
 ### A Zipper Merge
 
 Now, we turn attention to a bottleneck where there is a lane drop from two to one-lane. To better understand to various factors that can affect a breakdown, we will investigate a "zipper merge." 
 
 Imagine that we shrink ourselves down to a size that is sufficiently small to observe a zipper close. That's right, a zipper. Let's say, a jacket zipper. We will stand on the zipper pull and look in the direction where zipper tapes are separated.  This is analogous to standing on the side of a roadway looking upstream where the vehicles merge at a bottleneck. Regardless of how fast the zipper slider is pulled, the zipper tapes become secure when meshed together because the rows of zipper teeth are the same size, move at the same speed, are evenly spaced and aligned to allow the two tapes to link together. The incoming vehicles on a freeway, on the other hand, are typically not the same size, not traveling at the speed, not evenly spaced, and not aligned. Instead, vehicles must change speed and carefully merge together to avoid crashing into one another.  It is possible to achieve a zipper merge under high-speed conditions. This occurs on a motor raceway where the drivers are professionals.
-
-
 
 To realistically depict driver behavior at a freeway bottleneck, a  time-varying acceleration  function is used:
 
@@ -212,7 +309,7 @@ A primary reason for showing this animation is to discuss the importance of a $t
 
 _A critical question do these drivers drive safety?_ Since the driver of vehicle 1 maintains a constant speed of 25 mph, we will answer, "Yes." The answer for vehicle 2 is the same, "Yes." Driver 2 reaches a maximum speed of 32.5 mph before returning to a speed of 25 mph. The trajectory for vehicle 3 "crosses" the trajectory of vehicle 1, suggesting that a side-swipe crash or near-miss may take place at $t = 6.5$ seconds.  At this point in time, the centerline distance between the two vehicles is less than 6 feet and the potential for a crash is high. Is driver 3 to blame? Let us investigate the situation further.
 
-At around $x$ = 50 feet or around $t$ = 2 seconds, driver 1 can see that  vehicle 3 is passing. Driver 1 has the responsibility to decelerate his or her vehicle and has ample time to do so, thus avoid a crash. The trajectories of the two vehicles would "cross" but at a point in time where the two vehicles have much more room to manuveur. In other words, "crossing trajectories" can serve a warning of potential risk. The time when trajectories "cross" dictates the outcome.
+At around $x$ = 50 feet or around $t$ = 2 seconds, driver 1 can see that  vehicle 3 is passing. Driver 1 has the responsibility to decelerate his or her vehicle and has ample time to do so, thus avoid a crash. The trajectories of the two vehicles would "cross" but at a point in time where the two vehicles have much more room to manuever. In other words, "crossing trajectories" can serve a warning of potential risk. The time when trajectories "cross" dictates the outcome.
 
 Getting back to the question about driving safely. All drivers are operating within the law, then we must conclude _all drivers are driving safely._
 
@@ -256,7 +353,7 @@ title("Breakdown", "Signalized Intersection")
 
 The classical approach is to calculate shock wave speed using the $\Delta q/ \Delta k$ formula and a flow-density diagram. Our car-following $CF$ approach uses the $\alpha(t) = a - b t$ model and a function that assures the drivers drive safely. It does not use a flow-density diagram. 
 
-This approach explains  queue formation differently.  The $CF$  approach  shows the transistion from a free-flow to a congested state, the $u_{-1}$ to $u_0$ transition, to be smooth, not an abrupt change as with the classical method. The "Bottleneck" vehicles  show the $u_{-1}$ to $u_0$ transition to be moving upstream. That means the delay spreads in two directions, upstream and downstream.  The "Full Stop" vehicles have two shockwave speeds. One for the delay and one for stopped vehicles that do not cross the $x$ = 0 line. Both spread in the upstream direction only. Incidentally, these shockwave speeds can be estimated with the trajectories.
+This approach explains  queue formation differently.  The $CF$  approach  shows the transistion from a free-flow to a congested state, the $u_{-1}$ to $u_0$ transition, to be smooth, not an abrupt change as with the classical method using a constant velocity model. The "Bottleneck" vehicles  show the $u_{-1}$ to $u_0$ transition to be moving upstream. That means the delay spreads in two directions, upstream and downstream.  The "Full Stop" vehicles have two shockwave speeds: one for breaking at $t_1$ and one for the vehicle when it stops at $t_3$.  Both progress in the upstream direction only. Incidentally, these shockwave speeds can be estimated with the trajectories.
 
 
 Input to the __run__ function produces a collection of data frames, which we call the "cflist." The information from these data frames can be inspected to give a detailed look at the interaction between the lead and following vehicles during a traffic breakdown. 
@@ -304,31 +401,31 @@ The argument for the  $Q = K * U$ model is based upon _macroscale_ observations 
 
 To justify the  $Q = k * U(t)$ model for a bottleneck, consider a "thought experiment." In addition to collecting speed $u_i$ data that we described above for the eight  month I-93 study, a series of videos are simultaneously taken by a helicopter flying overhead or by a drone. The video data will be used to obtain direct measures of density  $k_i = n_i/l$.  Next, take the matched $k_i$ and $u_i$ records, sort them into bins according to magnitude of traffic density, and construct a box plot. This sorting procedure treats the density data as fixed values or constants and the speed data as a random variable.
 
-The box plot will arguably resemble of  the __Box Plot of Density-Speed__ diagram of I-93 study data presented above in the __Exploratory Data Analysis__ section. Assuming the "thought experiment" and I-93 study data sufficiently similiar, inferences can be drawn from I-93 box-plot. By visual inspection, speed decreases as the traffic density increases. Since the bottleneck geometry is unchanged throughout the experiment, the number of vehicles $n_i$ and speed $u_i$ are strongly associated. Thus, the $Q = k * U(t)$ model holds.
+The box plot will arguably resemble of  the __Box Plot of Density-Speed__ diagram of I-93 study data presented above in the __Exploratory Data Analysis__ section. Assuming the "thought experiment" and I-93 study data sufficiently similiar, inferences can be drawn from I-93 box-plot. By visual inspection, speed decreases as the traffic density increases. Since the bottleneck geometry is unchanged throughout the experiment, the number of vehicles $n_i$ and speed $u_i$ are strongly associated. Thus, the $Q = k * U(t)$ model holds. 
 
-[pjo2017](https://github.com/PJOssenbruggen/Basic/blob/master/IEEE_MT-ITS.pdf)
+To be absolutely clear about the meaning of the $Q = k * U(t)$ model for the Brownian motion speed model, $U(t) = u + \sigma W(t) = u + \sigma \sqrt{\Delta t} Z$, we rewrite it in functional form to draw attention to the _key variables_:
 
-## tfuhp Package Potential. 
+* $Q = f(k, u, \sigma, h)$
 
-The potential of the __tfuhp__ package will be addressed with a question: What have we learned about traffic performance?
+where $k = n/l$ = traffic density, $u$ = design speed,  $\sigma$ = standard deviation of $u$, and  $h$ represents a safe headway for vehicles of the same length.    
 
-* With strict driver discipline that it is _theoretically possble_ to maintain high speeds on a freeway under high traffic demand. See the __zipper merge__ animation.
-    
-* With classical traffic flow theory (deterministic models) coupled with stochastic models that it is possible to explain traffic behavior with relatively simple models. See the __brownian.motion__ and __cfanim__ animations.
-    
-* By modeling driver behavior as a stochastic process that it is possible to describe field observations with a simple Brownian motion of speed. See Example 1, the __rrtrials__ output.  
+### Breakdown Event Forecasting
 
-* By treating incoming free-flow traffic demand and speed breakdown speed as random variables and introducing them into a deterministic car-following alogorithm helps explain traffic breakdown. See Example 2, the __run__ output.
+Inspecting $t-x$ trajectories and $h$ histograms derived from the $Q$ model  proves to be an effective in understanding traffic breakdown and explaining being in a congested state. Given $k$, it is possible to predict  probability of traffic breakdown  $\pi$. To gain an appreciation of the  $\hat{\pi}$ forecast model, look at the  __Box Plot of Density-Speed__ diagram.  We select bin of $k$ and then determine the proportion of breakdowns $p$ in the bin.  $p$ is straightforwardly calculated as the ratio of the number of observations where $u \le u^*$ to the total number of observations in the bin $k$. As previously mentioned, the HCM designates roadway capacity $c^*$ to be in the vicinity 2250 vph  at $k^*$ = 45 vpm. The estimate of $p$  for this bin is quite small. However, as  the $k$ values increase, the values of $p$ increase rapidly. Expressing $\pi$ by _time-of-day_ we have a wortwhile tool, _a macroscale model_, that traffic operators and managers may find useful:
 
-* By using the driver sight distance under the assumption that all drivers will drive safely, i.e., always maintain safe distance or headway, that it is possible to explain breakdown and measure traffic performance at a bottleneck. See Examples 2 and 3.
+$\hat{\pi} = P(K_t \ge k^*)$ 
 
-## Next Steps.
+$K_t$ is a stochastic differential equation model of traffic density by _time-of-day_ $t$ [@pjo2017]. Treating traffic density $K_t$ as the random variable  may seem contradictory given the discussion about the $Q = k * U(t)$ model. It is not. Note that two models are different. One is a _macroscale_ model predicting breakdown and the other one is a _microscale_ model predicting flow.  
 
-The potential of __tfuhp__ package has been introduced in this vignette. There is no question that traffic is complex problem. To deal with myriad problems and issues associated with traffic congestion, a better understanding of the root causes of conditions that lead to conditions must be understood. This is proving to be a daunting task. Hopefully, this vignette shows that a deeper understanding can be achieved. 
+## Summary
 
-It is also recognized that the __tfuhp__ package as it presently stands is difficult to use. This is especially true of people unfamiliar with __R__. Thus, my first task is add __R Markdown Shiny__ HTML widgets to my code. For example, take the __run__ function with its eight input variables. Instead of downloading the package and running it on one's computer. The user will be allowed to run it online using tools to input these variables. In Examples 2 and 3, the deceleration rate is assumed to  $d$ = 15 feet per second squared. Changing it, to say  $d$ = 32, will bring new insights to our understanding of traffic breakdown. In particular, queue formation with shock wave analysis
+_What have we learned about traffic performance using the __tfuhp__ package?_ The most notable lesson learned is:
 
-Second, this package is open to the public, https://github.com/PJOssenbruggen/Basic. In other words, I am inviting people to share their experiences with the package with me. GitHub promotes this activity, https://github.com/explore.
+* By modeling driver behavior with a simple, parsimonious  Brownian motion model of speed, it is possible to explain and forecast  traffic  breakdown on a ring-road and at a bottleneck.  
+
+The potential of the __tfuhp__ package as a learning tool has been demonstrated. Hopefully, this platform can be adapted and expanded to help users  identify the root cause or causes for other congestion problems. My next task is add __R Markdown Shiny__ HTML widgets to my code. Adding this feature will allow the user to simply conduct sensitivity analyses on-line. For example, the effects of speed  and density on ring-road performance can be explored. Sliders for $u$, $\sigma$ and $k$ will be provided so a user change them at will. The __tfuhp__ package will instantaneously produce a histogram of headways as illustrated above.
+
+This package is open to the public, https://github.com/PJOssenbruggen/Basic. In other words, I am inviting people to share their experiences with the package with me. GitHub promotes this activity, https://github.com/explore.
 
 # References
 
