@@ -1,9 +1,13 @@
 ---
-title: "tfuhp: Tools for Understanding Highway Performance"
+title: "TFUHP"
 author: "Paul J. Ossenbruggen"
-date: "2018-01-25"
-bibliography: "/Users/PJO/Desktop/Basic/CF.bib"
+date: "`r Sys.Date()`"
+bibliography: "/Users/PJO/Desktop/Basic/doc/CF.bib"
 output: html_document
+vignette: >
+  %\VignetteIndexEntry{CFmarkdown}
+  \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
 runtime: shiny
 ---
 
@@ -15,6 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r, include = FALSE, warning = FALSE}
 library(Basic)
 ```
+
 
 ## Overview 
  
@@ -56,8 +61,9 @@ The [trfhp](https://github.com/PJOssenbruggen/Basic) package is  a collection of
 Let's look again at trip generation. This time, we will incorporate visual imagry into the discussion. Before the interview, we don't know if the students will travel north, south, east or west or how far they will travel. We do know that they are all located at the same place initially and when the class ends that they will disperse. A [R](https://www.r-project.org) _Brownian motion model_, a time-dependent stochastic model, can simulate this behavior.  At time $t$ = 0, the students are  located at the point $(x = 0, y = 0)$. They become more dispersed as time progresses. Robert Brown, a botanist, described this chaotic motion of a grain of pollen suspended in water. This model is used by economists and physicists [@sde] [@iacus]. 
 
 
-```{r brownian.motion, fig.show =  'animate', ffmpeg.format='gif', dev='jpeg', fig.height = 4, fig.width = 4, echo = FALSE}
+```{r brownian.motion, echo = FALSE, fig.height=4, fig.show='animate', fig.width=4, dev='jpeg', ffmpeg.format='gif'}
 library(animation)
+
 ani.options(interval = 0.1, loop = TRUE)
 ani.pause(interval = 0.1)
 n <- 10
@@ -80,7 +86,7 @@ A __Flow-Speed Plot__  scatter plot  reveals much about the traffic at the site.
 Even though the data are noisy, patterns are revealed. For one,  speeds between 60 and 80 miles per hour (mph) are observed at  flows ranging from 0 to 3000 vehicles per hour (vph). The speed tends to decrease marginally with an increase in flow. The densities  over this range increase but for the most part, do not exceed $k \le 70$ vehicles per mile (vpm). Given these results, $u^* =$ 50 mph is defined to be a critical speed where a _congested state_ and  a _free-flow state_ are defined to be $u \le u^*$ and  $u > u^*$, respectively.  Low speeds and high densities, $u \le u^*$ and $k > 70$ vpm, tend to be associated and define a congested state. 
 
 
-```{r, echo = FALSE, fig.height = 4, fig.width = 6}
+```{r, echo = FALSE, fig.height = 4, fig.width = 6, message = FALSE, warning = FALSE}
 library(dplyr)
 library(ggplot2)
 speedplot()
@@ -89,7 +95,7 @@ speedplot()
 We continue to explore the relationship between $k$ and $u$ with  the __Box Plot of Density-Speed__.   To construct the diagram, the speed were sorted and placed into bins. For example, the labeled as $k^*$ = 45 vpm consists of observations ranging 42.5 to 47.5 vpm. This value of $k^*$ is taken from the Highway Capacity Manual (HCM), which defines it to be the roadway capacity for this geometric design. Visual inspection reveals that the chance of driving in a free-flow state, $u^* > 50$,  is greater when $k^* \le 45$ vpm. The interquartile range of speed is extremely tight for $k^* \le 45$ vpm. Excluding outliners, a driver can be assured that speeds of 70 mph or more can be expected. With the exception of the bin at $k$ = 50 vpm, speeds considerably less than 25 mph is expected for $k^* \ge 55$ vpm.  It is impossible to explain why so many congested speed observations are located in the $0 < k \le k^* = 50$ range. For $k \le 50$ vpm, a better case can be made that a congested state will be observed. 
 
 
-```{r, echo = FALSE, fig.height = 4, fig.width = 6}
+```{r, echo = FALSE, fig.height = 4, fig.width = 6, message = FALSE, warning = FALSE}
 library(dplyr)
 library(ggplot2)
 speedboxplot()
@@ -109,7 +115,7 @@ The smooth blue curve,  a generalized additive model (gam), suggests that there 
 The blue curve must be used with care. It does not take over one-hour ($t$ = 5/4 = 1.25) for the speed to drop from  55 to 20 mph or speed drop of 35 mph. Again, remember the $t$ values are time indices, not clock times.   The blue curve is useful for inferences regarding speed drop but totally misleading with regard to times of occurrence.  Every driver knows that breakdown events occur on a time scale of seconds not minutes. 
 
 
-```{r, echo = FALSE, fig.height = 4, fig.width = 6}
+```{r, echo = FALSE, fig.height = 4, fig.width = 6, message = FALSE, warning = FALSE}
 library(dplyr)
 library(ggplot2)
 speedtsplot()
@@ -129,7 +135,7 @@ $U(t) = u + \sigma W(t) = u + \sigma \sqrt{\Delta t} Z$
 
 where initial speed $u$ and standard deviation of speed $\sigma$ are constants, $W(t) = \sqrt{\Delta t} Z$ is Brownian motion, and time $t$ is measured in seconds. $Z$ is defined to be a standard normal probability distribution  where $Z \sim N(0,1)$, a standard-normal probability model,  and $\Delta t$ is defined to be the time step. The simulation where  $u$ = 30 mph, $\sigma$ = 3 mph, and $\Delta t$ = 0.5 second, shows a driver has difficluty maintaining  a speed of 30 mph.
 
-```{r cfanim, echo = FALSE, fig.show='animate', ffmpeg.format='gif', dev='jpeg', fig.height = 4, fig.width = 6}
+```{r cfanim, echo = FALSE, fig.show='animate', ffmpeg.format='gif', dev='jpeg', fig.height = 4, fig.width = 6, message = FALSE, warning = FALSE}
 library(animation)
 library(dplyr)
 library(gganimate)
@@ -164,7 +170,7 @@ Level-of-service estimates for the simulation are shown in the following table. 
   |-----------------:|-------------------:| -----------------:|
   | 2.2 seconds | 1.6 seconds | 1650 vehicles per hour (vph)|
  
-```{r, echo = TRUE, fig.height=4, fig.width= 6}
+```{r, echo = FALSE, fig.height=4, fig.width= 6, message = FALSE, warning = FALSE}
 set.seed(124)
 par(mfrow = c(1,2))
 output <- rrtrials(30, 3, 55, 120, 5, 14, 100, c(0,100), c(-1000, 2000))
@@ -180,10 +186,6 @@ Overall, the $Q$ model predicts poor performance.  $\hat{Q} \le c^*$ = 2250 vph 
 
 ### Sensitivity Analysis
 
----
-runtime: shiny
-output: html_document
----
 
 
 
@@ -275,7 +277,7 @@ $\alpha(t) = a - b t$
 
 where $t$ denotes time. The constants $a$ and $b$ are estimated by using boundary conditions. Knowing  $\alpha(t)$, speed $u(t) and distance $x(t)$ can be forecast as shown  in the __Vehicles entering a Bottleneck__ animation. The __zipper()__ function calls the two __R__  packages as shown. 
 
-```{r, fig.show = 'animate', ffmpeg.format ='gif', dev = 'jpeg', echo = FALSE, fig.height = 4, fig.width = 6}
+```{r, fig.show = 'animate', ffmpeg.format ='gif', dev = 'jpeg', echo = FALSE, fig.height = 4, fig.width = 6, message = FALSE, warning = FALSE}
 library(animation)
 library(dplyr)
 library(gganimate)
@@ -321,7 +323,7 @@ _Car-following_ models  describe and simulate the traffic behavior  by designati
 
 Again, we assume a freeway narrows from two-lanes to one. The results are shown in the __Breakdown: Bottleneck__ diagram.  The number of vehicles in the simulation remains fixed, $n$ = 10. The lead vehicle, denoted as 1 in the figure, approaches the bottleneck at a speed of 63 mph and decelerates to a speed of 34 mph. See the __Time-Speed Plot__. The lead vehicle reaches this breakdown speed of 34 mph at $x$ = 0 as shown by the point $(t_3,0)$. All following drivers must reduce their speed to avoid colliding into the vehicle in front of them. 
 
- ```{r, echo = FALSE, fig.height = 4, fig.width = 6}
+ ```{r, echo = FALSE, fig.height = 4, fig.width = 6, message = FALSE, warning = FALSE}
 set.seed(123)
 cflist <- run(10, 63, 10, 34, 0.1, 55, 5, 15, 14, c(0, 60), c(-2000, 5000))
 title("Breakdown", "Bottleneck")
@@ -345,7 +347,7 @@ The level-of-service estimates are:
   
 Contrast the "Bottleneck" situation  to  where the same vehicles come a full stop at a signal.  The "Full Stop" vehicles experience longer delays as can be seen in the following diagram, which is no surprise. The "Full Stop" vehicles are stacked up on the downstream side of the $x = 0$ line. It forms shockwave of stopped vehicles that move upstream. The "Bottleneck"  shows the shockwave moving upstream of vehicles that are to slow down. 
 
-```{r, as.is = TRUE, echo = FALSE, fig.height = 4, fig.width = 6}
+```{r, as.is = TRUE, echo = FALSE, fig.height = 4, fig.width = 6, message = FALSE, warning = FALSE}
 library(knitr)
 cflist <- run(10, 63, 10, 0,  0,  55, 5, 15, 14, c(0, 20),c(-1000, 200))
 title("Breakdown", "Signalized Intersection")
@@ -362,7 +364,7 @@ Input to the __run__ function produces a collection of data frames, which we cal
 
 The above figures show that the trajectories to be smooth curves.  The lead vehicle use  exponential $u = exp(-\lambda * t)$ and the following vehicles use non-linear $\alpha(t) = a - b t$ speed models. Depending on the situation, each driver  adjusts his or her speed independently from one another. The lead vehicle shown below has a concave trajectory from $t_0$ to $t_3$,  indicating a decline  in speed. Vehicle 2 and 3 have linear and convex trajectories. For vehicle 3, the driver is accelerating until reaches point $(t_1, x_2)$ where it begins to decelerate. 
 
-```{r, echo = FALSE, fig.height = 4, fig.width = 6}
+```{r, echo = FALSE, fig.height = 4, fig.width = 6, message = FALSE, warning = FALSE}
 set.seed(123)
 nveh <- 3
 ulead <- 63

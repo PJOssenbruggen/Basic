@@ -4,7 +4,7 @@ username:
 account: rpubs
 server: rpubs.com
 hostUrl: rpubs.com
-appId: https://api.rpubs.com/api/v1/document/375323/1a4040628cda4e6abc6897d7d7109bb5
-bundleId: https://api.rpubs.com/api/v1/document/375323/1a4040628cda4e6abc6897d7d7109bb5
-url: http://rpubs.com/pjossenbruggen/375323
-when: 1522442990.61332
+appId: https://api.rpubs.com/api/v1/document/378985/1e11f69d93f045808763c35a33b32fc7
+bundleId: https://api.rpubs.com/api/v1/document/378985/1e11f69d93f045808763c35a33b32fc7
+url: http://rpubs.com/publish/claim/378985/6e0a8ff43cdb462e94f25d5983f1c21b
+when: 1523481757.4292
