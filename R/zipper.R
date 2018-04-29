@@ -21,6 +21,8 @@
 #'     ustart1, uend1, xstart1, xend1,
 #'     ustart2, uend2, xstart2, xend2,
 #'     ustart3, uend3, xstart3, xend3)
+#' @examples
+#' zipper(0,60,90,90,0,5000,90,90,-200,4500,90,90,-500, 4000)
 zipper  <- function(tstart, tend,
                     ustart1, uend1, xstart1, xend1,
                     ustart2, uend2, xstart2, xend2,
@@ -105,7 +107,7 @@ zipper  <- function(tstart, tend,
   dfx   <- cbind(dfx, step)
  # dfx   <- as.tibble(dfx)
   p    <- ggplot2::ggplot(dfx, ggplot2::aes(t, x, color = Vehicle, frame = step)) +
-    ggplot2::geom_path(ggplot2::aes(cumulative = TRUE, group = Vehicle)) +
+    ggplot2::geom_line(ggplot2::aes(cumulative = TRUE)) +
     ggplot2::ggtitle("Vehicles entering a Bottleneck")
   gganimate::gganimate(p, title_frame = FALSE)
 }

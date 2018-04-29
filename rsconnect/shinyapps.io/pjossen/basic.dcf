@@ -1,0 +1,10 @@
+name: basic
+title:
+username:
+account: pjossen
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 333324
+bundleId: 1345968
+url: https://pjossen.shinyapps.io/basic/
+when: 1525026790.30484
