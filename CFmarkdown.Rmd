@@ -2,14 +2,12 @@
 title: "tfuhp: Tools for Understanding Highway Performance"
 author: "Paul J. Ossenbruggen"
 date: "2018-01-25"
-bibliography: "Users/PJO/Desktop/Basic/CF.bibtex"
+bibliography: "CF.bibtex"
 output: html_document
 runtime: shiny
 ---
 
-...
-run-as: user;
-...
+
 
 
 ```{r setup, include=FALSE}
