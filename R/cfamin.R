@@ -1,4 +1,4 @@
-#' \code{cfanim} uses a Brownian motion model of speed to animate a driver's ability to maintain a speed \code{u}.
+#' \code{cfanim} uses a Brownian motion model of speed to describe driver's ability to maintain a speed \code{u}.
 #'
 #' @return The \code{cfanim} function returns information for a single vehicle
 #' used to analyze the effects of traffic noise on car-following.
@@ -21,7 +21,7 @@ cfanim <- function(u, usd, tup, dt) {
   abline(h = u, col = gray(0.8))
   Wold <- 0
   i <- 0
-  df <- data.frame( t = dt*i, u = u.)
+  df <- data.frame(t = dt*i, u = u.)
   for (i in 1:n) {i
     dev.hold()
     t <- dt * i
@@ -31,8 +31,9 @@ cfanim <- function(u, usd, tup, dt) {
     Wold <- W
     df <- rbind(df, data.frame(t = dt*i,  u = u))
   }
-  p    <- ggplot2::ggplot(df, ggplot2::aes(t, u, frame = t)) +
-    ggplot2::geom_path(ggplot2::aes(cumulative = TRUE )) +
+  p    <- ggplot2::ggplot(df, ggplot2::aes(t, u)) +
+    ggplot2::geom_point() +
+    ggplot2::geom_smooth() +
     ggplot2::ggtitle("Brownian Motion Model of Speed")
-  gganimate::gganimate(p, title_frame = FALSE)
+  return(p)
 }

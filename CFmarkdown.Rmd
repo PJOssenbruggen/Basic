@@ -8,8 +8,6 @@ runtime: shiny
 ---
 
 
-
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -58,15 +56,13 @@ The [trfhp](https://github.com/PJOssenbruggen/Basic) package is  a collection of
 Let's look again at trip generation. This time, we will incorporate visual imagry into the discussion. Before the interview, we don't know if the students will travel north, south, east or west or how far they will travel. We do know that they are all located at the same place initially and when the class ends that they will disperse. A [R](https://www.r-project.org) _Brownian motion model_, a time-dependent stochastic model, can simulate this behavior.  At time $t$ = 0, the students are  located at the point $(x = 0, y = 0)$. They become more dispersed as time progresses. Robert Brown, a botanist, described this chaotic motion of a grain of pollen suspended in water. This model is used by economists and physicists [@sde] [@iacus]. 
 
 
-```{r brownian.motion, fig.show =  'animate', ffmpeg.format='gif', dev='jpeg', message = FALSE, fig.height = 4, fig.width = 4, echo = FALSE}
-library(animation)
-ani.options(interval = 0.1, loop = TRUE)
-ani.pause(interval = 0.1)
-n <- 10
-xlim <- ylim <- c(-20, 20)
-animation::brownian.motion(n, xlim, ylim, pch = 21, cex = 3, col = "blue", bg = "yellow",
-          main = "Brownian Motion")
-
+```{r tripdispersion,  message = FALSE, fig.height = 4, fig.width = 4, echo = FALSE}
+library(ggplot2)
+p1 <- tripdispersion(20, 123)
+p2 <- tripdispersion(20, 002)
+par(mfrow = c(1,2))
+p1
+p2
 ```
 
 The mathematics behind the animation is relatively simple. Of course, the Brownian motion model shown here can be adapted to other situtations. This will be  illustrated presently. The ultimate aim of using [trfhp](https://github.com/PJOssenbruggen/Basic) package tools is to improve our chances of mitigating congestion and improving performance using the simple mathematical and graphical tools.
@@ -132,14 +128,16 @@ $U(t) = u + \sigma W(t) = u + \sigma \sqrt{\Delta t} Z$
 where initial speed $u$ and standard deviation of speed $\sigma$ are constants, $W(t) = \sqrt{\Delta t} Z$ is Brownian motion, and time $t$ is measured in seconds. $Z$ is defined to be a standard normal probability distribution  where $Z \sim N(0,1)$, a standard-normal probability model,  and $\Delta t$ is defined to be the time step. The simulation where  $u$ = 30 mph, $\sigma$ = 3 mph, and $\Delta t$ = 0.5 second, shows a driver has difficluty maintaining  a speed of 30 mph.
 
 ```{r cfanim, echo = FALSE, fig.show='animate', ffmpeg.format='gif', dev='jpeg', fig.height = 4, fig.width = 6, message=FALSE, error=FALSE, warning = FALSE}
-library(animation)
-library(dplyr)
 library(gganimate)
 library(gapminder)
 library(ggplot2)
 library(tidyverse)
 set.seed(321)
-cfanim(30, 3, 30, 0.5)
+p1 <- cfanim(30, 3, 30, 0.5)
+p2 <- cfanim(30, 3, 30, 0.5)
+par(mfrow = c(1,2))
+p1
+p2
 ```
 
 Now, we turn our attention to modeling vehicular interaction, better known in the literature as _car following_. The deterministic _flow-density-speed_ relationship of $q = k * u$, is now treated as a random process of the form:
@@ -292,7 +290,8 @@ ustart3 <- 30
 uend3   <- 25
 xstart3 <- -50
 xend3   <- 275
-zipper(tstart,tend,ustart1,uend1,xstart1,xend1,ustart1,uend2,xstart2,xend2,ustart3,uend3,xstart3,xend3)
+title <- "Zipper Merge"
+zipper(tstart,tend,ustart1,uend1,xstart1,xend1,ustart1,uend2,xstart2,xend2,ustart3,uend3,xstart3,xend3,title)
 ```
 
 The animation depicted here consists of three vehicles. The driver of vehicle 3 is more aggressive than the other two drivers. Driver 1, who is the least aggressive, maintains a constant speed of 25 mph. Note that $a$ = $b$ = 0 for this driver. The $t-x$ trajectory for vehicle 1 is a straight line with a constant slope of 25 * 5280/3600 = 36.7 feet per second (fps). The trajectories for vehicles 1 and 2 are non-linear. The merge is complete after 10 seconds. At the end of the merge, all vehicles are traveling at $u$ = 25 mph and have a distance headway of $h$ = 25 feet, which is assumed to be a safe distance for this speed. 
