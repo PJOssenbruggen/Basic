@@ -1,8 +1,8 @@
-#' The function \code{speedboxplot} plots the data from a data frame \code{quk}
+#' The function \code{logisticmodel} estimates the parameters of logistic regression model
+#' using a binomial formula and logit link finction for  \code{quk}
 #'
-#' @usage speedboxplot()
-speedboxplot <- function() {
-### Density-speed. Put in bins.
+#' @usage logisticmodel()
+logisticmodel <- function() {
   qukbin <- quk[,c(1,2,3)]
   bin <- {}
   for(i in 1:dim(qukbin)[1]) {
@@ -33,15 +33,34 @@ speedboxplot <- function() {
     if(quk[i,3] >= 122.5) bin <- c(bin, 24)                     # k = 125
   }
   qukbin <-  cbind(qukbin, bin)
-
-  graphics::boxplot(u ~ bin, data = quk, col = gray(0.8), axes = FALSE)
-  abline(h = 45, lty = 3)
-  abline(v = 9, lty = 3)
-  axis(side = 2, at = seq(0,80, by = 20))
-  axis(side = 2, at = 40, labels = "u, mi / h", tick = FALSE, line = 2)
-  axis(side = 1, at = seq(2,24, by = 2), labels = seq(10,120,by=10))
-  axis(side = 1, at = 11, labels = "k, veh / mi", tick = FALSE, line = 2)
-  axis(side = 3, at = 9, labels = expression(k^"*"))
-  axis(side = 4, at = 45, labels = expression(u^"*"))
-  box()
+  pi.forecast <- function(k) exp(fit1$coefficients[1] + fit1$coefficients[2] * k)/(1 + exp(fit1$coefficients[1] + fit1$coefficients[2] * k))
+  pf = y <- n <- k <- rep(NA, 23)
+  df <- data.frame(k, y, n, pf)
+  kseq <- seq(5,125,5)
+  for(i in 1:24) {
+    ui      <- qukbin[qukbin[,4] == i,2]
+    df[i,1] <- kseq[i]
+    df[i,2] <- m <- length(ui[ui <= 50])
+    df[i,3] <- n <- length(ui[ui > 50])
+    df[i,4] <- m/(m + n)
+  }
+  plot(df[,1], df[,4], typ = "p", pch = 16, xlab = "k, veh/mi", ylab = expression(pi) )
+  k <- df[,1]
+  df[,1] <- k
+  fit1 <- glm2(pf ~ k, data = df, family = binomial(link="logit"),
+               control=glm.control(trace=TRUE))
+  k.factor <- gl(n = dim(df)[1], k = 1, labels = as.character(k))
+  df <- cbind(df, k.factor)
+ # fit2 <- glm2(pf ~ k.factor, data = df, family = binomial(link="logit"),
+ #              control=glm.control(trace=TRUE))
+  kseq <- seq(0,120,0.1)
+  pi.hat <- pi.forecast(kseq)
+  pi.hat2 = pi.forecast(df[,1])
+  lines(kseq, pi.hat)
+  exp.failures <- pi.hat2 * (df[,2] + df[,3])
+  df <- cbind(df, pi.hat2, exp.failures)
+  points(df[,1], df[,6])
+  e <- df[,2] - exp.failures
+  df <- cbind(df, e)
+  return(df)
 }

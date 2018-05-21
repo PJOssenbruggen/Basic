@@ -12,9 +12,7 @@ runtime: shiny
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r, include = FALSE, warning = FALSE, message = FALSE, error = FALSE}
-library(Basic)
-```
+
 
 ## Overview 
  
@@ -78,7 +76,7 @@ A __Flow-Speed Plot__  scatter plot  reveals much about the traffic at the site.
 Even though the data are noisy, patterns are revealed. For one,  speeds between 60 and 80 miles per hour (mph) are observed at  flows ranging from 0 to 3000 vehicles per hour (vph). The speed tends to decrease marginally with an increase in flow. The densities  over this range increase but for the most part, do not exceed $k \le 70$ vehicles per mile (vpm). Given these results, $u^* =$ 50 mph is defined to be a critical speed where a _congested state_ and  a _free-flow state_ are defined to be $u \le u^*$ and  $u > u^*$, respectively.  Low speeds and high densities, $u \le u^*$ and $k > 70$ vpm, tend to be associated and define a congested state. 
 
 
-```{r, echo = FALSE, fig.height = 4, fig.width = 6, message=FALSE, error=FALSE, warning = FALSE}
+```{r spp, echo = FALSE, fig.height = 4, fig.width = 6, message=FALSE, error=FALSE, warning = FALSE}
 library(dplyr)
 library(ggplot2)
 speedplot()
@@ -87,7 +85,7 @@ speedplot()
 We continue to explore the relationship between $k$ and $u$ with  the __Box Plot of Density-Speed__.   To construct the diagram, the speed were sorted and placed into bins. For example, the labeled as $k^*$ = 45 vpm consists of observations ranging 42.5 to 47.5 vpm. This value of $k^*$ is taken from the Highway Capacity Manual (HCM), which defines it to be the roadway capacity for this geometric design. Visual inspection reveals that the chance of driving in a free-flow state, $u^* > 50$,  is greater when $k^* \le 45$ vpm. The interquartile range of speed is extremely tight for $k^* \le 45$ vpm. Excluding outliners, a driver can be assured that speeds of 70 mph or more can be expected. With the exception of the bin at $k$ = 50 vpm, speeds considerably less than 25 mph is expected for $k^* \ge 55$ vpm.  It is impossible to explain why so many congested speed observations are located in the $0 < k \le k^* = 50$ range. For $k \le 50$ vpm, a better case can be made that a congested state will be observed. 
 
 
-```{r, echo = FALSE, fig.height = 4, fig.width = 6, message=FALSE, error=FALSE, warning = FALSE}
+```{r speedboxplot, echo = FALSE, fig.height = 4, fig.width = 6, message=FALSE, error=FALSE, warning = FALSE}
 library(dplyr)
 library(ggplot2)
 speedboxplot()
@@ -181,7 +179,7 @@ Overall, the $Q$ model predicts poor performance.  $\hat{Q} \le c^*$ = 2250 vph 
 ### Sensitivity Analysis
 
 
-```{r echo = FALSE,  fig.height = 18, fig.width = 6, message=FALSE, error=FALSE, warning = FALSE}
+```{r echo = FALSE,  fig.height = 4, fig.width = 6, message=FALSE, error=FALSE, warning = FALSE}
 library(shiny)
 server <- shinyServer(function(input, output){
     output$myspeed       <- renderText(input$speed)

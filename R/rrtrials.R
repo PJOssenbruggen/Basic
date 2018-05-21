@@ -41,6 +41,13 @@ rrtrials <- function(umn, usd, k0, T, dt, leff, nveh, xlim, ylim) {
   lines(c(0,T), c(0, 5280/3600*umn * T), col = gray(0.5), lty = 3)
   abline(h = 0, col = gray(0.8))
   abline(v = 0, col = gray(0.8))
+  legend(x = 0, y = ylim[2],
+         legend = bquote(bar(u) == .(umn)),
+         bty = 'n')
+  legend(x = 0, y = 0.9*ylim[2],
+         legend = bquote(sigma == .(usd)),
+         bty = 'n')
+
 # curve 2
   lines(tseq, foll[,3], lty = 2, col = gray(0.5))
   lines(tseq, xf, lty = 1, lwd = 1, col = gray(0))

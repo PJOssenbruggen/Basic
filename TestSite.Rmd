@@ -1,0 +1,263 @@
+---
+title: "TestSite"
+author: "Paul Ossenbruggen"
+date: "5/18/2018"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r, include = FALSE, warning = FALSE, message = FALSE, error = FALSE}
+library(Basic)
+```
+
+### Scatter Plot of Bottleneck Data
+
+```{r speedplot,  message = FALSE, fig.height = 4, fig.width = 4, echo = FALSE}
+library(dplyr)
+library(ggplot2)
+speedplot()
+```
+
+### Density-Speed Box Plot
+
+
+```{r speedboxplot,  message = FALSE, fig.height = 4, fig.width = 5, echo = FALSE}
+library(dplyr)
+library(ggplot2)
+speedboxplot()
+title("Box Plot of Density-Speed")
+```
+
+### Logistic Regression Model
+```{r logisticmodel,  message = FALSE, fig.height = 4, fig.width = 5, echo = FALSE, warning = FALSE, error = FALSE}
+library(glm2)
+library(ggplot2)
+df <- logisticmodel()
+df <- dplyr::as_tibble(df)
+ggplot2::ggplot(df, ggplot2::aes(k, exp.failures, size = e)) +
+    ggplot2::geom_smooth()
+```
+
+### Time-Distance Diagrams on a Ring Road
+
+```{r ringroad1,  message = FALSE, fig.height = 4, fig.width = 5, echo = FALSE}
+set.seed(124)
+k <- 30
+d <- 22/(pi*k)
+d <- round(d,1)
+output1 <- rrtrials(70, 1, k, 120, 5, 14, 100, c(0,120), c(-1000, 2000))
+title("n = 22 vehicles","Free-Flow")
+mtext(bquote(k == .(k)), side = 3)
+h1 <- output1[[5]][1]
+hsd1 <- output1[[5]][2]
+q1 <- output1[[5]][3]
+```
+
+
+```{r ringroad2,  message = FALSE, fig.height = 4, fig.width = 5, echo = FALSE}
+set.seed(124)
+k <- 50
+d <- 22/(pi*k)
+d <- round(d,1)
+output2 <- rrtrials(40, 5, 55, 120, 5, 14, 100, c(0,120), c(-1000, 2000))
+title("n = 22 vehicles","Congested-Flow")
+mtext(bquote(k == .(k)), side = 3)
+h2 <- output2[[5]][1]
+hsd2 <- output2[[5]][2]
+q2 <- output2[[5]][3]
+```
+
+ | __Scenario__ |$\bar{h}$, seconds | $\hat{\sigma}_h$, seconds | $\hat{Q}$,  vehicles per hour (vph) |
+ |-----------------:  |-----------------:|-------------------:| -----------------:|
+ | Free-Flow | 1.68 | 0.59 | 2137 |
+ | Congested-Flow | 1.76 | 1.46 | 2045 |
+ 
+ 
+### Stationary Time-Series Model of Speed
+
+```{r cfanim1,  message = FALSE, fig.height = 4, fig.width = 6, echo = FALSE}
+library(gapminder)
+library(ggplot2)
+library(tidyverse)
+set.seed(767)
+d1 <- cfanim(70, 1, 120, 3)
+summary(d1[,2])
+df <- dplyr::as_tibble(d1)
+ggplot2::ggplot(df, ggplot2::aes(t, u)) +
+    ggplot2::geom_smooth()
+```
+
+
+```{r cfanim2,  message = FALSE, fig.height = 4, fig.width = 6, echo = FALSE}
+library(gapminder)
+library(ggplot2)
+library(tidyverse)
+set.seed(267)
+d1 <- cfanim(40, 5, 120, 3)
+summary(d1[,2])
+df <- dplyr::as_tibble(d1)
+ggplot2::ggplot(df, ggplot2::aes(t, u)) +
+    ggplot2::geom_smooth()
+```
+
+### Car-Following and Merging Models
+
+```{r CF,  message = FALSE, fig.height = 4, fig.width = 6, echo = FALSE}
+library(gapminder)
+library(ggplot2)
+library(tidyverse)
+zipper(0,60,90,90,0,5000,90,90,-200,4500,90,90,-500, 4000, title = "Car Following")
+```
+
+```{r zipper,  message = FALSE, fig.height = 4, fig.width = 6, echo = FALSE}
+library(gapminder)
+library(ggplot2)
+library(tidyverse)
+zipper(0,40,85,90,0,4000,90,99,0,4500,90,90,-500, 4200, title = "Zipper Merge")
+```
+
+
+
+### Flow-Speed Plot
+
+```{r speedtsplot,  message = FALSE, fig.height = 4, fig.width = 5, echo = FALSE}
+library(dplyr)
+library(ggplot2)
+speedtsplot()
+```
+
+
+### Car-Following and Breakdown
+
+```{r runBottleneck,  message = FALSE, fig.height = 5, fig.width = 6, echo = FALSE}
+set.seed(123)
+cflist <- run(10, 63, 10, 34, 0.1, 55, 5, 15, 14, c(0, 60), c(-2000, 5000))
+title("Breakdown", "Bottleneck")
+```
+
+### Stopping at Signal
+
+```{r runSignal,  message = FALSE, fig.height = 5, fig.width = 6, echo = FALSE}
+cflist <- run(10, 63, 10, 0,  0,  55, 5, 15, 14, c(0, 20),c(-1000, 200))
+title("Breakdown", "Signalized Intersection")
+```
+
+### Explaining Breakdown
+
+```{r explainBreakdown,  message = FALSE, fig.height = 5, fig.width = 6, echo = FALSE}
+set.seed(123)
+nveh <- 3
+ulead <- 63
+ulead.sd <- 10
+ubrkdown <- 34
+ubrkdown.sd <- 0.1
+k <- 55
+k.sd <- 5
+d <- 15
+leff <- 14
+xlim <- c(0,12)
+ylim <- c(-600, 600)
+cflist <- run(nveh, ulead, ulead.sd, ubrkdown, ubrkdown.sd, k, k.sd, d, leff, xlim, ylim)
+points(2.459226, -183.3195, pch = 8, cex = 0.5)
+points(7.069598, 177.2323 + hsafe(53.89641, 14), pch = 8, cex = 0.5)
+points(4.179863, -233.8204, pch = 8, cex = 0.5)
+points(9.047542, 219.6009 + hsafe(53.89641, 14), pch = 8, cex = 0.5)
+lines(c(4.179863,9.047542), c(-233.8204,219.6009  + hsafe(53.89641, 14)), lty = 5, col = gray(0.5))
+text(2.459226, -183.3195, labels = expression("("*t[1]*","*x[1]*")"),pos = 3, cex = 0.75)
+text(4.179863, -278.8204, labels = expression("("*t[1]*","*x[1]*")"),pos = 3, cex = 0.75)
+text(7.069598, 177.2323 + hsafe(53.89641, 14), labels = expression("("*t[2]*","*x[2]*")"),pos = 3, cex = 0.75)
+text(9.047542, 219.6009 + hsafe(53.89641, 14), labels = expression("("*t[2]*","*x[2]*")"),pos = 3, cex = 0.75)
+text(4.56, 0, labels = expression("("*t[5]*",0)"),pos = 3, cex = 0.75)
+text(6.7, 0, labels = expression("("*t[5]*",0)"),pos = 3, cex = 0.75)
+legend("topleft", legend = "driver sight-lines", bty = "n", lty = 5, col = gray(0.5))
+title("Breakdown","Basic Concepts and Notation")
+```
+
+
+### Time-Distance Plot on Ring Road
+
+```{r timedistance,  message = FALSE, fig.height = 4, fig.width = 6, echo = FALSE}
+library(shiny)
+server <- shinyServer(function(input, output){
+    output$myspeed       <- renderText(input$speed)
+    output$mydensity     <- renderText(input$density)
+    output$myvol         <- renderText(input$vol)
+    output$mytm          <- renderText(input$tm)
+    output$mytstep       <- renderText(input$tstep)
+    output$myleff        <- renderText(input$leff)
+    output$mynobs        <- renderText(input$nobs)
+    output$table         <- renderTable({
+      umn <- reactive(as.numeric(input$speed))
+      usd <- reactive(as.numeric(input$vol))
+      k0  <- reactive(as.numeric(input$density))
+      T   <- reactive(as.numeric(input$tm))
+      dt  <- reactive(as.numeric(input$tstep))
+      leff<- reactive(as.numeric(input$leff))
+      nveh<- reactive(as.numeric(input$nobs))
+      xlim<- c(0,60)
+      ylim<- c(-2000,1000)
+      headway <- rrtrials(umn(), usd(), k0(), T(), dt(), leff(), nveh(), xlim, ylim)[[7]][-1]
+      q <- 3600/headway
+      mn.headway <- round(mean(headway),2)
+      sd.headway <- round(sd(headway),2)
+      mn.q <- round(mean(q),0)
+      sd.q <- round(sd(q),0)
+      table <- data.frame(Headway.mean = mn.headway, Headway.SD = sd.headway, Flow.mean = mn.q, Flow.SD = sd.q)
+    })
+    output$plot         <- renderPlot({
+      umn <- reactive(as.numeric(input$speed))
+      usd <- reactive(as.numeric(input$vol))
+      k0  <- reactive(as.numeric(input$density))
+      T   <- reactive(as.numeric(input$tm))
+      dt  <- reactive(as.numeric(input$tstep))
+      leff<- reactive(as.numeric(input$leff))
+      nveh<- reactive(as.numeric(input$nobs))
+      xlim<- c(0,60)
+      ylim<- c(-2000,1000)
+      headway <- rrtrials(umn(), usd(), k0(), T(), dt(), leff(), nveh(), xlim, ylim)[[7]][-1]
+      q <- 3600/headway
+      hist(q, col = gray(0.8))
+      par(mfrow = c(1,2))
+      hist(headway, col = gray(0.8), xlab = "h, seconds", main = "Headway", breaks = seq(min(headway),max(headway)+1),0.5)
+      length(headway)
+      hist(q, col = gray(0.8), xlab = "q, vph", main = "Flow", breaks = seq(min(q)-250,max(q)+250,250))
+    })
+  }
+)
+
+ui <- shinyUI(fluidPage(
+  titlePanel(""),
+  sidebarLayout(
+    verticalLayout((h4("Cause")),
+                 sliderInput("speed",    "Speed, mph",  min = 0, max = 100, value = 30, step = 5),
+                 sliderInput("density",  "Density, vpm", min = 5, max = 110, value = 55, step = 5),
+                 sliderInput("vol",      "Speed volatility, mph", min = 0, max = 20, value = 3, step = 0.5),
+                 sliderInput("tm",       "Time, seconds", min = 5, max = 120, value = 60, step = 5),
+                 sliderInput("tstep",    "Time step, seconds", min = 1, max = 10, value = 5, step = 0.5),
+                 sliderInput("leff",     "Vehicle length, feet", min = 5, max = 25, value = 14, step = 2.5),
+                 sliderInput("nobs",     "Number of observations", min = 30, max = 200, value = 100, step = 10)
+    ),
+    mainPanel((h4("Effects")),
+             tableOutput("table"),
+             plotOutput("plot", width = "100%", height = "400px")
+    )
+  )
+)
+)
+shinyApp(ui = ui, server = server)
+```
+
+### Brownian Motion Plots (Trip Dispersion)
+
+```{r tripdispersion,  message = FALSE, fig.height = 4, fig.width = 4, echo = FALSE}
+library(ggplot2)
+p1 <- tripdispersion(20, 123)
+p2 <- tripdispersion(20, 003)
+par(mfrow = c(1,2))
+p1 
+p2
+```
