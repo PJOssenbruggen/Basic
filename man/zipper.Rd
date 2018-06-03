@@ -2,8 +2,8 @@
 % Please edit documentation in R/zipper.R
 \name{zipper}
 \alias{zipper}
-\title{The \code{zipper} function simulates a bottleneck where two lanes of traffic merge
-into one lane without causing any traffic delay.}
+\title{The \code{zipper} function can be used to simulate interaction among three vehicles in car following
+on a single lane or three vehicles merging on a two-lane highway.}
 \usage{
 zipper(tstart, tend,
     ustart1, uend1, xstart1, xend1,
@@ -44,6 +44,10 @@ zipper(tstart, tend,
 a so-called a ``zipper merge.''
 }
 \description{
-The \code{zipper} function simulates a bottleneck where two lanes of traffic merge
-into one lane without causing any traffic delay.
+The \code{zipper} function can be used to simulate interaction among three vehicles in car following
+on a single lane or three vehicles merging on a two-lane highway.
+}
+\examples{
+zipper(0,60,90,90,0,5000,90,90,-200,4500,90,90,-500, 4000)
+zipper(0,40,85,90,0,4000,90,99,0,4500,90,90,-500, 4200)
 }

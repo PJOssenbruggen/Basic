@@ -2,12 +2,12 @@
 % Please edit documentation in R/cfamin.R
 \name{cfanim}
 \alias{cfanim}
-\title{\code{cfanim} uses a Brownian motion model of speed to animate a driver's ability to maintain a speed \code{u}.}
+\title{\code{cfanim} uses a stochastic model of speed to describe driver's ability to maintain a speed \code{u}.}
 \usage{
-cfanim(u, usd, tup, dt)
+cfanim(umn, usd, tup, dt)
 }
 \arguments{
-\item{u}{mean speed (mph), a number}
+\item{umn}{mean speed (mph), a number}
 
 \item{usd}{standard deviation of \code{umn}, a number}
 
@@ -21,7 +21,7 @@ used to analyze the effects of traffic noise on car-following.
 The function uses a stochastic traffic noise model, a brownian motion or Weiner \code{W} model.
 }
 \description{
-\code{cfanim} uses a Brownian motion model of speed to animate a driver's ability to maintain a speed \code{u}.
+\code{cfanim} uses a stochastic model of speed to describe driver's ability to maintain a speed \code{u}.
 }
 \examples{
 cfanim(60, 3, 30, 0.25)

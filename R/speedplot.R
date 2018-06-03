@@ -1,8 +1,11 @@
-#' The function \code{speedplot} plots the data from the \code{quk}  data frame.
+#' A scatter plot of traffic data.
 #'
-#' @usage speedplot()
-speedplot <- function() {
-  quk <- dplyr::as_tibble(quk)
-  ggplot2::ggplot(quk, ggplot2::aes(q, u)) + ggplot2::geom_point(ggplot2::aes(color = k, size = k)) +
+#' @param QUKtdayX, a matrix
+#' @examples speedplot(QUKtdayX)
+speedplot <- function(QUKtdayX) {
+  quk0 <- QUKtdayX
+  quk1 <- dplyr::as_tibble(quk0)
+  ggplot2::ggplot(quk1, ggplot2::aes_string("q", "u")) +
+    ggplot2::geom_point(ggplot2::aes_string(color = "k", size = "k")) +
     ggplot2::ggtitle("Flow-Speed Plot")
 }

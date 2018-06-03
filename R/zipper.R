@@ -22,13 +22,14 @@
 #'     ustart2, uend2, xstart2, xend2,
 #'     ustart3, uend3, xstart3, xend3)
 #' @examples
-#' zipper(0,60,90,90,0,5000,90,90,-200,4500,90,90,-500, 4000, title = "Car Following")
-#' zipper(0,40,85,90,0,4000,90,99,0,4500,90,90,-500, 4200, title = "Zipper Merge")
+#' zipper(0,60,90,90,0,5000,90,90,-200,4500,90,90,-500, 4000)
+#' zipper(0,40,85,90,0,4000,90,99,0,4500,90,90,-500, 4200)
 zipper  <- function(tstart, tend,
                     ustart1, uend1, xstart1, xend1,
                     ustart2, uend2, xstart2, xend2,
-                    ustart3, uend3, xstart3, xend3,
-                    title) {
+                    ustart3, uend3, xstart3, xend3
+                    )
+  {
   tseq   <- seq(0, tend, by = 0.2)
   xfseq1 <- ufseq1 <- xlseq1 <- ulseq1 <- {}
   xfseq2 <- ufseq2 <- xlseq2 <- ulseq2 <- {}
@@ -74,8 +75,7 @@ zipper  <- function(tstart, tend,
   }
   df = rbind(df1, df2, df3)
   p   <- ggplot2::ggplot(df, ggplot2::aes(t, x, colour = Vehicle, size = u, frame = t)) +
-    ggplot2::geom_point() +
-    ggplot2::ggtitle(title)
+    ggplot2::geom_point()
   return(p)
 }
 

@@ -2,10 +2,16 @@
 % Please edit documentation in R/speedplot.R
 \name{speedplot}
 \alias{speedplot}
-\title{The function \code{speedplot} plots the data from the \code{quk}  data frame.}
+\title{A scatter plot of traffic data.}
 \usage{
-speedplot()
+speedplot(QUKtdayX)
+}
+\arguments{
+\item{QUKtdayX, }{a matrix}
 }
 \description{
-The function \code{speedplot} plots the data from the \code{quk}  data frame.
+A scatter plot of traffic data.
+}
+\examples{
+speedplot(QUKtdayX)
 }

@@ -11,13 +11,13 @@ rrtrials(umn, usd, k0, T, dt, leff, nveh, xlim, ylim)
 
 \item{usd}{standard deviation of lead vehicle speed (mph), a number}
 
-\item{k0}{traffic density, a number}
+\item{k0}{traffic density (vpm), a number}
 
-\item{T}{upper time range, a number}
+\item{T}{upper time range (seconds), a number}
 
-\item{dt}{time-step, a number}
+\item{dt}{time-step (seconds), a number}
 
-\item{leff}{effective vehicle length, a number}
+\item{leff}{effective vehicle length (feet), a number}
 
 \item{nveh}{number of following vehicles, a number}
 
@@ -27,8 +27,9 @@ rrtrials(umn, usd, k0, T, dt, leff, nveh, xlim, ylim)
 }
 \value{
 The \code{rrtrials} function returns a x-tractories or \code{t-x} plots
-for the lead and following vehicles where crossing trajectories are disallowed.
-The following vehicle driver maintains a safe headway while attempting to minimize
+for the lead and following vehicles on a single-lane road. This is a strict car-following
+model. Crossing trajectories are disallowed. In addition,
+a following vehicle driver maintains a safe headway while attempting to minimize
 travel time. In other words, the following vehicle's movement is constrained. Output
 from The \code{rrtrials} is an output matrix called \code{LF}.
 }
@@ -38,4 +39,5 @@ from The \code{rrtrials} is an output matrix called \code{LF}.
 \examples{
 rrtrials(10, 3, 55, 40, 5, 14, 10, c(0, 40), c(-1000, 600))
 rrtrials(2, 1, 55, 240, 5, 14, 20, c(0, 240), c(-2000, 600))
+rrtrials(20, 3, 55, 120, 5, 14, 100, c(0,100), c(-1000, 2000))
 }

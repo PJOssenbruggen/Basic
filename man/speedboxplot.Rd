@@ -2,10 +2,13 @@
 % Please edit documentation in R/speedboxplot.R
 \name{speedboxplot}
 \alias{speedboxplot}
-\title{The function \code{speedboxplot} plots the data from a data frame \code{I93weekday}}
+\title{The function \code{speedboxplot} plots the data from a data frame \code{QUKtdayX}}
 \usage{
-speedboxplot()
+speedboxplot(QUKtdayX)
+}
+\arguments{
+\item{QUKtdayX, }{a matrix}
 }
 \description{
-The function \code{speedboxplot} plots the data from a data frame \code{I93weekday}
+The function \code{speedboxplot} plots the data from a data frame \code{QUKtdayX}
 }

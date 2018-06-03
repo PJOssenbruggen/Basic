@@ -1,4 +1,4 @@
-#' \code{cfanim} uses a Brownian motion model of speed to describe driver's ability to maintain a speed \code{u}.
+#' \code{cfanim} uses a stochastic model of speed to describe driver's ability to maintain a speed \code{u}.
 #'
 #' @return The \code{cfanim} function returns information for a single vehicle
 #' used to analyze the effects of traffic noise on car-following.
@@ -7,7 +7,7 @@
 #' @param usd standard deviation of \code{umn}, a number
 #' @param tup upper time range, a number
 #' @param dt time-step, a number
-#' @usage cfanim(u, usd, tup, dt)
+#' @usage cfanim(umn, usd, tup, dt)
 #' @examples
 #' cfanim(60, 3, 30, 0.25)
 cfanim <- function(umn, usd, tup, dt) {

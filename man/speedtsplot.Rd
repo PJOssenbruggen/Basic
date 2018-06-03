@@ -4,7 +4,10 @@
 \alias{speedtsplot}
 \title{The function \code{speedtsplot} plots the data from the \code{speedts} data frame.}
 \usage{
-speedtsplot()
+speedtsplot(speedts)
+}
+\arguments{
+\item{speedts, }{a matrix}
 }
 \description{
 The function \code{speedtsplot} plots the data from the \code{speedts} data frame.

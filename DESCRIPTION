@@ -17,7 +17,9 @@ Imports:
     gapminder,
     ggplot2,
     knitr,
+    rmarkdown,
+    roxygen2,
     shiny,
     tidyverse
 Suggests: 
-    rmarkdown
+    

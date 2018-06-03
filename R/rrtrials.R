@@ -1,16 +1,17 @@
 #' \code{rrtrials} produces \code{t-x} trajectories for lead and following vehicles on a ring road
 #'
 #' @return The \code{rrtrials} function returns a x-tractories or \code{t-x} plots
-#' for the lead and following vehicles where crossing trajectories are disallowed.
-#' The following vehicle driver maintains a safe headway while attempting to minimize
+#' for the lead and following vehicles on a single-lane road. This is a strict car-following
+#' model. Crossing trajectories are disallowed. In addition,
+#' a following vehicle driver maintains a safe headway while attempting to minimize
 #' travel time. In other words, the following vehicle's movement is constrained. Output
 #' from The \code{rrtrials} is an output matrix called \code{LF}.
 #' @param umn lead vehicle speed (mph), a number
 #' @param usd standard deviation of lead vehicle speed (mph), a number
-#' @param k0 traffic density, a number
-#' @param T upper time range, a number
-#' @param dt time-step, a number
-#' @param leff effective vehicle length, a number
+#' @param k0 traffic density (vpm), a number
+#' @param T upper time range (seconds), a number
+#' @param dt time-step (seconds), a number
+#' @param leff effective vehicle length (feet), a number
 #' @param nveh number of following vehicles, a number
 #' @param xlim plot range along the \code{t} axis, a vector
 #' @param ylim plot range along the \code{x} axis, a vector
