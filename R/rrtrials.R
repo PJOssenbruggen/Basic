@@ -17,14 +17,18 @@
 #' @param ylim plot range along the \code{x} axis, a vector
 #' @usage rrtrials(umn, usd, k0, T, dt, leff, nveh, xlim, ylim)
 #' @examples
-#' rrtrials(10, 3, 55, 40, 5, 14, 10, c(0, 40), c(-1000, 600))
-#' rrtrials(2, 1, 55, 240, 5, 14, 20, c(0, 240), c(-2000, 600))
+#' rrtrials(41,11, 50, 100, 1, 14, 2, c(0, 100), c(-1000, 600))
+#' rrtrials(2, 2, 55, 100, 1, 14, 10, c(0, 240), c(-2000, 600))
 #' rrtrials(20, 3, 55, 120, 5, 14, 100, c(0,100), c(-1000, 2000))
 rrtrials <- function(umn, usd, k0, T, dt, leff, nveh, xlim, ylim) {
   t0    <- 0
   input <- as.matrix(data.frame(umn, usd, k0, T, dt, leff, nveh))
   lead  <- bmfree(umn, usd, T, dt)
   foll  <- bmfree(umn, usd, T, dt)
+  u <- c(lead[,2], foll[,2])
+  par(mfrow = c(1,2))
+  xlim <- c(0,T)
+
   nobs  <- dim(lead)[1]
   h0    <- 5280/k0
   foll[,3]  <- foll[,3] - rep(h0, nobs)
@@ -38,18 +42,17 @@ rrtrials <- function(umn, usd, k0, T, dt, leff, nveh, xlim, ylim) {
 # headway analysis: If safe, no adjustments are made to spacing or speed of the following vehicle are made.
   for(i in 1:nobs) if(h[i] >= hsf[i]) xf[i] <- foll[i,3] else xf[i] <- lead[i,3] - hsf[i]
   for(i in 1:nobs) if(h[i] >= hsf[i]) uf[i] <- foll[i,2] else uf[i] <- lead[i,2]
-  plot(tseq, xl, typ = "l", xlab = "t, seconds", ylab = expression(x[t]*", feet"), xlim = xlim, ylim = ylim)
+  x <- c(xl, xf)
+  ylimx = c(min(x),max(x))
+  plot(tseq, xl, typ = "l", xlab = "t, seconds", ylab = expression(x[t]*", feet"),
+       xlim = xlim, ylim = ylimx)
   lines(c(0,T), c(0, 5280/3600*umn * T), col = gray(0.5), lty = 3)
+  lines(tseq,xf,lwd = 2)
   abline(h = 0, col = gray(0.8))
   abline(v = 0, col = gray(0.8))
-  legend(x = 0, y = ylim[2],
-         legend = bquote(bar(u) == .(umn)),
-         bty = 'n')
-  legend(x = 0, y = 0.9*ylim[2],
-         legend = bquote(sigma == .(usd)),
-         bty = 'n')
-
-# curve 2
+  mtext(text = bquote(bar(u) == .(umn)), line = 1)
+  mtext(text = bquote(hat(sigma) == .(usd)), line = 0)
+# curve 2, etc
   lines(tseq, foll[,3], lty = 2, col = gray(0.5))
   lines(tseq, xf, lty = 1, lwd = 1, col = gray(0))
   LF      <- cbind(lead[,c(1,3)], xf)

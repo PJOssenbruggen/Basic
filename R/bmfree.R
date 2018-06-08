@@ -2,7 +2,7 @@
 #'
 #' @return The \code{bmfree} function returns information for a single vehicle
 #' used to analyze the effects of traffic noise on car-following.
-#' The model, a stochastic traffic noise model, is assumed to be a stationary time-series model.
+#' The model, a stochastic traffic noise model, is assumed to be a Brownian bridge model.
 #' Distance \code{x} is estimated with the forward Euler method.
 #' @param umn mean speed (mph), a number
 #' @param usd standard deviation of \code{umn}, a number
@@ -10,25 +10,17 @@
 #' @param dt time-step, a number
 #' @usage bmfree(umn, usd, T, dt)
 #' @examples
-#' bmfree(34, 3, 60, 5)
-#' bmfree(2, 2, 60, 5)
+#' bmfree(41, 11, 100, 1)
+#' bmfree(2, 2, 60, 1)
 bmfree  <- function(umn, usd, T, dt) {
   umn   <- umn*5280/3600
   usd   <- usd*5280/3600
   tseq  <- seq(0, T, by = dt)
-  tlen  <- length(tseq)
-  W     <- numeric(tlen)
-  Z     <- rnorm(T)
+  N     <- length(tseq)
   x     <- c(0, rep(NA, tlen - 1))
-  tau   <- tseq/T
-  W     <- numeric(tlen)
-  for(i in 1:tlen) W[i] <- Z[i]
-  W     <- c(0, W[-tlen])
-  u     <- c(umn, umn + usd * W)[-length(tlen)]
-  tux   <- as.matrix(data.frame(t = tseq, u, x, W))
-  for(i in 2:tlen) {
-    x[i] <- x[i-1] + dt * u[i-1]
-  }
-  tux[,3] <- x
+  u     <- as.numeric(BBridge(x = umn, y = umn, t0 = 0, N, T))
+  for(i in 1:tlen) if(u[i] <= 0) u[i] = 0
+  for(i in 2:tlen) x[i] <- x[i-1] + dt * u[i-1]
+  tux   <- as.matrix(data.frame(t = tseq, u, x))
   return(tux)
 }

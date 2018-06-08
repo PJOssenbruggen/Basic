@@ -18,13 +18,13 @@ bmfree(umn, usd, T, dt)
 \value{
 The \code{bmfree} function returns information for a single vehicle
 used to analyze the effects of traffic noise on car-following.
-The model, a stochastic traffic noise model, is assumed to be a stationary time-series model.
+The model, a stochastic traffic noise model, is assumed to be a Brownian bridge model.
 Distance \code{x} is estimated with the forward Euler method.
 }
 \description{
 The \code{bmfree} function returns a \code{tux} matrix of time \code{t}, speed \code{u} and location \code{x} values.
 }
 \examples{
-bmfree(34, 3, 60, 5)
-bmfree(2, 2, 60, 5)
+bmfree(41, 11, 100, 1)
+bmfree(2, 2, 60, 1)
 }

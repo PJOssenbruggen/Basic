@@ -37,7 +37,7 @@ from The \code{rrtrials} is an output matrix called \code{LF}.
 \code{rrtrials} produces \code{t-x} trajectories for lead and following vehicles on a ring road
 }
 \examples{
-rrtrials(10, 3, 55, 40, 5, 14, 10, c(0, 40), c(-1000, 600))
-rrtrials(2, 1, 55, 240, 5, 14, 20, c(0, 240), c(-2000, 600))
+rrtrials(41,11, 50, 100, 1, 14, 2, c(0, 100), c(-1000, 600))
+rrtrials(2, 2, 55, 100, 1, 14, 10, c(0, 240), c(-2000, 600))
 rrtrials(20, 3, 55, 120, 5, 14, 100, c(0,100), c(-1000, 2000))
 }
