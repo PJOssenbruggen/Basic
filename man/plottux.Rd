@@ -4,7 +4,7 @@
 \alias{plottux}
 \title{\code{plottux} produces \code{t-u} and \code{t-x} trajectories for a lead and following vehicles on a ring road,}
 \usage{
-plottux(umn, usd, T, dt)
+plottux(umn, usd, T, dt, k0)
 }
 \arguments{
 \item{umn}{mean speed (mph), a number}
@@ -13,12 +13,14 @@ plottux(umn, usd, T, dt)
 
 \item{T}{upper time range, a number}
 
-\item{dt}{time-step, a number#'}
+\item{dt}{time-step, a number}
+
+\item{k0}{traffic density (vpm), a number}
 }
 \description{
 \code{plottux} produces \code{t-u} and \code{t-x} trajectories for a lead and following vehicles on a ring road,
 }
 \examples{
-plottux(2,2,100,1)
-plottux(41,11,100,1)
+plottux(2,2,100,1,55)
+plottux(41,11,100,1,55)
 }

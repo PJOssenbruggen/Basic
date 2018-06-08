@@ -19,7 +19,7 @@
 #' @examples
 #' rrtrials(41,11, 50, 100, 1, 14, 2, c(0, 100), c(-1000, 600))
 #' rrtrials(2, 2, 55, 100, 1, 14, 10, c(0, 240), c(-2000, 600))
-#' rrtrials(20, 3, 55, 120, 5, 14, 100, c(0,100), c(-1000, 2000))
+#' rrtrials(20, 3, 55, 120, 1, 14, 100, c(0,100), c(-1000, 2000))
 rrtrials <- function(umn, usd, k0, T, dt, leff, nveh, xlim, ylim) {
   t0    <- 0
   input <- as.matrix(data.frame(umn, usd, k0, T, dt, leff, nveh))
@@ -45,9 +45,9 @@ rrtrials <- function(umn, usd, k0, T, dt, leff, nveh, xlim, ylim) {
   x <- c(xl, xf)
   ylimx = c(min(x),max(x))
   plot(tseq, xl, typ = "l", xlab = "t, seconds", ylab = expression(x[t]*", feet"),
-       xlim = xlim, ylim = ylimx)
+       xlim = xlim, ylim = ylimx,lwd = 1)
   lines(c(0,T), c(0, 5280/3600*umn * T), col = gray(0.5), lty = 3)
-  lines(tseq,xf,lwd = 2)
+  lines(tseq,xf,lwd = 1)
   abline(h = 0, col = gray(0.8))
   abline(v = 0, col = gray(0.8))
   mtext(text = bquote(bar(u) == .(umn)), line = 1)

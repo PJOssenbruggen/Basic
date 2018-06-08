@@ -17,10 +17,10 @@ bmfree  <- function(umn, usd, T, dt) {
   usd   <- usd*5280/3600
   tseq  <- seq(0, T, by = dt)
   N     <- length(tseq)
-  x     <- c(0, rep(NA, tlen - 1))
-  u     <- as.numeric(BBridge(x = umn, y = umn, t0 = 0, N, T))
-  for(i in 1:tlen) if(u[i] <= 0) u[i] = 0
-  for(i in 2:tlen) x[i] <- x[i-1] + dt * u[i-1]
+  x     <- c(0, rep(NA, N - 1))
+  u     <- as.numeric(sde::BBridge(x = umn, y = umn, t0 = 0, N, T))
+  for(i in 1:N) if(u[i] <= 0) u[i] = 0
+  for(i in 2:N) x[i] <- x[i-1] + dt * u[i-1]
   tux   <- as.matrix(data.frame(t = tseq, u, x))
   return(tux)
 }

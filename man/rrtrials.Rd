@@ -39,5 +39,5 @@ from The \code{rrtrials} is an output matrix called \code{LF}.
 \examples{
 rrtrials(41,11, 50, 100, 1, 14, 2, c(0, 100), c(-1000, 600))
 rrtrials(2, 2, 55, 100, 1, 14, 10, c(0, 240), c(-2000, 600))
-rrtrials(20, 3, 55, 120, 5, 14, 100, c(0,100), c(-1000, 2000))
+rrtrials(20, 3, 55, 120, 1, 14, 100, c(0,100), c(-1000, 2000))
 }

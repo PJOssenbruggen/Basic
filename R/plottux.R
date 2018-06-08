@@ -3,12 +3,13 @@
 #' @param umn mean speed (mph), a number
 #' @param usd standard deviation of \code{umn}, a number
 #' @param T upper time range, a number
-#' @param dt time-step, a number#'
-#' @usage plottux(umn, usd, T, dt)
+#' @param dt time-step, a number
+#' @param k0 traffic density (vpm), a number
+#' @usage plottux(umn, usd, T, dt, k0)
 #' @examples
-#' plottux(2,2,100,1)
-#' plottux(41,11,100,1)
-plottux <- function(umn, usd, T, dt) {
+#' plottux(2,2,100,1,55)
+#' plottux(41,11,100,1,55)
+plottux <- function(umn, usd, T, dt, k0) {
   umn0  <- t(data.frame(umn = 5280/3600*umn, 0))
   t0    <- 0
   lead  <- bmfree(umn, usd, T, dt)

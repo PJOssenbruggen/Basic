@@ -19,6 +19,7 @@ Imports:
     knitr,
     rmarkdown,
     roxygen2,
+    sde,
     shiny,
     tidyverse
 Suggests: 
