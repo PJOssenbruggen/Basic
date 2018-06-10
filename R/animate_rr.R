@@ -2,8 +2,9 @@
 #' using data \code{LF} from \code{rrtrials}.
 #'
 #' @param LF, a matrix
-#' @usage animate_rr(LF)
-animate_rr <- function(LF) {
+#' @param leff, effective vehicle length (feet), number
+#' @usage animate_rr(LF, leff)
+animate_rr <- function(LF, leff) {
   n   <- 20                 # n = 20 gives a reasonable looking animation plot.
   k0  <- LF[[1]][3]
   umn <- LF[[1]][1]

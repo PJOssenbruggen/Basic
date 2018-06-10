@@ -3,21 +3,23 @@
 #' @param umn mean speed (mph), a number
 #' @param usd standard deviation of \code{umn}, a number
 #' @param T upper time range, a number
-#' @param dt time-step, a number
+#' @param N number of time-steps, a number
 #' @param k0 traffic density (vpm), a number
-#' @usage plottux(umn, usd, T, dt, k0)
+#' @param leff effective vehicle length, a number
+#' @usage plottux(umn, usd, N, T, k0, leff)
 #' @examples
-#' plottux(2,2,100,1,55)
-#' plottux(41,11,100,1,55)
-plottux <- function(umn, usd, T, dt, k0) {
+#' plottux(18.8, 3.8, 15, 900, 55, 14)
+#' plottux(41,11,15,900,55, 14)
+plottux <- function(umn, usd, N, T, k0, leff) {
   umn0  <- t(data.frame(umn = 5280/3600*umn, 0))
   t0    <- 0
-  lead  <- bmfree(umn, usd, T, dt)
-  foll  <- bmfree(umn, usd, T, dt)
-  u <- c(lead[,2], foll[,2])
+  lead  <- bmfree(umn, usd, N, T)
+  foll  <- bmfree(umn, usd, N, T)
+  dt    <- T/N
+  u     <- c(lead[,2], foll[,2])
   par(mfrow = c(1,2))
-  xlim <- c(0,T)
-  ylim <- c(0,max(u))
+  xlim  <- c(0,T)
+  ylim  <- c(0,max(u))
   nobs  <- dim(lead)[1]
   h0    <- 5280/k0
   foll[,3]  <- foll[,3] - rep(h0, nobs)
@@ -25,7 +27,7 @@ plottux <- function(umn, usd, T, dt, k0) {
   tseq  <- lead[,1]
   hsf   <- rep(NA, nobs)
   for(i in 1:nobs) hsf[i] <- hsafe(foll[i,2], leff)
-  df <- data.frame(t = tseq, xl = lead[,3], xf = foll[,3], hsf, h, ul = lead[,2], uf = foll[,2],
+  df    <- data.frame(t = tseq, xl = lead[,3], xf = foll[,3], hsf, h, ul = lead[,2], uf = foll[,2],
                    uf0 = foll[,2], xf0 = foll[,3])
   xl    <- lead[,3]
   ul    <- lead[,2]

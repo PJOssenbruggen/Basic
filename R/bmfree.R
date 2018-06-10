@@ -6,21 +6,25 @@
 #' Distance \code{x} is estimated with the forward Euler method.
 #' @param umn mean speed (mph), a number
 #' @param usd standard deviation of \code{umn}, a number
-#' @param T upper time range, a number
-#' @param dt time-step, a number
-#' @usage bmfree(umn, usd, T, dt)
+#' @param T upper time range in minutes, a number
+#' @param N number of time-steps, a number
+#' @usage bmfree(umn, usd, N, T)
 #' @examples
-#' bmfree(41, 11, 100, 1)
-#' bmfree(2, 2, 60, 1)
-bmfree  <- function(umn, usd, T, dt) {
+#' bmfree(41, 11, 900, 60)
+#' bmfree(18.8, 3.8, 60, 60)
+bmfree  <- function(umn, usd, N, T) {
   umn   <- umn*5280/3600
   usd   <- usd*5280/3600
-  tseq  <- seq(0, T, by = dt)
-  N     <- length(tseq)
-  x     <- c(0, rep(NA, N - 1))
-  u     <- as.numeric(sde::BBridge(x = umn, y = umn, t0 = 0, N, T))
-  for(i in 1:N) if(u[i] <= 0) u[i] = 0
-  for(i in 2:N) x[i] <- x[i-1] + dt * u[i-1]
-  tux   <- as.matrix(data.frame(t = tseq, u, x))
+  W     <- numeric(N+1)
+  t     <- seq(0, T, length = N+1)
+  for(i in 2:(N+1)) W[i] <- W[i-1] + rnorm(1) / usd
+  x     <- umn
+  y     <- umn
+  u     <- x + W - t/T *  (W[N+1] - y + x)
+  dt    <- T/N
+  x     <- rep(0, length(t))
+  for(i in 1:(N+1)) if(u[i] <= 0) u[i] = 0
+  for(i in 2:(N+1)) x[i] <- x[i-1] + dt * u[i-1]
+  tux   <- as.matrix(data.frame(t, u, x))
   return(tux)
 }

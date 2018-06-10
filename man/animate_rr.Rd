@@ -5,10 +5,12 @@
 \title{\code{animate_rr} draws the path around the ring-road
 using data \code{LF} from \code{rrtrials}.}
 \usage{
-animate_rr(LF)
+animate_rr(LF, leff)
 }
 \arguments{
 \item{LF, }{a matrix}
+
+\item{leff, }{effective vehicle length (feet), number}
 }
 \description{
 \code{animate_rr} draws the path around the ring-road

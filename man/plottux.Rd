@@ -4,23 +4,25 @@
 \alias{plottux}
 \title{\code{plottux} produces \code{t-u} and \code{t-x} trajectories for a lead and following vehicles on a ring road,}
 \usage{
-plottux(umn, usd, T, dt, k0)
+plottux(umn, usd, N, T, k0, leff)
 }
 \arguments{
 \item{umn}{mean speed (mph), a number}
 
 \item{usd}{standard deviation of \code{umn}, a number}
 
+\item{N}{number of time-steps, a number}
+
 \item{T}{upper time range, a number}
 
-\item{dt}{time-step, a number}
-
 \item{k0}{traffic density (vpm), a number}
+
+\item{leff}{effective vehicle length, a number}
 }
 \description{
 \code{plottux} produces \code{t-u} and \code{t-x} trajectories for a lead and following vehicles on a ring road,
 }
 \examples{
-plottux(2,2,100,1,55)
-plottux(41,11,100,1,55)
+plottux(18.8, 3.8, 15, 900, 55, 14)
+plottux(41,11,15,900,55, 14)
 }
