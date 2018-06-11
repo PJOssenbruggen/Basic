@@ -4,7 +4,7 @@
 \alias{rrtrials}
 \title{\code{rrtrials} produces \code{t-x} trajectories for lead and following vehicles on a ring road}
 \usage{
-rrtrials(umn, usd, k0, T, dt, leff, nveh, xlim, ylim)
+rrtrials(umn, usd, k0, N, T, leff, lambda, nveh, xlim, ylim)
 }
 \arguments{
 \item{umn}{lead vehicle speed (mph), a number}
@@ -13,11 +13,13 @@ rrtrials(umn, usd, k0, T, dt, leff, nveh, xlim, ylim)
 
 \item{k0}{traffic density (vpm), a number}
 
+\item{N}{number of time-steps, a number}
+
 \item{T}{upper time range (seconds), a number}
 
-\item{dt}{time-step (seconds), a number}
-
 \item{leff}{effective vehicle length (feet), a number}
+
+\item{lambda}{calibration constant, a number}
 
 \item{nveh}{number of following vehicles, a number}
 
@@ -37,7 +39,7 @@ from The \code{rrtrials} is an output matrix called \code{LF}.
 \code{rrtrials} produces \code{t-x} trajectories for lead and following vehicles on a ring road
 }
 \examples{
-rrtrials(41,11, 50, 100, 1, 14, 2, c(0, 100), c(-1000, 600))
-rrtrials(2, 2, 55, 100, 1, 14, 10, c(0, 240), c(-2000, 600))
-rrtrials(20, 3, 55, 120, 1, 14, 100, c(0,100), c(-1000, 2000))
+rrtrials(41, 11, 50, 120, 120, 14, 1.25, 9,   c(0, 120), c(-2000, 8000))
+rrtrials(2,  2, 55, 60, 60, 14, 0.5,  9,   c(0, 60), c(-2000, 600))
+rrtrials(18.8, 3.8, 55, 120, 120, 14, 0.8, 9, c(0, 120), c(-1000, 2000))
 }

@@ -9,26 +9,24 @@
 #' @param umn lead vehicle speed (mph), a number
 #' @param usd standard deviation of lead vehicle speed (mph), a number
 #' @param k0 traffic density (vpm), a number
+#' @param N number of time-steps, a number
 #' @param T upper time range (seconds), a number
-#' @param dt time-step (seconds), a number
 #' @param leff effective vehicle length (feet), a number
+#' @param lambda calibration constant, a number
 #' @param nveh number of following vehicles, a number
 #' @param xlim plot range along the \code{t} axis, a vector
 #' @param ylim plot range along the \code{x} axis, a vector
-#' @usage rrtrials(umn, usd, k0, T, dt, leff, nveh, xlim, ylim)
+#' @usage rrtrials(umn, usd, k0, N, T, leff, lambda, nveh, xlim, ylim)
 #' @examples
-#' rrtrials(41,11, 50, 100, 1, 14, 2, c(0, 100), c(-1000, 600))
-#' rrtrials(2, 2, 55, 100, 1, 14, 10, c(0, 240), c(-2000, 600))
-#' rrtrials(20, 3, 55, 120, 1, 14, 100, c(0,100), c(-1000, 2000))
-rrtrials <- function(umn, usd, k0, T, dt, leff, nveh, xlim, ylim) {
+#' rrtrials(41, 11, 50, 120, 120, 14, 1.25, 9,   c(0, 120), c(-2000, 8000))
+#' rrtrials(2,  2, 55, 60, 60, 14, 0.5,  9,   c(0, 60), c(-2000, 600))
+#' rrtrials(18.8, 3.8, 55, 120, 120, 14, 0.8, 9, c(0, 120), c(-1000, 2000))
+rrtrials <- function(umn, usd, k0, N, T, leff, lambda, nveh, xlim, ylim) {
   t0    <- 0
-  input <- as.matrix(data.frame(umn, usd, k0, T, dt, leff, nveh))
-  lead  <- bmfree(umn, usd, T, dt)
-  foll  <- bmfree(umn, usd, T, dt)
-  u <- c(lead[,2], foll[,2])
-  par(mfrow = c(1,2))
-  xlim <- c(0,T)
-
+  input <- as.matrix(data.frame(umn, usd, k0, N, T, leff, lambda, nveh))
+  lead  <- bmfree(umn, usd, N, T, lambda)
+  foll  <- bmfree(umn, usd, N, T, lambda)
+  u     <- c(lead[,2], foll[,2])
   nobs  <- dim(lead)[1]
   h0    <- 5280/k0
   foll[,3]  <- foll[,3] - rep(h0, nobs)
@@ -43,11 +41,11 @@ rrtrials <- function(umn, usd, k0, T, dt, leff, nveh, xlim, ylim) {
   for(i in 1:nobs) if(h[i] >= hsf[i]) xf[i] <- foll[i,3] else xf[i] <- lead[i,3] - hsf[i]
   for(i in 1:nobs) if(h[i] >= hsf[i]) uf[i] <- foll[i,2] else uf[i] <- lead[i,2]
   x <- c(xl, xf)
-  ylimx = c(min(x),max(x))
+#  ylimx = c(min(x),max(x))
   plot(tseq, xl, typ = "l", xlab = "t, seconds", ylab = expression(x[t]*", feet"),
-       xlim = xlim, ylim = ylimx,lwd = 1)
+       xlim = xlim, ylim = ylim, lwd = 1)
   lines(c(0,T), c(0, 5280/3600*umn * T), col = gray(0.5), lty = 3)
-  lines(tseq,xf,lwd = 1)
+  lines(tseq, xf,lwd = 1)
   abline(h = 0, col = gray(0.8))
   abline(v = 0, col = gray(0.8))
   mtext(text = bquote(bar(u) == .(umn)), line = 1)
@@ -62,7 +60,7 @@ rrtrials <- function(umn, usd, k0, T, dt, leff, nveh, xlim, ylim) {
     if(k == 4 | k == 5)
     lead     <- foll
     lead[,3] <- xf
-    foll     <- bmfree(umn, usd, T, dt)
+    foll     <- bmfree(umn, usd, N, T, lambda)
     foll[,3] <- foll[,3] - rep(h0, nobs) * k
     h        <- lead[,3] - foll[,3]
     for(i in 1:nobs) hsf[i] <- hsafe(foll[i,2], leff)
@@ -75,6 +73,7 @@ rrtrials <- function(umn, usd, k0, T, dt, leff, nveh, xlim, ylim) {
     colnames(LFu) <- c("t", paste(1:(k+1)))
   }
 # t5 is the time the vehicle crosses x = 0
+  dt  <- N/T
   t5  <- rrheadway(LF, dt)
   k   <- 0
   for(i in 1:length(t5)) if(!is.na(t5[i])) k <- k + 1
@@ -87,8 +86,10 @@ rrtrials <- function(umn, usd, k0, T, dt, leff, nveh, xlim, ylim) {
   abline(v = t4, col = gray(0.8))
   axis(side = 3, at = c(t0, t4), labels = c(expression(t[0]), expression(t[4])))
   ncase    <- nveh + 1
-  text(rep(0,ncase), c(LF[1,2:dim(LF)[2]]), labels = seq(1,ncase), cex = 0.5, pos = 2, offset = 0.4)
-  text(rep(t4,ncase), c(LF[dim(LF)[1],2:dim(LF)[2]]), labels = seq(1,ncase), cex = 0.5, pos = 4, offset = 0.4)
+  text(rep(0,ncase), c(LF[1,2:dim(LF)[2]]), labels = seq(1,ncase),
+       cex = 0.5, pos = 2, offset = 0.4)
+  text(rep(t4,ncase), c(LF[dim(LF)[1],2:dim(LF)[2]]), labels = seq(1,ncase),
+       cex = 0.5, pos = 4, offset = 0.4)
   hdwy    <- c(t5[1], diff(t5))
   hdwy.mn <- mean(hdwy)
   hdwy.sd <- sd(hdwy)

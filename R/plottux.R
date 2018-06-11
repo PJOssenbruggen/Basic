@@ -2,19 +2,20 @@
 #'
 #' @param umn mean speed (mph), a number
 #' @param usd standard deviation of \code{umn}, a number
-#' @param T upper time range, a number
+#' @param T upper time range in seconds, a number
 #' @param N number of time-steps, a number
 #' @param k0 traffic density (vpm), a number
 #' @param leff effective vehicle length, a number
-#' @usage plottux(umn, usd, N, T, k0, leff)
+#' @param lambda calibration constant, a number
+#' @usage plottux(umn, usd, N, T, k0, leff, lambda)
 #' @examples
-#' plottux(18.8, 3.8, 15, 900, 55, 14)
-#' plottux(41,11,15,900,55, 14)
-plottux <- function(umn, usd, N, T, k0, leff) {
+#' plottux(41, 11, 120, 120, 55, 14, 1.25)
+#' plottux(18.8, 3.8, 120, 120, 55, 14, 0.5)
+plottux <- function(umn, usd, N, T, k0, leff, lambda) {
   umn0  <- t(data.frame(umn = 5280/3600*umn, 0))
   t0    <- 0
-  lead  <- bmfree(umn, usd, N, T)
-  foll  <- bmfree(umn, usd, N, T)
+  lead  <- bmfree(umn, usd, N, T, lambda)
+  foll  <- bmfree(umn, usd, N, T, lambda)
   dt    <- T/N
   u     <- c(lead[,2], foll[,2])
   par(mfrow = c(1,2))
@@ -70,6 +71,5 @@ plottux <- function(umn, usd, N, T, k0, leff) {
   dfsum = as.data.frame(cbind(umn0, dfsum))
   colnames(dfsum) <- c("umn", "ul", "uf", "uf0")
   rownames(dfsum) <- c("mean", "sd")
-  dfsum
   return(dfsum)
 }
