@@ -12,6 +12,7 @@
 #' @usage usdBBridge(umn, usd, N, T, lambda)
 #' @examples
 #' usdBBridge(41, 11, 900, 15, 0.75)
+#' usdBBridge(41, 11, 900, 15, 1.15)
 #' usdBBridge(18.8, 3.9, 900, 15, 0.5)
 usdBBridge <- function(umn, usd, N, T, lambda) {
   W     <- numeric(N+1)
