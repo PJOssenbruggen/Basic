@@ -27,6 +27,6 @@ Distance \code{x} is estimated with the forward Euler method.
 The \code{bmfree} function returns a \code{tux} matrix of time \code{t}, speed \code{u} and location \code{x} values.
 }
 \examples{
-bmfree(41, 11, 900, 60, 1.25)
-bmfree(18.8, 3.8, 60, 60, 0.8)
+bmfree(41, 11, 900, 60, 1.15)
+bmfree(18.8, 3.8, 60, 60, 0.5)
 }

@@ -11,8 +11,8 @@
 #' @param lambda calibration constant, a number
 #' @usage bmfree(umn, usd, N, T, lambda)
 #' @examples
-#' bmfree(41, 11, 900, 60, 1.25)
-#' bmfree(18.8, 3.8, 60, 60, 0.8)
+#' bmfree(41, 11, 900, 60, 1.15)
+#' bmfree(18.8, 3.8, 60, 60, 0.5)
 bmfree  <- function(umn, usd, N, T, lambda) {
   umn   <- umn*5280/3600
   usd   <- usd*5280/3600

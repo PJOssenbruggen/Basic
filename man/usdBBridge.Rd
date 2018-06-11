@@ -27,6 +27,6 @@ Distance \code{x} is estimated with the forward Euler method.
 The \code{usdBBridge} function from Iacus.
 }
 \examples{
-usdBBridge(41, 11, 900, 15, 1.25)
+usdBBridge(41, 11, 900, 15, 0.75)
 usdBBridge(18.8, 3.9, 900, 15, 0.5)
 }
