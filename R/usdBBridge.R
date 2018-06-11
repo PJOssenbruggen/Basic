@@ -11,7 +11,7 @@
 #' @param lambda calibration constant, a number
 #' @usage usdBBridge(umn, usd, N, T, lambda)
 #' @examples
-#' usdBBridge(41, 11, 900, 15, 1.25)
+#' usdBBridge(41, 11, 900, 15, 1.15)
 #' usdBBridge(18.8, 3.9, 900, 15, 0.5)
 usdBBridge <- function(umn, usd, N, T, lambda) {
   n1    <- min(c(120, N))
@@ -33,9 +33,9 @@ usdBBridge <- function(umn, usd, N, T, lambda) {
   df1  <- data.frame(mean = mean(u[1:n1]), sd = sd(u[1:n1]), N = n1, lambda)
   df   <- round(rbind(df0, df2, df1),2)
   legend("topright",
-         legend = "95% C.I.",
-         lty = 2,
-         lwd = 1,
+         legend = c(expression(bar(u)[t]), "95% C.I."),
+         lty = c(1,2),
+         lwd = c(2,1),
          bty = "n")
   print(df)
 }
