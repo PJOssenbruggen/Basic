@@ -80,8 +80,7 @@ zipper  <- function(tstart, tend,
     x   <- xab(x0,u0,a = a3, b = b3,t,t0)
     df3 <- rbind(df3, data.frame(t, u, x, Vehicle = "3"))
   }
-  df = rbind(df1, df2, df3)
-  print(df)
+  df  <- rbind(df1, df2, df3)
   p   <- ggplot2::ggplot(df, ggplot2::aes(t, x, colour = Vehicle, size = u, frame = t)) +
     ggplot2::geom_point()
   return(p)
