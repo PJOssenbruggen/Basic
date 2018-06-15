@@ -19,25 +19,25 @@ zipper(tstart, tend,
 
 \item{uend1}{end speed (mph) for vehicle in lane 1, a number}
 
-\item{xstart1}{start location for vehicle in lane 1, a number}
+\item{xstart1}{start location for vehicle in lane 1 (feet), a number}
 
-\item{xend1}{end location for vehicle in lane 1, a number}
+\item{xend1}{end location for vehicle in lane 1 (feet), a number}
 
 \item{ustart2}{start speed (mph) for vehicle in lane 2, a number}
 
 \item{uend2}{end speed (mph) for vehicle in lane 2, a number}
 
-\item{xstart2}{start location for vehicle in lane 2, a number}
+\item{xstart2}{start location for vehicle in lane 2 (feet), a number}
 
-\item{xend2}{end location for vehicle in lane 2, a number}
+\item{xend2}{end location for vehicle in lane 2 (feet), a number}
 
 \item{ustart3}{start speed (mph) for vehicle in lane 3, a number}
 
 \item{uend3}{end speed (mph) for vehicle in lane 3, a number}
 
-\item{xstart3}{start location for vehicle in lane 3, a number}
+\item{xstart3}{start location for vehicle in lane 3 (feet), a number}
 
-\item{xend3}{end location for vehicle in lane 3, a number}
+\item{xend3}{end location for vehicle in lane 3 (feet), a number}
 }
 \value{
 \code{zipper} uses a deterministic model and animation to illustrate an ``idealistic'' situtaion,
@@ -50,4 +50,5 @@ on a single lane or three vehicles merging on a two-lane highway.
 \examples{
 zipper(0,60,90,90,0,5000,90,90,-200,4500,90,90,-500, 4000)
 zipper(0,40,85,90,0,4000,90,99,0,4500,90,90,-500, 4200)
+zipper(0,5,60,20,0,500,65,20,-100,467,80,20,-350,433)
 }
