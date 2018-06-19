@@ -8,19 +8,18 @@
 #' @param usd standard deviation of \code{umn}, a number
 #' @param T upper time range in minutes, a number
 #' @param N number of time-steps, a number
-#' @param lambda calibration constant, a number
-#' @usage usdBBridge(umn, usd, N, T, lambda)
+#' @usage usdBBridge(umn, usd, N, T)
 #' @examples
-#' usdBBridge(41, 11, 900, 15, 0.75)
-#' usdBBridge(41, 11, 900, 15, 1.15)
-#' usdBBridge(18.8, 3.9, 900, 15, 0.5)
-usdBBridge <- function(umn, usd, N, T, lambda) {
+#' usdBBridge(41, 11, 90000, 15)
+#' usdBBridge(18.8, 3.9, 90000, 15)
+usdBBridge <- function(umn, usd, N, T) {
   W     <- numeric(N+1)
   t     <- seq(0, T, length = N+1)
-  for(i in 2:(N+1)) W[i] <- W[i-1] + rnorm(1)
+  dt    <- T/N
+  for(i in 2:(N+1)) W[i] <- W[i-1] + sqrt(dt) * usd * rnorm(1)
   x     <- umn
   y     <- umn
-  u     <- x + (W - t/T *  (W[N+1] - y + x)) * lambda
+  u     <- x + (W - t/T *  (W[N+1] - y + x))
   plot(t, u, type = "l", xlab = "t, minutes", ylab = expression(u[t]*", mph"),
        ylim = c(0, umn + 3 * usd), lwd = 2)
   abline(h = umn, lty = 3)
@@ -28,9 +27,9 @@ usdBBridge <- function(umn, usd, N, T, lambda) {
   abline(h = 0, col = gray(0.3))
   abline(v = 0, col = gray(0.3))
   n1   <- 120
-  df0  <- data.frame(mean = umn, sd = usd, N = 0, lambda)
-  df2  <- data.frame(mean = mean(u), sd = sd(u), N, lambda)
-  df1  <- data.frame(mean = mean(u[1:n1]), sd = sd(u[1:n1]), N = n1, lambda)
+  df0  <- data.frame(mean = umn, sd = usd, N = 0, dt)
+  df2  <- data.frame(mean = mean(u), sd = sd(u), N, dt)
+  df1  <- data.frame(mean = mean(u[1:n1]), sd = sd(u[1:n1]), N = n1, dt)
   df   <- round(rbind(df0, df2, df1), 2)
   legend("topright",
          legend = c(expression(bar(u)[t]), "95% C.I."),

@@ -4,7 +4,7 @@
 \alias{usdBBridge}
 \title{The \code{usdBBridge} function from Iacus.}
 \usage{
-usdBBridge(umn, usd, N, T, lambda)
+usdBBridge(umn, usd, N, T)
 }
 \arguments{
 \item{umn}{mean speed (mph), a number}
@@ -14,8 +14,6 @@ usdBBridge(umn, usd, N, T, lambda)
 \item{N}{number of time-steps, a number}
 
 \item{T}{upper time range in minutes, a number}
-
-\item{lambda}{calibration constant, a number}
 }
 \value{
 The \code{usdBBridge} function returns information for a single vehicle
@@ -27,7 +25,6 @@ Distance \code{x} is estimated with the forward Euler method.
 The \code{usdBBridge} function from Iacus.
 }
 \examples{
-usdBBridge(41, 11, 900, 15, 0.75)
-usdBBridge(41, 11, 900, 15, 1.15)
-usdBBridge(18.8, 3.9, 900, 15, 0.5)
+usdBBridge(41, 11, 90000, 15)
+usdBBridge(18.8, 3.9, 90000, 15)
 }
