@@ -2,55 +2,32 @@
 % Please edit documentation in R/usdzipper.R
 \name{usdzipper}
 \alias{usdzipper}
-\title{The \code{usdzipper} function can be used to simulate interaction among three vehicles in car following
-on a single lane or three vehicles merging on a two-lane highway.}
+\title{The \code{usdzipper} function is used to perform a sensitivity analysis of a single vehicles
+in traffic breakdown.}
 \usage{
-usdzipper(tstart, tend,
-    ustart1, uend1, xstart1, xend1,
-    ustart2, uend2, xstart2, xend2,
-    ustart3, uend3, xstart3, xend3, usd)
+usdzipper(tstart, tend, umn, usd, xstart, xend)
 }
 \arguments{
 \item{tstart}{start time, a number}
 
 \item{tend}{end time, a number}
 
-\item{ustart1}{start speed (mph) for vehicle in lane 1, a number}
+\item{umn}{start speed (mph) for vehicle in lane 1, a number}
 
-\item{uend1}{end speed (mph) for vehicle in lane 1, a number}
+\item{usd}{speed volatility for \code(umn), a number}
 
-\item{xstart1}{start location for vehicle in lane 1 (feet), a number}
+\item{xstart}{start location for vehicle in lane 1 (feet), a number}
 
-\item{xend1}{end location for vehicle in lane 1 (feet), a number}
-
-\item{ustart2}{start speed (mph) for vehicle in lane 2, a number}
-
-\item{uend2}{end speed (mph) for vehicle in lane 2, a number}
-
-\item{xstart2}{start location for vehicle in lane 2 (feet), a number}
-
-\item{xend2}{end location for vehicle in lane 2 (feet), a number}
-
-\item{ustart3}{start speed (mph) for vehicle in lane 3, a number}
-
-\item{uend3}{end speed (mph) for vehicle in lane 3, a number}
-
-\item{xstart3}{start location for vehicle in lane 3 (feet), a number}
-
-\item{xend3}{end location for vehicle in lane 3 (feet), a number}
-
-\item{usd}{speed volatility, a number}
+\item{xend}{end location for vehicle in lane 1 (feet), a number}
 }
 \value{
 \code{usdzipper} uses a deterministic model and animation to illustrate an ``idealistic'' situtaion,
 a so-called a ``usdzipper merge.''
 }
 \description{
-The \code{usdzipper} function can be used to simulate interaction among three vehicles in car following
-on a single lane or three vehicles merging on a two-lane highway.
+The \code{usdzipper} function is used to perform a sensitivity analysis of a single vehicles
+in traffic breakdown.
 }
 \examples{
-usdzipper(0,60,90,90,0,5000,90,90,-200,4500,90,90,-500, 4000, 11)
-usdzipper(0,40,85,90,0,4000,90,99,0,4500,90,90,-500, 4200, 11)
-usdzipper(0,5,60,20,0,500,65,20,-100,467,80,20,-350,433, 11)
+usdzipper(0, 5, 41, 11.6, 0, 500)
 }
