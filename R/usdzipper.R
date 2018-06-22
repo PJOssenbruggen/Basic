@@ -1,89 +1,105 @@
-#' The \code{usdzipper} function can be used to simulate interaction among three vehicles in car following
-#' on a single lane or three vehicles merging on a two-lane highway.
+#' The \code{usdzipper} function is used to perform a sensitivity analysis of a single vehicles
+#' in traffic breakdown.
 #'
 #' @param tstart start time, a number
 #' @param tend end time, a number
-#' @param ustart1 start speed (mph) for vehicle in lane 1, a number
-#' @param uend1 end speed (mph) for vehicle in lane 1, a number
-#' @param xstart1 start location for vehicle in lane 1 (feet), a number
-#' @param xend1 end location for vehicle in lane 1 (feet), a number
-#' @param ustart2 start speed (mph) for vehicle in lane 2, a number
-#' @param uend2 end speed (mph) for vehicle in lane 2, a number
-#' @param xstart2 start location for vehicle in lane 2 (feet), a number
-#' @param xend2 end location for vehicle in lane 2 (feet), a number
-#' @param ustart3 start speed (mph) for vehicle in lane 3, a number
-#' @param uend3 end speed (mph) for vehicle in lane 3, a number
-#' @param xstart3 start location for vehicle in lane 3 (feet), a number
-#' @param xend3 end location for vehicle in lane 3 (feet), a number
-#' @param usd speed volatility, a number
+#' @param umn start speed (mph) for vehicle in lane 1, a number
+#' @param usd speed volatility for \code(umn), a number
+#' @param xstart start location for vehicle in lane 1 (feet), a number
+#' @param xend end location for vehicle in lane 1 (feet), a number
 #' @return \code{usdzipper} uses a deterministic model and animation to illustrate an ``idealistic'' situtaion,
 #' a so-called a ``usdzipper merge.''
-#' @usage usdzipper(tstart, tend,
-#'     ustart1, uend1, xstart1, xend1,
-#'     ustart2, uend2, xstart2, xend2,
-#'     ustart3, uend3, xstart3, xend3, usd)
+#' @usage usdzipper(tstart, tend, umn, usd, xstart, xend)
 #' @examples
-#' usdzipper(0,60,90,90,0,5000,90,90,-200,4500,90,90,-500, 4000, 11)
-#' usdzipper(0,40,85,90,0,4000,90,99,0,4500,90,90,-500, 4200, 11)
-#' usdzipper(0,5,60,20,0,500,65,20,-100,467,80,20,-350,433, 11)
-usdzipper  <- function(tstart, tend,
-                    ustart1, uend1, xstart1, xend1,
-                    ustart2, uend2, xstart2, xend2,
-                    ustart3, uend3, xstart3, xend3, usd
-)
+#' usdzipper(0, 5, 41, 11.6, 0, 500)
+usdzipper  <- function(tstart, tend, umn, usd, xstart, xend)
 {
-  tseq   <- seq(0, tend, by = 0.02)
-  xfseq1 <- ufseq1 <- xlseq1 <- ulseq1 <- {}
-  xfseq2 <- ufseq2 <- xlseq2 <- ulseq2 <- {}
-  xfseq3 <- ufseq3 <- xlseq3 <- ulseq3 <- {}
-  # vehicle 1
-  dfab   <- xabparam(tstart, tend, ustart = ustart1 * 5280/3600, uend = uend1 * 5280/3600,
-                     xstart = xstart1, xend = xend1)
+  mysample <- rnorm(1000, umn, usd)
+#  hist(mysample, col = gray(0.8))
+  ustart <- sample(mysample[mysample > 50], 1)
+  uend  <- sample(mysample[mysample <= 50], 1)
+  step  <- tend/1000
+  tseq  <- seq(0, tend, by = step)
+  u0    <- ustart * 5280/3600
+  uend  <- uend * 5280/3600
+  x0    <- xstart
+  t0    <- 0
+  usd   <- usd * 5280/3600
+  xfseq  <- ufseq <- xlseq <- ulseq <- {}
+  dfab   <- xabparam(tstart, tend, ustart = u0, uend = uend, xstart = x0, xend = xend)
   a1     <- dfab[1]
   b1     <- dfab[2]
-  u0    <- ustart1 * 5280/3600
-  x0    <- xstart1
-  t0    <- 0
-  df1   <- df2 <- df3 <- {}
-  for(i in 1:length(tseq)) {
-    t   <- tseq[i]
-    u   <- uab(u0, a = a1, b = b1,t,t0)
-    x   <- xab(x0,u0,a = a1, b = b1,t,t0)
-    Vehicle = "1"
-    df1 <- rbind(df1, data.frame(t, u, x, Vehicle))
+  W      <- usd * sqrt(step) * rnorm(length(tseq),0,1)
+  df1    <- data.frame(t = tseq,
+                    u = uab(u0, a = a1, b = b1, tseq, t0),
+                    x = xab(x0, u0,a = a1, b = b1, tseq, t0),
+                    W,
+                    uvol = rep(NA, length(tseq)),
+                    xvol = rep(NA, length(tseq)),
+                    u0 = rep(u0, length(tseq)),
+                    uend = rep(uend, length(tseq)),
+                    a = rep(a1, length(tseq)),
+                    b = rep(b1, length(tseq))
+                    )
+  df1[1,5] <- df1[1,2] + df1[1,4]
+  df1[1,6] <- x0
+  for(i in 2:length(tseq)) {
+    df1[i,5]  <- df1[i-1,2] + df1[i,4]
+    df1[i,6]  <- df1[i-1,3] + df1[i,5] * step
   }
-  # vehicle 2
-  dfab  <- xabparam(tstart,tend,ustart = ustart2  * 5280/3600, uend = uend2  * 5280/3600,
-                    xstart = xstart2, xend = xend2)
-  a2    <- dfab[1]
-  b2    <- dfab[2]
-  u0    <- ustart2 * 5280/3600
-  x0    <- xstart2
-  t0    <- 0
-  for(i in 1:length(tseq)) {
-    t   <- tseq[i]
-    u   <- uab(u0,a = a2, b = b2,t,t0)
-    x   <- xab(x0,u0,a = a2, b= b2,t,t0)
-    Vehicle = "2"
-    df2 <- rbind(df2, data.frame(t, u, x, Vehicle))
+  ustart <- sample(mysample[mysample > 50], 1)
+  uend  <- sample(mysample[mysample <= 50], 1)
+  u0    <- ustart * 5280/3600
+  uend  <- uend * 5280/3600
+  x0    <- -1 * hsafe(3600/5250*ustart, 14)
+  xend   <- xend - hsafe(3600/5250*uend, 14)
+  dfab   <- xabparam(tstart, tend, ustart = u0, uend = uend, xstart = x0, xend = xend)
+  a1     <- dfab[1]
+  b1     <- dfab[2]
+  df3    <- data.frame(t = tseq,
+                      u = uab(u0, a = a1, b = b1, tseq, t0),
+                      x = xab(x0, u0,a = a1, b = b1, tseq, t0),
+                      W,
+                      uvol = rep(NA, length(tseq)),
+                      xvol = rep(NA, length(tseq)),
+                      u0 = rep(u0, length(tseq)),
+                      uend = rep(uend, length(tseq)),
+                      a = rep(a1, length(tseq)),
+                      b = rep(b1, length(tseq))
+                      )
+  df3[1,5] <- df3[1,2] + df3[1,4]
+  df3[1,6] <- x0
+  for(i in 2:length(tseq)) {
+    df3[i,5]  <- df3[i-1,2] + df3[i,4]
+    df3[i,6]  <- df3[i-1,3] + df3[i,5] * step
   }
-  # vehicle 3
-  dfab  <- xabparam(tstart,tend,ustart = ustart3  * 5280/3600, uend = uend3  * 5280/3600,
-                    xstart = xstart3, xend = xend3)
-  a3    <- dfab[1]
-  b3    <- dfab[2]
-  u0    <- ustart3 * 5280/3600
-  x0    <- xstart3
-  t0    <- 0
-  for(i in 1:length(tseq)) {
-    t   <- tseq[i]
-    u   <- uab(u0,a = a3, b = b3,t,t0)
-    x   <- xab(x0,u0,a = a3, b = b3,t,t0)
-    df3 <- rbind(df3, data.frame(t, u, x, Vehicle = "3"))
-  }
-  df  <- rbind(df1, df2, df3)
-  p   <- ggplot2::ggplot(df, ggplot2::aes(t, x, colour = Vehicle, size = u, frame = t)) +
-    ggplot2::geom_point()
-  return(p)
+  par(mfrow = c(1,2), pty = "s")
+  plot(df1[,1],df1[,2],typ = "l", xlab = "t, seconds", ylab = expression(u[t]*", fps"),ylim=c(0,150))
+  lines(df1[,1],df1[,5], col = "blue")
+  lines(df3[,1],df3[,5], col = "red")
+  abline(h = 0, col = gray(0.8))
+  abline(v = 0, col = gray(0.8))
+  abline(h = 50, lty = 3)
+  axis(side = 4, at = 50, labels = expression(u*"*"))
+  plot(df1[,1],df1[,3],typ = "l", xlab = "t, seconds", ylim = c(-100,600),
+       ylab = expression(x[t]*", feet"))
+  lines(df1[,1],df1[,6], col = "blue")
+  lines(df3[,1],df3[,6], col = "red")
+  abline(h = 0, col = gray(0.8))
+  abline(v = 0, col = gray(0.8))
+  legend("topleft", legend = c("Vehicle 1", "Vehicle 2"),
+         lty = c(1,1), col = c("blue", "red"), bty = "n")
+  par(mfrow = c(1,1), pty = "s")
+  df2mn = round(apply(df1, 2, mean),1)
+  df2sd = round(apply(df1, 2, sd),1)
+  df2 = rbind(df2mn,df2sd)
+  rownames(df2) = c("mean", "sd")
+  df2 <- df2[,c(2,4,7,8,9,10)]
+  df3mn = round(apply(df3, 2, mean),1)
+  df3sd = round(apply(df3, 2, sd),1)
+  df3 = rbind(df3mn,df3sd)
+  rownames(df3) = c("mean", "sd")
+  df3 <- df3[,c(2,4,7,8,9,10)]
+  return(list(df2, df3))
 }
 
