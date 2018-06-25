@@ -2,6 +2,7 @@
 #'
 #' @param QUKtdayX, a matrix
 #' @usage speedboxplot(QUKtdayX)
+#' @export
 speedboxplot <- function(QUKtdayX) {
 ### Density-speed. Put in bins.
   quk1 <- QUKtdayX[,c(1,2,3)]

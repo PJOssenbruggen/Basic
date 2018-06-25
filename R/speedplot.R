@@ -2,6 +2,7 @@
 #'
 #' @param QUKtdayX, a matrix
 # #' @examples speedplot(QUKtdayX)
+#' @export
 speedplot <- function(QUKtdayX) {
   quk0 <- QUKtdayX
   quk1 <- dplyr::as_tibble(quk0)

@@ -5,6 +5,7 @@
 #' @usage  hsafe(u, leff)
 # #' @examples
 # #' hsafe(60, 14)
+#' @export
 hsafe = function(u, leff) {
   mph = u * 3600 / 5280
   h = (1 + mph/10) * leff
