@@ -3,6 +3,7 @@
 #'
 #' @param QUKtdayX, a matrix
 #' @usage logisticmodel(QUKtdayX)
+#' @export
 logisticmodel <- function(QUKtdayX) {
   par(mfrow = c(1,1))
   quk1 <- QUKtdayX[,c(1,2,3)]

@@ -25,6 +25,7 @@
 # #' zipper(0,60,90,90,0,5000,90,90,-200,4500,90,90,-500, 4000)
 # #' zipper(0,40,85,90,0,4000,90,99,0,4500,90,90,-500, 4200)
 # #' zipper(0,5,60,20,0,500,65,20,-100,467,80,20,-350,433)
+#' @export
 zipper  <- function(tstart, tend,
                     ustart1, uend1, xstart1, xend1,
                     ustart2, uend2, xstart2, xend2,

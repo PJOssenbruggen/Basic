@@ -12,6 +12,7 @@
 # #' @examples
 # #' usdBBridge(41, 11, 90000, 15)
 # #' usdBBridge(18.8, 3.9, 90000, 15)
+#' @export
 usdBBridge <- function(umn, usd, N, T) {
   W     <- numeric(N+1)
   t     <- seq(0, T, length = N+1)

@@ -15,6 +15,7 @@
 #' @import grDevices
 #' @import stats
 #' @import graphics
+#' @export
 formqueue  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
   par(mfrow = c(1,1))
   x1 <- x2 <- {}

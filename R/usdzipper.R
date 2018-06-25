@@ -12,6 +12,7 @@
 #' @usage usdzipper(tstart, tend, umn, usd, xstart, xend)
 # #' @examples
 # #' usdzipper(0, 5, 41, 11.6, 0, 500)
+#' @export
 usdzipper  <- function(tstart, tend, umn, usd, xstart, xend)
 {
   mysample <- rnorm(1000, umn, usd)
