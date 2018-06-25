@@ -23,6 +23,3 @@ The function uses a stochastic traffic noise model, a brownian motion or Weiner 
 \description{
 \code{cfanim} uses a stochastic model of speed to describe driver's ability to maintain a speed \code{u}.
 }
-\examples{
-cfanim(60, 3, 30, 0.25)
-}

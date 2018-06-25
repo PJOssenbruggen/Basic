@@ -2,9 +2,9 @@
 % Please edit documentation in R/trial.R
 \name{trial}
 \alias{trial}
-\title{The function \code{trial} produces traffic performance information, stored in lists \code{L} and \code{F}
+\title{The function \code{trial} produces traffic performance information, stored in lists \code{L} and \code{Fw}
 for lead and following vehicles, respectively/
-\code{L} and \code{F} contain the information needed to graph a time-distance \code{t-x} trajectories for two vehicles.}
+\code{L} and \code{Fw} contain the information needed to graph a time-distance \code{t-x} trajectories for two vehicles.}
 \usage{
 trial(ul, ubk, k, uf, d, leff, xlim, ylim)
 }
@@ -34,12 +34,7 @@ input vector using feet and second scales exclusely; a car-following matrix \cod
 the congested state and shock-wave speed for evaluating queuing.
 }
 \description{
-The function \code{trial} produces traffic performance information, stored in lists \code{L} and \code{F}
+The function \code{trial} produces traffic performance information, stored in lists \code{L} and \code{Fw}
 for lead and following vehicles, respectively/
-\code{L} and \code{F} contain the information needed to graph a time-distance \code{t-x} trajectories for two vehicles.
-}
-\examples{
-trial(63, 10, 55, 70, 15, 14, c(0,8), c(-500, 60))
-trial(63, 34, 22, 70, 15, 14, c(0,12), c(-1500, 600))
-trial(63, 34, 55, 70, 15, 14, c(0,12), c(-1500, 600))
+\code{L} and \code{Fw} contain the information needed to graph a time-distance \code{t-x} trajectories for two vehicles.
 }

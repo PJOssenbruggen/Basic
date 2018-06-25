@@ -4,7 +4,7 @@
 \alias{rrtrials}
 \title{\code{rrtrials} produces \code{t-x} trajectories for lead and following vehicles on a ring road}
 \usage{
-rrtrials(umn, usd, k0, N, T, leff, lambda, nveh, xlim, ylim)
+rrtrials(umn, usd, k0, N, T, leff, nveh, xlim, ylim)
 }
 \arguments{
 \item{umn}{lead vehicle speed (mph), a number}
@@ -18,8 +18,6 @@ rrtrials(umn, usd, k0, N, T, leff, lambda, nveh, xlim, ylim)
 \item{T}{upper time range (seconds), a number}
 
 \item{leff}{effective vehicle length (feet), a number}
-
-\item{lambda}{calibration constant, a number}
 
 \item{nveh}{number of following vehicles, a number}
 

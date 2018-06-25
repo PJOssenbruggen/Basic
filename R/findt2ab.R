@@ -14,7 +14,6 @@
 #' @param lwd line width, a number
 #' @param col line color, a factor
 #' @usage findt2ab(tstart, tmid, tend, ulstart, ulmid, xlstart, xlmid, xfstart, uf, lty, lwd, col)
-#' @export
 findt2ab <- function(tstart, tmid, tend, ulstart, ulmid, xlstart, xlmid, xfstart, uf, lty, lwd, col) {
   tstart <- tstart
   tend   <- tmid

@@ -16,8 +16,3 @@ gbmtheta(upre, u0, t3)
 \description{
 Estimate \code{theta} of a geometric Brownian motion model.
 }
-\examples{
-gbmtheta(63, 34, 4)
-gbmtheta(0, 5, 4)
-gbmtheta(6, 0, 4)
-}

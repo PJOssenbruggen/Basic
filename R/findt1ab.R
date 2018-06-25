@@ -10,7 +10,6 @@
 #' @param t1 start time, a number
 #' @param t2 end time, a number
 #' @usage findt1ab(xl0, xf0, uf0, ul0, tseq, useq, t1, t2)
-#' @export
 findt1ab <- function(xl0, xf0, uf0, ul0, tseq, useq, t1, t2) {
   tf1      <- (xl0 - xf0) / (uf0 - 1 / ul0) + t1
   xl1      <- xf0 + uf0 * (tf1 - t1)

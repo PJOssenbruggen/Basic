@@ -12,6 +12,3 @@ uk_sdk(QUKtdayX)
 \description{
 A speed volatility model.
 }
-\examples{
-uk_sdk(QUKtdayX)
-}

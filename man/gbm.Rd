@@ -16,7 +16,3 @@ gbm(u0, theta, t)
 \description{
 Estimate speed \code{u} at time \code{t} using a geometric Brownian motion model.
 }
-\examples{
-gbm(92.4, -0.0154, 40)
-gbm(0, 0.4, 4)
-}

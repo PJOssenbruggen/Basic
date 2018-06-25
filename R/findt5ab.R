@@ -8,7 +8,6 @@
 #' @param t2 time when the vehicle sights lead vehicle, a number
 #' @param t4 upper end of search range, a number
 #' @usage findt5ab(xf1, xf2, uf1, uf2, t1, t2, t4)
-#' @export
 findt5ab <- function(xf1, xf2, uf1, uf2, t1, t2, t4) {
   tstart <- t1
   tend   <- t2

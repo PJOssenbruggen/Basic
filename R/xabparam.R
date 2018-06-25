@@ -7,8 +7,8 @@
 #' @param  xstart location, a number
 #' @param  xend location, a number
 #' @usage  xabparam(tstart, tend, ustart, uend, xstart, xend)
-#' @examples
-#' xabparam(0, 18.59797, 92.4, 0, 0, 1397.045)
+# #' @examples
+# #' xabparam(0, 18.59797, 92.4, 0, 0, 1397.045)
 xabparam = function(tstart, tend, ustart, uend, xstart, xend) {
   dt = tend - tstart
   du = uend - ustart

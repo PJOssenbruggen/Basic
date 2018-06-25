@@ -22,6 +22,3 @@ f1(xl0, ul0, theta, xf1, t, t1)
 \description{
 Space headway \code{h} between the lead and following vehicles at time \code{t}. Lead and following vehicles use gBm and constant speed models, respectively.
 }
-\examples{
-f1(-689.6, 92.4, -0.0154, -240, 4, 0)
-}

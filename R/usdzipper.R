@@ -1,17 +1,17 @@
 #' The \code{usdzipper} function is used to perform a sensitivity analysis of a single vehicles
 #' in traffic breakdown.
 #'
+#' @return \code{usdzipper} uses a deterministic model to illustrate an ``idealistic'' situtaion,
+#' a so-called a ``usdzipper merge.''
 #' @param tstart start time, a number
 #' @param tend end time, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
-#' @param usd speed volatility for \code(umn), a number
+#' @param usd speed volatility for \code{umn}, a number
 #' @param xstart start location for vehicle in lane 1 (feet), a number
 #' @param xend end location for vehicle in lane 1 (feet), a number
-#' @return \code{usdzipper} uses a deterministic model and animation to illustrate an ``idealistic'' situtaion,
-#' a so-called a ``usdzipper merge.''
 #' @usage usdzipper(tstart, tend, umn, usd, xstart, xend)
-#' @examples
-#' usdzipper(0, 5, 41, 11.6, 0, 500)
+# #' @examples
+# #' usdzipper(0, 5, 41, 11.6, 0, 500)
 usdzipper  <- function(tstart, tend, umn, usd, xstart, xend)
 {
   mysample <- rnorm(1000, umn, usd)

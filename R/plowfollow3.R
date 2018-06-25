@@ -18,7 +18,7 @@ plotfollow3 = function(cflist, vehicle, uf, kf, ub, leff, t4) {
   LF     <- cflist[[1]]
   output <- cflist[[2]]
 # Lead vehicle information
-  F <- L <- LF[[vehicle]]
+  Fw <- L <- LF[[vehicle]]
   t0 <- 0
 # A maintain safe headways at time t0 and t1.
 # points(t0, xf0, cex = 0.5)
@@ -53,11 +53,11 @@ plotfollow3 = function(cflist, vehicle, uf, kf, ub, leff, t4) {
   xf1  <- xl1 - hsafe(uf1,leff )
 #  points(tf1, xf1, cex = 0.5, pch = 8)
 
-# Record this information in the F matrix. Remember the F matrix will become the L matrix for the next vehicle (iteration).
-  F[1,2] <- tf1
-  F[2,2] <- uf1
-  F[4,2] <- hsafe(uf1, leff)
-  F[3,2] <- xf1
+# Record this information in the Fw matrix. Remember the Fw matrix will become the L matrix for the next vehicle (iteration).
+  Fw[1,2] <- tf1
+  Fw[2,2] <- uf1
+  Fw[4,2] <- hsafe(uf1, leff)
+  Fw[3,2] <- xf1
 # curve from t0 to tf1 for following vehicle
   tstart <- t0
   tend   <- tf1
@@ -69,11 +69,11 @@ plotfollow3 = function(cflist, vehicle, uf, kf, ub, leff, t4) {
   lwd    <- 1
   col    <- gray(0)
   answer4 <- trajectoryab(tstart, tend, ustart, uend, xstart, xend, lty, lwd, col)
-  F[1,1]  <- tstart
-  F[2,1]  <- ustart
-  F[3,1]  <- xstart
-  F[4,1]  <- hf0
-  text(t0, F[3,1], vehicle + 1, pos = 2, offset = 0.4, cex = 0.5)
+  Fw[1,1]  <- tstart
+  Fw[2,1]  <- ustart
+  Fw[3,1]  <- xstart
+  Fw[4,1]  <- hf0
+  text(t0, Fw[3,1], vehicle + 1, pos = 2, offset = 0.4, cex = 0.5)
 # Notes: Following vehicle headway and speed are obtained from random value inputs.
 # Find tf2 for the following vehicle. Assumption: t3 = time when vehicle 1 begins traveling at ub0.
   tstart  <- L[1,2]
@@ -83,8 +83,8 @@ plotfollow3 = function(cflist, vehicle, uf, kf, ub, leff, t4) {
   xlstart <- L[3,2]
   ulmid   <- L[2,k]
   xlmid   <- L[3,k]
-  xfstart <- F[3,2]
-  uf      <- F[2,2]
+  xfstart <- Fw[3,2]
+  uf      <- Fw[2,2]
   answer2 <- findt2ab(tstart, tmid, tend, ulstart, ulmid, xlstart, xlmid, xfstart, uf, lty, lwd, col)
   dest    <- answer2[1]
   if(ub == 0 & answer2[2] < L[1,4]) {
@@ -102,21 +102,21 @@ plotfollow3 = function(cflist, vehicle, uf, kf, ub, leff, t4) {
 #  ul2     <- answer2[4]
 #  test    <- answer2[5]
 # t3 = time when following vehicle obtains speed ub0.
-  F[1,4]  <- F[1,3]  <- tl2
-  F[2,4]  <- F[2,3]  <- ub0
-  F[4,4]  <- F[4,3]  <- hsafe(ub0, leff)
-  xf2     <- xl2 - F[4,3]
-  F[3,4]  <- F[3,3]  <- xf2
+  Fw[1,4]  <- Fw[1,3]  <- tl2
+  Fw[2,4]  <- Fw[2,3]  <- ub0
+  Fw[4,4]  <- Fw[4,3]  <- hsafe(ub0, leff)
+  xf2     <- xl2 - Fw[4,3]
+  Fw[3,4]  <- Fw[3,3]  <- xf2
 # points(tl2, xf2, pch = 15, cex = 0.5)
 # print(data.frame(vehicle = vehicle + 1, dest, test))
-# points(F[1,4], F[3,4], pch = 15, cex = 0.5)
+# points(Fw[1,4], Fw[3,4], pch = 15, cex = 0.5)
 # curve from t1 to t3 for the following vehicle
-  tstart <- F[1,2]
-  tend   <- F[1,3]
-  ustart <- F[2,2]
-  uend   <- F[2,3]
-  xstart <- F[3,2]
-  xend   <- F[3,3]
+  tstart <- Fw[1,2]
+  tend   <- Fw[1,3]
+  ustart <- Fw[2,2]
+  uend   <- Fw[2,3]
+  xstart <- Fw[3,2]
+  xend   <- Fw[3,3]
   lty    <- 1
   lwd    <- 1
   col    <- gray(0)
@@ -124,31 +124,31 @@ plotfollow3 = function(cflist, vehicle, uf, kf, ub, leff, t4) {
 # line between t2 and t4
   lines(c(tend, t4), c(xend, xend + uend * (t4 - tend)))
 # Find t5
- if(L[2,3] == 0 | F[[2,4]] == 0) t5 <- NA else {
-   t1  <- F[1,2]
-   t2  <- F[1,3]
-   xf1 <- F[3,2]
-   xf2 <- F[3,3]
-   uf1 <- F[2,2]
-   uf2 <- F[2,3]
-   t1  <- F[1,2]
-   t2  <- F[1,3]
+ if(L[2,3] == 0 | Fw[[2,4]] == 0) t5 <- NA else {
+   t1  <- Fw[1,2]
+   t2  <- Fw[1,3]
+   xf1 <- Fw[3,2]
+   xf2 <- Fw[3,3]
+   uf1 <- Fw[2,2]
+   uf2 <- Fw[2,3]
+   t1  <- Fw[1,2]
+   t2  <- Fw[1,3]
    t5 <- findt5ab(xf1, xf2, uf1, uf2, t1, t2, t4)
  }
 # Performance measures
   ul0    <- L[2,1]
   xl0    <- L[3,1]
   t3     <- L[1,4]
-  t1     <- round(F[1,2], 2)
-  t2     <- round(F[1,3], 2)
-  t3     <- round(F[1,4], 2)
+  t1     <- round(Fw[1,2], 2)
+  t2     <- round(Fw[1,3], 2)
+  t3     <- round(Fw[1,4], 2)
   t4     <- round(t4, 2)
   t5     <- round(t5, 2)
   output2 <- as.matrix(data.frame(vehicle = vehicle, t1, t2, t3, t4, t5))
   output <- rbind(output, output2)
   output <- as.matrix(output)
 
-  LF     <- c(LF, list(F))
+  LF     <- c(LF, list(Fw))
   cflist <- list(LF, output)
   return(cflist)
 }

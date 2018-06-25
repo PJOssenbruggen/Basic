@@ -2,7 +2,7 @@
 % Please edit documentation in R/lfmatrix.R
 \name{lfmatrix}
 \alias{lfmatrix}
-\title{The function \code{lfmatrix} unlists the information \code{cflist}, the lists \code{L} and \code{F},
+\title{The function \code{lfmatrix} unlists the information \code{cflist}, the lists \code{L} and \code{Fw},
 for lead and following vehicles, respectively.}
 \usage{
 lfmatrix(cflist, nveh)
@@ -17,6 +17,6 @@ lfmatrix(cflist, nveh)
 are in turn are used to estimate performance measures for the simulation.
 }
 \description{
-The function \code{lfmatrix} unlists the information \code{cflist}, the lists \code{L} and \code{F},
+The function \code{lfmatrix} unlists the information \code{cflist}, the lists \code{L} and \code{Fw},
 for lead and following vehicles, respectively.
 }

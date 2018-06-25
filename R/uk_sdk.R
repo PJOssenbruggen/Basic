@@ -1,7 +1,8 @@
 #' A speed volatility model.
 #'
 #' @param QUKtdayX, a matrix
-#' @examples uk_sdk(QUKtdayX)
+# #' @examples
+# #' uk_sdk(QUKtdayX)
 uk_sdk <- function(QUKtdayX) {
   quk1 <- QUKtdayX[,c(1,2,3)]
   bin <- {}

@@ -7,8 +7,8 @@
 #' @param t1 deceleration time, a number
 #' @param t time, a number
 #' @usage f1(xl0, ul0, theta, xf1, t, t1)
-#' @examples
-#' f1(-689.6, 92.4, -0.0154, -240, 4, 0)
+# #' @examples
+# #' f1(-689.6, 92.4, -0.0154, -240, 4, 0)
 f1 <- function(xl0, ul0, theta, xf1, t, t1) {
   x0 <- xf1
   u  <- ul0

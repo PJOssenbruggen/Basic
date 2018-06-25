@@ -26,6 +26,3 @@ f2(xl0, ul0, ul3, theta, t3, xf1, t, t1)
 \description{
 Headway \code{h} between the lead and following vehicles at time \code{t}. Lead and following vehicles use constant speed models, respectively.
 }
-\examples{
-f2(-420, 92.4, 49.86667, -0.0154, 40, -600, 45, 0)
-}

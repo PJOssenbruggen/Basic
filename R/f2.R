@@ -9,8 +9,8 @@
 #' @param t time, a number
 #' @param t1 deceleration time, a number
 #' @usage f2(xl0, ul0, ul3, theta, t3, xf1, t, t1)
-#' @examples
-#' f2(-420, 92.4, 49.86667, -0.0154, 40, -600, 45, 0)
+# #' @examples
+# #' f2(-420, 92.4, 49.86667, -0.0154, 40, -600, 45, 0)
 f2 <- function(xl0, ul0, ul3, theta, t3, xf1, t, t1) {
   h = xl0 + gbmx(ul0, theta, t3) + ul3 * (t - t3) - xfollow(xf1, ul0, t, t1)
   return(h)

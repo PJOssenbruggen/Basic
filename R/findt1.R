@@ -8,9 +8,8 @@
 #' @param theta gbm model parameter, a number.
 #' @param leff effective vehicle length, a number.
 #' @usage findt1(xl0, xf0, ul0, uf0, theta, leff)
-#' @examples
-#' findt1(-100, -200, 90, 90, -0.16, 14)
-#' @export
+# #' @examples
+# #' findt1(-100, -200, 90, 90, -0.16, 14)
 findt1 <- function(xl0, xf0, ul0, uf0, theta, leff) {
   t1    <- (xl0 - xf0) / (uf0 - 1 / ul0)
   xf1   <- xf0 + uf0 * t1
@@ -19,6 +18,5 @@ findt1 <- function(xl0, xf0, ul0, uf0, theta, leff) {
   uf1    <- gbm(ul0, theta, t1)
   answer <- as.matrix(data.frame(t1, xf1, uf1))
 #  print(answer)
-
   return(answer)
 }

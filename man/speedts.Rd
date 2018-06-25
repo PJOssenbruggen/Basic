@@ -1,19 +1,16 @@
 \name{speedts}
 \alias{speedts}
 \docType{data}
-\title{
-speedts
-}
+\title{\code{speedts} speed data used by \code{speedtsplot}}
 \description{
-\code{speedts} is a subset of \code{QUKtdayX}
-}
+\code{speedts} speed data for lead and following vehicles.}
 \usage{data("speedts")}
 \format{
-  A data frame with 8697 observations on the following 3 variables.
+  A data frame with  observations on the following 3 variables.
   \describe{
+    \item{\code{day}}{a numeric vector}
     \item{\code{t}}{a numeric vector}
     \item{\code{u}}{a numeric vector}
-    \item{\code{day}}{a numeric vector}
   }
 }
 \keyword{datasets}

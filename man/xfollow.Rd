@@ -18,6 +18,3 @@ xfollow(x0, u, t, t0)
 \description{
 Estimate \code{x} distance traveled using a constant speed model.
 }
-\examples{
-xfollow(-200, 80, 10, 0)
-}

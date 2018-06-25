@@ -16,8 +16,3 @@ gbmx(u0, theta, t)
 \description{
 Estimate distance \code{x} given a geometric Brownian motion model and time t.
 }
-\examples{
-gbmx(92.4, -0.0154, 10)
-gbmx(0, 0.4, 10)
-gbmx(6, -0.154, 4)
-}

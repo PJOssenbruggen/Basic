@@ -4,13 +4,13 @@
 \alias{plotfollow}
 \title{Produces a time-distance \code{t-x} trajectoty for \code{vehicle i = 2}.}
 \usage{
-plotfollow(L, F, t4)
+plotfollow(L, Fw, t4)
 }
 \arguments{
 \item{L}{a collection of variables that describe the relationship between a lead \code{l}
 and a following \code{f} vehicle, a matrix.}
 
-\item{F}{a collection of variables that describe the relationship between a lead \code{l}
+\item{Fw}{a collection of variables that describe the relationship between a lead \code{l}
 and a following \code{f} vehicle, a matrix.}
 
 \item{t4}{upper range of the plot, a number.}

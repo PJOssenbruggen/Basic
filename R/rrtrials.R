@@ -12,21 +12,19 @@
 #' @param N number of time-steps, a number
 #' @param T upper time range (seconds), a number
 #' @param leff effective vehicle length (feet), a number
-#' @param lambda calibration constant, a number
 #' @param nveh number of following vehicles, a number
 #' @param xlim plot range along the \code{t} axis, a vector
 #' @param ylim plot range along the \code{x} axis, a vector
-#' @usage rrtrials(umn, usd, k0, N, T, leff, lambda, nveh, xlim, ylim)
-#' @exampl
-#' rrtrials(41, 11, 50, 120, 120, 14, 0.75, 9,   c(0, 120), c(-1000, 7500))
-#' rrtrials(41, 11, 50, 120, 120, 14, 1.25, 9,   c(0, 120), c(-1000, 7500))
-#' rrtrials(2,  2, 55, 60, 60, 14, 0.5,  9,   c(0, 60), c(-2000, 600))
-#' rrtrials(18.8, 3.8, 55, 120, 120, 14, 0.5, 9, c(0, 120), c(-1000, 2000))
-rrtrials <- function(umn, usd, k0, N, T, leff, lambda, nveh, xlim, ylim) {
+#' @usage rrtrials(umn, usd, k0, N, T, leff, nveh, xlim, ylim)
+# #' @examples
+# #' rrtrials(41, 11, 50, 120, 120, 14, 9,   c(0, 120), c(-1000, 7500))
+# #' rrtrials(2,  2, 55, 60, 60, 14,    9,   c(0, 60), c(-2000, 600))
+# #' rrtrials(18.8, 3.8, 55, 120, 120, 14, 9, c(0, 120), c(-1000, 2000))
+rrtrials <- function(umn, usd, k0, N, T, leff, nveh, xlim, ylim) {
   t0    <- 0
-  input <- as.matrix(data.frame(umn, usd, k0, N, T, leff, lambda, nveh))
-  lead  <- bmfree(umn, usd, N, T, lambda)
-  foll  <- bmfree(umn, usd, N, T, lambda)
+  input <- as.matrix(data.frame(umn, usd, k0, N, T, leff, nveh))
+  lead  <- bmfree(umn, usd, N, T)
+  foll  <- bmfree(umn, usd, N, T)
   u     <- c(lead[,2], foll[,2])
   nobs  <- dim(lead)[1]
   h0    <- 5280/k0
@@ -61,7 +59,7 @@ rrtrials <- function(umn, usd, k0, N, T, leff, lambda, nveh, xlim, ylim) {
     if(k == 4 | k == 5)
     lead     <- foll
     lead[,3] <- xf
-    foll     <- bmfree(umn, usd, N, T, lambda)
+    foll     <- bmfree(umn, usd, N, T)
     foll[,3] <- foll[,3] - rep(h0, nobs) * k
     h        <- lead[,3] - foll[,3]
     for(i in 1:nobs) hsf[i] <- hsafe(foll[i,2], leff)

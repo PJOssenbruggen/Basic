@@ -19,11 +19,11 @@
 #'  \code{output[[4]], output[[5]], output[[6]]} and \code{output[[7]]} returns matrices
 #'  of speed \code{u}, location {x} and safe headway \code{h} values for each vehicle
 #'  at times \code{t0,t1,t2,t3}, respectively. Finally, \code{output[[8]]} returns a list
-#'  the \code{cflist} list consisting of information stored as \code{L} and \code{F} matrices.
-#' @examples
-#' run(10, 63, 10, 0,  0,  55, 5, 15, 14, c(0, 20),c(-1000, 200))
-#' run(10, 63, 10, 34, 0.1,  55, 5, 15, 14, c(0, 60),c(-2000, 4000))
-#' run(10, 63, 10, 10,  1,  55, 5, 15, 14, c(0, 40),c(-2000, 2500))
+#'  the \code{cflist} list consisting of information stored as \code{L} and \code{Fw} matrices.
+# #' @examples
+# #' run(10, 63, 10, 0,  0,  55, 5, 15, 14, c(0, 20),c(-1000, 200))
+# #' run(10, 63, 10, 34, 0.1,  55, 5, 15, 14, c(0, 60),c(-2000, 4000))
+# #' run(10, 63, 10, 10,  1,  55, 5, 15, 14, c(0, 40),c(-2000, 2500))
 run <- function(nveh, ulead, ulead.sd, ubrkdown, ubrkdown.sd, k, k.sd, d, leff, xlim, ylim) {
   input <- as.matrix(data.frame(nveh, ulead, ulead.sd, ubrkdown, ubrkdown.sd, k, k.sd, d, leff))
   ul    <- c(ulead, rnorm(n = nveh - 1, mean = ulead,  sd = ulead.sd))

@@ -11,7 +11,6 @@
 #' @param t4 upper end of search range, a number
 #' @param t unknown time \code{t5}, a number
 #' @usage findt5(xf1, xf3, uf1, uf3, theta, t, t1, t2, t3, t4)
-#' @export
 findt5 <- function(xf1, xf3, uf1, uf3, theta, t, t1, t2, t3, t4) {
   u0   <- uf1
   fun3 <- function(xf1, uf1, theta, t, t1) xf1 + gbmx(uf1, theta, t - t1)

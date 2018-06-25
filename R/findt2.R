@@ -5,7 +5,6 @@
 #' @param theta gbm model parameter, a number
 #' @param t4 time, a number
 #' @usage findt2(L, theta, t4)
-#' @export
 findt2 <- function(L, theta, t4) {
   t2  <- NULL
   t0  <- L[1,1]

@@ -1,7 +1,7 @@
 #' A scatter plot of traffic data.
 #'
 #' @param QUKtdayX, a matrix
-#' @examples speedplot(QUKtdayX)
+# #' @examples speedplot(QUKtdayX)
 speedplot <- function(QUKtdayX) {
   quk0 <- QUKtdayX
   quk1 <- dplyr::as_tibble(quk0)

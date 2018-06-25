@@ -14,20 +14,17 @@ usdzipper(tstart, tend, umn, usd, xstart, xend)
 
 \item{umn}{start speed (mph) for vehicle in lane 1, a number}
 
-\item{usd}{speed volatility for \code(umn), a number}
+\item{usd}{speed volatility for \code{umn}, a number}
 
 \item{xstart}{start location for vehicle in lane 1 (feet), a number}
 
 \item{xend}{end location for vehicle in lane 1 (feet), a number}
 }
 \value{
-\code{usdzipper} uses a deterministic model and animation to illustrate an ``idealistic'' situtaion,
+\code{usdzipper} uses a deterministic model to illustrate an ``idealistic'' situtaion,
 a so-called a ``usdzipper merge.''
 }
 \description{
 The \code{usdzipper} function is used to perform a sensitivity analysis of a single vehicles
 in traffic breakdown.
-}
-\examples{
-usdzipper(0, 5, 41, 11.6, 0, 500)
 }

@@ -1,16 +1,15 @@
 \name{xl0}
 \alias{xl0}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-The lead \code{l} vehicle speed \code{ul0} at time \code{t0}.
+\docType{data}
+\title{The lead \code{l} vehicle location \code{xl0} at time \code{t0}.}
+\format{The following vehicle location at \code{t0} is assumed to be dependent space headway \code{h0}.
+\describe{
+\item{xl0}{distance, measured in feet.}
+}}
+\usage{
+xl0
 }
 \description{
-The lead vehicle speed at \code{t0} is assumed to be independent of the pre-breakdown speed \code{upre}.
+The lead \code{l} vehicle location \code{xl0} at time \code{t0}.
 }
-
-\value{
-\item{xl0}{location, measured in feet.}
-}
-\author{
-Paul J Ossenbruggen
-}
+\keyword{datasets}

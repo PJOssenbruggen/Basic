@@ -16,6 +16,3 @@ ubreakdown(nveh, ubk, ubk.sd)
 \description{
 The \code{ubreakdown} function generates a breakdown speed vector \code{ubk} assuming a lognormal distribution.
 }
-\examples{
-ubreakdown(6, 10, 1)
-}

@@ -12,15 +12,21 @@ Depends: R (>= 2.10)
 RoxygenNote: 6.0.1
 Imports:
     animation,
+    devtools,
     dplyr,
     gganimate,
     gapminder,
     ggplot2,
+    graphics,
+    grDevices,
     knitr,
     rmarkdown,
     roxygen2,
     sde,
     shiny,
-    tidyverse
+    stats,
+    tidyverse,
+    usethis,
+    utils
 Suggests: 
-    
+    testthat

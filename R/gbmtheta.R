@@ -4,10 +4,10 @@
 #' @param u0 breakdown speed, a number
 #' @param t3 time when u0 is initiated, a number
 #' @usage gbmtheta(upre, u0, t3)
-#' @examples
-#' gbmtheta(63, 34, 4)
-#' gbmtheta(0, 5, 4)
-#' gbmtheta(6, 0, 4)
+# #' @examples
+# #' gbmtheta(63, 34, 4)
+# #' gbmtheta(0, 5, 4)
+# #' gbmtheta(6, 0, 4)
 gbmtheta = function(upre, u0, t3) {
   if(u0 == 0) {
     theta <- log(0.01*upre/upre)/t3

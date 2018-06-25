@@ -4,9 +4,8 @@
 #' @param ubk breakdown ubk, a number
 #' @param ubk.sd standard deviation of \code{ubk}, a number
 #' @usage ubreakdown(nveh, ubk, ubk.sd)
-#' @examples
-#' ubreakdown(6, 10, 1)
-#' @export
+# #' @examples
+# #' ubreakdown(6, 10, 1)
 ubreakdown <- function(nveh, ubk, ubk.sd) {
   omega <- sqrt(1 + log(ubk.sd^2)/(2 * log(ubk)))
   theta <- (2*log(ubk) - omega^2)/2

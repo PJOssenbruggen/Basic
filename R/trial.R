@@ -1,6 +1,6 @@
-#' The function \code{trial} produces traffic performance information, stored in lists \code{L} and \code{F}
+#' The function \code{trial} produces traffic performance information, stored in lists \code{L} and \code{Fw}
 #' for lead and following vehicles, respectively/
-#' \code{L} and \code{F} contain the information needed to graph a time-distance \code{t-x} trajectories for two vehicles.
+#' \code{L} and \code{Fw} contain the information needed to graph a time-distance \code{t-x} trajectories for two vehicles.
 #'
 #' @param ul pre-breakdown speed of lead \code{l} vehicle, a number
 #' @param ubk breakdown speed of lead \code{l} vehicle, a number
@@ -17,10 +17,10 @@
 #' (4) a \code{output} vector consisting various performance estimates of delay including traffic flow in
 #' the congested state and shock-wave speed for evaluating queuing.
 #' @usage trial(ul, ubk, k, uf, d, leff, xlim, ylim)
-#' @examples
-#' trial(63, 10, 55, 70, 15, 14, c(0,8), c(-500, 60))
-#' trial(63, 34, 22, 70, 15, 14, c(0,12), c(-1500, 600))
-#' trial(63, 34, 55, 70, 15, 14, c(0,12), c(-1500, 600))
+# #' @examples
+# #' trial(63, 10, 55, 70, 15, 14, c(0,8), c(-500, 60))
+# #' trial(63, 34, 22, 70, 15, 14, c(0,12), c(-1500, 600))
+# #' trial(63, 34, 55, 70, 15, 14, c(0,12), c(-1500, 600))
 trial <- function(ul, ubk, k, uf, d, leff, xlim, ylim) {
 # Transformed to fps scale.
 #  print(data.frame(ul, ubk, k, uf, d, leff))
@@ -58,9 +58,9 @@ trial <- function(ul, ubk, k, uf, d, leff, xlim, ylim) {
 #  print(data.frame(vehicle = 1))
 #  print("All information in matrix L is restricted to the lead vehicle and how it changes speed from ul0 to ul3.")
 #  print("L = ")
-  F <- matrix(rep(NA, 16), ncol = 4)
-  colnames(F) <- c("t0","t1","t2","t3")
-  rownames(F) <- c("t", "u", "x", "h")
+  Fw <- matrix(rep(NA, 16), ncol = 4)
+  colnames(Fw) <- c("t0","t1","t2","t3")
+  rownames(Fw) <- c("t", "u", "x", "h")
 #  xl0 <- as.numeric(xl0); xf0 <- as.numeric(xf0); ul0 <- as.numeric(ul0);
 #  uf0 <- as.numeric(xf0); theta <- as.numeric(theta);
 #  print("Sight line and finding t2: t2 is a response time where the following vehicle driver")
@@ -87,16 +87,16 @@ trial <- function(ul, ubk, k, uf, d, leff, xlim, ylim) {
   xf3    <- xl3 - h3
 # Prevents vehicle from traveling backwards
 # points(t2, xf2, pch = 15, cex = 0.5)
-  F[1,1] <- t0;   F[1,2] <- t1;   F[1,3] <- t2;   F[1,4] <- t3;
-  F[2,1] <- uf0;  F[2,2] <- uf1;  F[2,3] <- ul2;  F[2,4] <- ul3
-  F[3,1] <- xf0;  F[3,2] <- xf1;  F[3,3] <- xf2;  F[3,4] <- xf3
-  F[4,1] <- h0;   F[4,2] <- h1;   F[4,3] <- h2;   F[4,4] <- h3
+  Fw[1,1] <- t0;   Fw[1,2] <- t1;   Fw[1,3] <- t2;   Fw[1,4] <- t3;
+  Fw[2,1] <- uf0;  Fw[2,2] <- uf1;  Fw[2,3] <- ul2;  Fw[2,4] <- ul3
+  Fw[3,1] <- xf0;  Fw[3,2] <- xf1;  Fw[3,3] <- xf2;  Fw[3,4] <- xf3
+  Fw[4,1] <- h0;   Fw[4,2] <- h1;   Fw[4,3] <- h2;   Fw[4,4] <- h3
 #  print("Finding t1: t1 is dependent on the lead, following vehicle speeds and headway h0.")
 #  print("The values of h0, h1, h2 and h3, the safe headways at time t0, t1, t2 and t3, are")
 #  print("functions of their lead vehicle speeds at these times.")
   t4     <- xlim[2]
-  output <- plotfollow(L, F, t4)
-  LF     <- list(L, F)
+  output <- plotfollow(L, Fw, t4)
+  LF     <- list(L, Fw)
   output <- as.matrix(output)
 
   return(list(LF, output))

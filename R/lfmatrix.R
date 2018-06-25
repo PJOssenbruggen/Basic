@@ -1,4 +1,4 @@
-#' The function \code{lfmatrix} unlists the information \code{cflist}, the lists \code{L} and \code{F},
+#' The function \code{lfmatrix} unlists the information \code{cflist}, the lists \code{L} and \code{Fw},
 #' for lead and following vehicles, respectively.
 #'
 #' @param cflist information produced from the \code{run} and \code{trial} functions, a list.
@@ -34,5 +34,3 @@ lfmatrix <- function(cflist, nveh) {
   lst  <- list(mat0,mat1,mat2,mat3)
   return(lst)
 }
-
-

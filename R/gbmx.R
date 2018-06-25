@@ -4,10 +4,10 @@
 #' @param theta gbm model estimate, a number.
 #' @param t time, a number
 #' @usage  gbmx(u0, theta, t)
-#' @examples
-#' gbmx(92.4, -0.0154, 10)
-#' gbmx(0, 0.4, 10)
-#' gbmx(6, -0.154, 4)
+# #' @examples
+# #' gbmx(92.4, -0.0154, 10)
+# #' gbmx(0, 0.4, 10)
+# #' gbmx(6, -0.154, 4)
 gbmx = function(u0, theta, t) {
   if(u0 > 0) {
     x <- u0/theta*(exp(theta*t) - 1)

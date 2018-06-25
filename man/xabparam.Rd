@@ -22,6 +22,3 @@ xabparam(tstart, tend, ustart, uend, xstart, xend)
 \description{
 Estimate the parameters \code{a} and \code{b} of a second-order velocity model.
 }
-\examples{
-xabparam(0, 18.59797, 92.4, 0, 0, 1397.045)
-}

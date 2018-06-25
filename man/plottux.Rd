@@ -4,7 +4,7 @@
 \alias{plottux}
 \title{\code{plottux} produces \code{t-u} and \code{t-x} trajectories for a lead and following vehicles on a ring road,}
 \usage{
-plottux(umn, usd, N, T, k0, leff, lambda)
+plottux(umn, usd, N, T, k0, leff)
 }
 \arguments{
 \item{umn}{mean speed (mph), a number}
@@ -18,13 +18,7 @@ plottux(umn, usd, N, T, k0, leff, lambda)
 \item{k0}{traffic density (vpm), a number}
 
 \item{leff}{effective vehicle length, a number}
-
-\item{lambda}{calibration constant, a number}
 }
 \description{
 \code{plottux} produces \code{t-u} and \code{t-x} trajectories for a lead and following vehicles on a ring road,
-}
-\examples{
-plottux(41, 11, 120, 120, 55, 14, 1.25)
-plottux(18.8, 3.8, 120, 120, 55, 14, 0.5)
 }

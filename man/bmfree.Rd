@@ -4,7 +4,7 @@
 \alias{bmfree}
 \title{The \code{bmfree} function returns a \code{tux} matrix of time \code{t}, speed \code{u} and location \code{x} values.}
 \usage{
-bmfree(umn, usd, N, T, lambda)
+bmfree(umn, usd, N, Tup)
 }
 \arguments{
 \item{umn}{mean speed (mph), a number}
@@ -13,20 +13,8 @@ bmfree(umn, usd, N, T, lambda)
 
 \item{N}{number of time-steps, a number}
 
-\item{T}{upper time range in minutes, a number}
-
-\item{lambda}{calibration constant, a number}
-}
-\value{
-The \code{bmfree} function returns information for a single vehicle
-used to analyze the effects of traffic noise on car-following.
-The model, a stochastic traffic noise model, is assumed to be a Brownian bridge model.
-Distance \code{x} is estimated with the forward Euler method.
+\item{Tup}{upper time range in minutes, a number}
 }
 \description{
 The \code{bmfree} function returns a \code{tux} matrix of time \code{t}, speed \code{u} and location \code{x} values.
-}
-\examples{
-bmfree(41, 11, 900, 60, 1.15)
-bmfree(18.8, 3.8, 60, 60, 0.5)
 }

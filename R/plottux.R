@@ -6,16 +6,15 @@
 #' @param N number of time-steps, a number
 #' @param k0 traffic density (vpm), a number
 #' @param leff effective vehicle length, a number
-#' @param lambda calibration constant, a number
-#' @usage plottux(umn, usd, N, T, k0, leff, lambda)
-#' @examples
-#' plottux(41, 11, 120, 120, 55, 14, 1.25)
-#' plottux(18.8, 3.8, 120, 120, 55, 14, 0.5)
-plottux <- function(umn, usd, N, T, k0, leff, lambda) {
+#' @usage plottux(umn, usd, N, T, k0, leff)
+# #' @examples
+# #' plottux(41, 11, 120, 120, 55, 14)
+# #' plottux(18.8, 3.8, 120, 120, 55, 14)
+plottux <- function(umn, usd, N, T, k0, leff) {
   umn0  <- t(data.frame(umn = 5280/3600*umn, 0))
   t0    <- 0
-  lead  <- bmfree(umn, usd, N, T, lambda)
-  foll  <- bmfree(umn, usd, N, T, lambda)
+  lead  <- bmfree(umn, usd, N, T)
+  foll  <- bmfree(umn, usd, N, T)
   dt    <- T/N
   u     <- c(lead[,2], foll[,2])
   par(mfrow = c(1,2))

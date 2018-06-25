@@ -24,6 +24,3 @@ findt1(xl0, xf0, ul0, uf0, theta, leff)
 \code{findt1} returns the deceleration time \code{t1}, the location \code{xf1}, and speed \code{uf1}
 of the following vehicle at time \code{t1}.
 }
-\examples{
-findt1(-100, -200, 90, 90, -0.16, 14)
-}
