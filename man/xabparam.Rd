@@ -2,14 +2,14 @@
 % Please edit documentation in R/xabparam.R
 \name{xabparam}
 \alias{xabparam}
-\title{Estimate the parameters \code{a} and \code{b} of a second-order velocity model.}
+\title{Estimate the parameters \code{a} and \code{b} of a first-order acceleration model \code{a + b * t}.}
 \usage{
 xabparam(tstart, tend, ustart, uend, xstart, xend)
 }
 \arguments{
-\item{tstart}{time, a number}
+\item{tstart}{time in seconds, a number}
 
-\item{tend}{time, a number}
+\item{tend}{time in seconds, a number}
 
 \item{ustart}{speed, a number}
 
@@ -20,5 +20,5 @@ xabparam(tstart, tend, ustart, uend, xstart, xend)
 \item{xend}{location, a number}
 }
 \description{
-Estimate the parameters \code{a} and \code{b} of a second-order velocity model.
+Estimate the parameters \code{a} and \code{b} of a first-order acceleration model \code{a + b * t}.
 }

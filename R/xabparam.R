@@ -1,7 +1,7 @@
-#' Estimate the parameters \code{a} and \code{b} of a second-order velocity model.
+#' Estimate the parameters \code{a} and \code{b} of a first-order acceleration model \code{a + b * t}.
 #'
-#' @param tstart time, a number
-#' @param tend time, a number
+#' @param tstart time in seconds, a number
+#' @param tend time in seconds, a number
 #' @param  ustart speed, a number
 #' @param  uend speed, a number
 #' @param  xstart location, a number

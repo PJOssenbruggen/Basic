@@ -1,6 +1,6 @@
 #' The \code{formqueue} function is used to explain queuing upstream of a bottleneck.
 #'
-#' @return \code{formqueue} uses a deterministic model to illustrate an ``idealistic'' situtaion,
+#' @return \code{formqueue} uses a deterministic model to illustrate an ``idealistic'' situation,
 #' a so-called a ``formqueue merge.''
 #' @param tstart start time, a number
 #' @param tend end time, a number
@@ -17,7 +17,6 @@
 #' @import graphics
 #' @export
 formqueue  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
-  par(mfrow = c(1,1))
   x1 <- x2 <- {}
   y1 <- y2 <- {}
   step  <- tend/10
@@ -47,7 +46,7 @@ formqueue  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
   abline(v = 0, col = gray(0.8))
   abline(h = c(0, -500), col = gray(0.8))
   title("Zipper Merge")
-  legend("topleft", legend = c("Vehicle 1", "Vehicle 2"),
+  legend("topleft", legend = c("Lane 1", "Lane 2"),
          col = c("green", "red"),
          pch = c(16,16),
          bty = "n")
