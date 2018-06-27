@@ -22,7 +22,7 @@ formqueue(tstart, tend, umn, usd, xstart, xfunnel, leff)
 \item{leff}{effective vehicle lingth(feet), a number}
 }
 \value{
-\code{formqueue} uses a deterministic model to illustrate an ``idealistic'' situation,
+\code{formqueue} uses a stochastic model to illustrate an ``idealistic'' situation,
 a so-called a ``formqueue merge.''
 }
 \description{

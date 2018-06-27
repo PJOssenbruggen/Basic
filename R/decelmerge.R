@@ -1,6 +1,6 @@
-#' The \code{freeflowpass} function estimates the relative locations of two vehicles where one passes the other.
+#' The \code{decelmerge} function estimates the relative locations of two vehicles where one passes the other.
 #'
-#' @return \code{freeflowpass} uses a deterministic model to show the locations of vehicle accelerating to pass
+#' @return \code{decelmerge} uses a deterministic model to show the locations of vehicle accelerating to pass
 #' another vehicle traveling side-by-side at the same speed.
 #' @param tstart start time, a number
 #' @param tend end time, a number
@@ -9,11 +9,11 @@
 #' @param xstart start location for vehicle in lane 1 (feet), a number
 #' @param xfunnel upstream location where the lane drop starts (feet), a number
 #' @param leff effective vehicle lingth(feet), a number
-#' @usage freeflowpass(tstart, tend, umn, usd, xstart, xfunnel, leff)
+#' @usage decelmerge(tstart, tend, umn, usd, xstart, xfunnel, leff)
 # #' @examples
-# #' freeflowpass(0, 10, 41, 0, -1000, -500, 14)
+# #' decelmerge(0, 10, 41, 0, -1000, -500, 14)
 #' @export
-freeflowpass  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
+decelmerge  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
   x1 <- x2 <- {}
   y1 <- y2 <- {}
   step  <- tend/10
@@ -42,7 +42,7 @@ freeflowpass  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
   xstart2 <- max(x2.)
   ustart2 <- uend2 <- umn*5280/3600
   xstart2 <- max(x2.)
-  xend2   <- x1[tseq == tend2] + hsafe(uend2, leff)
+  xend2   <- x1[tseq == tend2] - hsafe(uend2, leff)
   df2bk   <- data.frame(tstart2,tend2,ustart2,uend2,xstart2,xend2)
   ab      <- xabparam(tstart2, tend2, ustart2, uend2, xstart2, xend2)
   tseq3   <- seq(tstart2, tend2, step)
@@ -69,20 +69,20 @@ freeflowpass  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
   df2      <- cbind(df2, lane)
   colnames(df2) <- c("t", "u", "x", "y", "lane")
   df       <- rbind(df1[1:25,], df2[1:25,])
-#  plot(y1[x1 > -700 & x1 < 200], x1[x1 > -700 & x1 < 200], pch = 16, cex = 0.75, ylim = c(-700, 200),
-#       xlim = c(-7,7),      col = "green", axes = FALSE, ylab = "", xlab = "")
-#  y2 <- df2[,4]
-#  x2 <- df2[,3]
-#  points(y2[x2 > -700 & x2 < 200], x2[x2 > -700 & x2 < 200], pch = 16, cex = 0.75, col = "red")
-#  text(3,0, expression("x = 0"))
-#  text(0,-500, expression("x = -500"))
-#  abline(v = 0, col = gray(0.8))
-#  abline(h = c(0, -500), col = gray(0.8))
-#  title("Free-Flow Pass and Merge")
-#  legend("topleft", legend = c("Lane 1", "Lane 2"),
-#         col = c("green", "red"),
-#         pch = c(16,16),
-#         bty = "n")
+  #  plot(y1[x1 > -700 & x1 < 200], x1[x1 > -700 & x1 < 200], pch = 16, cex = 0.75, ylim = c(-700, 200),
+  #       xlim = c(-7,7),      col = "green", axes = FALSE, ylab = "", xlab = "")
+  #  y2 <- df2[,4]
+  #  x2 <- df2[,3]
+  #  points(y2[x2 > -700 & x2 < 200], x2[x2 > -700 & x2 < 200], pch = 16, cex = 0.75, col = "red")
+  #  text(3,0, expression("x = 0"))
+  #  text(0,-500, expression("x = -500"))
+  #  abline(v = 0, col = gray(0.8))
+  #  abline(h = c(0, -500), col = gray(0.8))
+  #  title("Free-Flow Pass and Merge")
+  #  legend("topleft", legend = c("Lane 1", "Lane 2"),
+  #         col = c("green", "red"),
+  #         pch = c(16,16),
+  #         bty = "n")
 
   return(df)
 }

@@ -1,6 +1,6 @@
 #' The \code{formqueue} function is used to explain queuing upstream of a bottleneck.
 #'
-#' @return \code{formqueue} uses a deterministic model to illustrate an ``idealistic'' situation,
+#' @return \code{formqueue} uses a stochastic model to illustrate an ``idealistic'' situation,
 #' a so-called a ``formqueue merge.''
 #' @param tstart start time, a number
 #' @param tend end time, a number

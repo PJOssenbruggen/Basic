@@ -34,8 +34,6 @@ speedboxplot <- function(QUKtdayX) {
     if(quk1[i,3] >= 117.5 & quk1[i,3] < 122.5) bin <- c(bin, 23)  # k = 120
     if(quk1[i,3] >= 122.5) bin <- c(bin, 24)                     # k = 125
   }
-
-  par(mfrow = c(1,1))
   graphics::boxplot(u ~ bin, data = quk1, col = gray(0.8), axes = FALSE)
   abline(h = 45, lty = 3)
   abline(v = 9, lty = 3)
