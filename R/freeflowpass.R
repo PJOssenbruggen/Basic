@@ -83,6 +83,5 @@ freeflowpass  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
 #         col = c("green", "red"),
 #         pch = c(16,16),
 #         bty = "n")
-
   return(df)
 }
