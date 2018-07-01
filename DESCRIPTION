@@ -29,4 +29,4 @@ Imports:
     usethis,
     utils
 Suggests: 
-    testthat
+    

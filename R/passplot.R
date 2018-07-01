@@ -1,4 +1,4 @@
-#' The function \code{passplot} plots the data from the \code{freeflowpass} or \code{decelmerge} data frames.
+#' The function \code{passplot} plots the data from \code{brksummary}, \code{freeflowpass}, \code{decelmerge} data frames.
 #'
 #' @param df from \code{freeflowpass}, a matrix
 #' @param title, a character string

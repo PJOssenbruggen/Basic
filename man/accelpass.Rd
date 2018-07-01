@@ -4,10 +4,10 @@
 \alias{accelpass}
 \title{The \code{accelpass} function estimates the relative locations of two vehicles where one passes the other.}
 \usage{
-accelpass(tstart, umn, usd, xstart, xfunnel, xend, leff, lane, step)
+accelpass(tend, umn, usd, xstart, xfunnel, leff, lane, step)
 }
 \arguments{
-\item{tstart}{start time, a number}
+\item{tend}{end time for simualted run, a number}
 
 \item{umn}{start speed (mph) for vehicle in lane 1, a number}
 
@@ -17,9 +17,7 @@ accelpass(tstart, umn, usd, xstart, xfunnel, xend, leff, lane, step)
 
 \item{xfunnel}{upstream location where the lane drop starts (feet), a number}
 
-\item{xend}{end location, a number}
-
-\item{leff}{effective vehicle lingth(feet), a number}
+\item{leff}{effective vehicle length(feet), a number}
 
 \item{lane}{number, a number}
 
@@ -27,7 +25,7 @@ accelpass(tstart, umn, usd, xstart, xfunnel, xend, leff, lane, step)
 }
 \value{
 \code{accelpass} uses a stochastic model to show the locations of vehicle accelerating to pass
-another vehicle traveling side-by-side at the same speed.
+another vehicle traveling side-by-side at the speed.
 }
 \description{
 The \code{accelpass} function estimates the relative locations of two vehicles where one passes the other.

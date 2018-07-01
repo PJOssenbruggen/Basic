@@ -2,7 +2,7 @@
 % Please edit documentation in R/passplot.R
 \name{passplot}
 \alias{passplot}
-\title{The function \code{passplot} plots the data from the \code{freeflowpass} or \code{decelmerge} data frames.}
+\title{The function \code{passplot} plots the data from \code{brksummary}, \code{freeflowpass}, \code{decelmerge} data frames.}
 \usage{
 passplot(df, title)
 }
@@ -12,5 +12,5 @@ passplot(df, title)
 \item{title, }{a character string}
 }
 \description{
-The function \code{passplot} plots the data from the \code{freeflowpass} or \code{decelmerge} data frames.
+The function \code{passplot} plots the data from \code{brksummary}, \code{freeflowpass}, \code{decelmerge} data frames.
 }
