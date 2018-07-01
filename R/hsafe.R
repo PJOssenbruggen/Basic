@@ -9,6 +9,6 @@
 hsafe = function(u, leff) {
   mph = u * 3600 / 5280
   h = (1 + mph/10) * leff
-  if(h < 2*leff) h = 2 * leff else h
+  if(h < 2*leff) h = 2 * leff else h = (1 + mph/10) * leff
   return(h)
 }

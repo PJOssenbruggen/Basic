@@ -84,8 +84,8 @@ brksummary <- function(k, tend, umn, usd, xstart, xfunnel, leff, lane, step) {
   xseq    <- df012[index, 8]
   lines(df012[,1],df012[,13], col = "pink")
   # Determine vehicle 2 correction
-  df[4,4] <- min(c(df[2,4], df[3,4]))       # u for vehicle 2 that cannot exceed u for vehicle 1
-  hsafe2  <- hsafe(df012[df[4,4],12], leff)
+  u       <- min(c(df[2,4], df[3,4]))       # u for vehicle 2 that cannot exceed u for vehicle 1
+  hsafe2  <- hsafe(u, leff)
   df[4,6] <- df[2,6] - hsafe2
   if(df[2,2] < df[3,2]) {
     df[4,2] <- df[2,2]
