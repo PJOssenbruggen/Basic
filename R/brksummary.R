@@ -125,13 +125,12 @@ brksummary <- function(k, tend, umn, usd, xstart, xfunnel, leff, lane, step) {
   # acceldown(tstart, tend, umn, usd, xstart,  step)
   dfdown <- acceldown(tstart, tend, umn, usd, xstart, step)
   lines(dfdown[,1], dfdown[,3], col = "red")
-
   # Output a data frame suitable for passplot(df, title)
   df12.  <- df012[,c(6:10)]
   colnames(df12.) <- c("t","u","x","y","lane")
   df12..  <- df012[,c(11:15)]
   colnames(df12..) <- c("t","u","x","y","lane")
   df12  <- rbind(df12., df12..)
-#  passplot(df = df12[df12[,3]>-600 & df12[,3] < 200,], title)
+  df12[,5] <- factor(df12[,5])
   return(list(df, df12))
 }

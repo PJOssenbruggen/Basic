@@ -10,8 +10,8 @@
 #' @param xfunnel upstream location where the lane drop starts (feet), a number
 #' @param leff effective vehicle lingth(feet), a number
 #' @usage decelmerge(tstart, tend, umn, usd, xstart, xfunnel, leff)
-# #' @examples
-# #' decelmerge(0, 10, 41, 0, -1000, -500, 14)
+#' @examples
+#' decelmerge(0, 10, 41, 0, -1000, -500, 14)
 #' @export
 decelmerge  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
   x1 <- x2 <- {}
@@ -29,7 +29,7 @@ decelmerge  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
     if(x1[i] < xfunnel) y1[i] = -6
   }
   df1      <- data.frame(t = tseq, u1 = rep(umn*5280/3600, length(tseq)), x1, y1)
-  lane     <- rep(1, dim(df1)[1])
+  lane     <- factor(rep(1, dim(df1)[1]))
   df1      <- cbind(df1, lane)
   colnames(df1) <- c("t", "u", "x", "y", "lane")
   # Lane 2
@@ -65,7 +65,7 @@ decelmerge  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
     if(df2[i,3] <= 0 & df2[i,3] >= xfunnel) df2[i,4] = -6/xfunnel * abs(df2[i,3])
     if(df2[i,3] < xfunnel) df2[i,4] = 6
   }
-  lane     <- rep(2, dim(df2)[1])
+  lane     <- factor(rep(2, dim(df2)[1]))
   df2      <- cbind(df2, lane)
   colnames(df2) <- c("t", "u", "x", "y", "lane")
   df       <- rbind(df1[1:25,], df2[1:25,])
@@ -83,6 +83,5 @@ decelmerge  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
   #         col = c("green", "red"),
   #         pch = c(16,16),
   #         bty = "n")
-
   return(df)
 }

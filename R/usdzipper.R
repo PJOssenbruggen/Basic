@@ -10,8 +10,8 @@
 #' @param xstart start location for vehicle in lane 1 (feet), a number
 #' @param xend end location for vehicle in lane 1 (feet), a number
 #' @usage usdzipper(tstart, tend, umn, usd, xstart, xend)
-# #' @examples
-# #' usdzipper(0, 5, 41, 11.6, 0, 500)
+#' @examples
+#' usdzipper(0, 5, 41, 11.6, 0, 500)
 #' @export
 usdzipper  <- function(tstart, tend, umn, usd, xstart, xend)
 {

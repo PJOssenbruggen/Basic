@@ -10,8 +10,8 @@
 #' @param xfunnel upstream location where the lane drop starts (feet), a number
 #' @param leff effective vehicle lingth(feet), a number
 #' @usage formqueue(tstart, tend, umn, usd, xstart, xfunnel, leff)
-# #' @examples
-# #' formqueue(0, 10, 41, 11.6, -1000, -500, 14)
+#' @examples
+#' formqueue(0, 10, 41, 11.6, -1000, -500, 14)
 #' @import grDevices
 #' @import stats
 #' @import graphics

@@ -23,6 +23,5 @@ xab(x0,u0,a,b,t,t0)
 Estimate distance \code{x} using second-order speed function.
 }
 \examples{
-
-?xab(0,0,16,0,10,0)
+xab(0,0,16,0,10,0)
 }

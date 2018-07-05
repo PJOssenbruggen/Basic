@@ -25,3 +25,6 @@ acceldown(tstart, tend, umn, usd, xstart,  step)
 \description{
 The \code{acceldown} function estimates the relative locations of a vehicle downstream of a bottleneck.
 }
+\examples{
+acceldown(8.75, 33.25, 47.59, 16.133, -70.36, 0.25)
+}

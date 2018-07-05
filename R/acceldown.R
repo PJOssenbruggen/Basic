@@ -8,8 +8,8 @@
 #' @param xstart start location of the vehicle (feet), a number
 #' @param step size in seconds, a number
 #' @usage acceldown(tstart, tend, umn, usd, xstart,  step)
-# #' @examples
-# #' acceldown(8.75, 33.25, 47.59, 16.133, -70.36, 0.25)
+#' @examples
+#' acceldown(8.75, 33.25, 47.59, 16.133, -70.36, 0.25)
 #' @export
 acceldown  <- function(tstart, tend, umn, usd, xstart, step) {
   tseq  <- seq(tstart, tend, by = step)

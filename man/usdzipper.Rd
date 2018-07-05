@@ -28,3 +28,6 @@ a so-called a ``usdzipper merge.''
 The \code{usdzipper} function is used to perform a sensitivity analysis of a single vehicles
 in traffic breakdown.
 }
+\examples{
+usdzipper(0, 5, 41, 11.6, 0, 500)
+}

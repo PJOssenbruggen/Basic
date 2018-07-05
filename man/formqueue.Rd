@@ -28,3 +28,6 @@ a so-called a ``formqueue merge.''
 \description{
 The \code{formqueue} function is used to explain queuing upstream of a bottleneck.
 }
+\examples{
+formqueue(0, 10, 41, 11.6, -1000, -500, 14)
+}

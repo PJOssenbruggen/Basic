@@ -20,3 +20,6 @@ uab(u0,a,b,t,t0)
 \description{
 Estimate distance \code{u} using second-order speed function.
 }
+\examples{
+uab(0,16,0,10,0)
+}

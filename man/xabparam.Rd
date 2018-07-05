@@ -22,3 +22,6 @@ xabparam(tstart, tend, ustart, uend, xstart, xend)
 \description{
 Estimate the parameters \code{a} and \code{b} of a first-order acceleration model \code{a + b * t}.
 }
+\examples{
+xabparam(0, 18.59797, 92.4, 0, 0, 1397.045)
+}

@@ -69,6 +69,7 @@ freeflowpass  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
   df2      <- cbind(df2, lane)
   colnames(df2) <- c("t", "u", "x", "y", "lane")
   df       <- rbind(df1[1:25,], df2[1:25,])
+  df[,5]   <- factor(df[,5])
 #  plot(y1[x1 > -700 & x1 < 200], x1[x1 > -700 & x1 < 200], pch = 16, cex = 0.75, ylim = c(-700, 200),
 #       xlim = c(-7,7),      col = "green", axes = FALSE, ylab = "", xlab = "")
 #  y2 <- df2[,4]
