@@ -1,8 +1,8 @@
 #' The function \code{schematic} defines key features of a simple bottleneck
 #'
 #' @usage schematic()
-# #' @examples
-# #' schematic()
+#' @examples
+#' schematic()
 #' @export
 schematic <- function() {
   x <- y <- 0
