@@ -14,3 +14,6 @@ hsafe(u, leff)
 \description{
 Safe headway \code{h} between lead and following vehicles. Speed \code{u} of lead vehicle is measured in mph. \code{leff} = 14 feet.
 }
+\examples{
+hsafe(60, 14)
+}

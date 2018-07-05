@@ -35,3 +35,36 @@ head(QUKtdayX)
 load("/Users/PJO/Desktop/sysdata.rda")
 head(quk)
 load("/Users/PJO/Desktop/Basic/data/speedts.RData")
+load("/Users/PJO/Desktop/Basic/data/Fw.rda")
+Fw
+load("/Users/PJO/Desktop/Basic/data/Fw.rda")
+fw
+F
+F <- {}
+F
+load("/Users/PJO/Desktop/Basic/data/Fw.rda")
+F
+load("/Users/PJO/Desktop/Basic/data/Fw.rda")
+QUKtdayX
+F
+load("/Users/PJO/Desktop/Basic/data/Fw.rda")
+tmp = load("/Users/PJO/Desktop/Basic/data/Fw.rda")
+tmp
+get(tmp)
+Fw = get(tmp)
+Fw
+rm(F)
+F
+ls
+ls()
+Fw
+tmp
+rm(Fw)
+Fw
+tmp = load("/Users/PJO/Desktop/Basic/data/QUKtdayX.rda")
+tmp
+get(tmp)
+tmp = load("/Users/PJO/Desktop/Basic/data/speedts.rda")
+tmp = load("/Users/PJO/Desktop/Basic/data/speedts.Rdda")
+tmp = load("/Users/PJO/Desktop/Basic/data/speedts.RData")
+get(tmp)

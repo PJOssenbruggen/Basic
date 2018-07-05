@@ -11,8 +11,8 @@
 #' @param lane number, a number
 #' @param step size in seconds, a number
 #' @usage accelpass(tend, umn, usd, xstart, xfunnel, leff, lane, step)
-# #' @examples
-# #' accelpass(30, 41, 11, -1000, -500, 14, 1, 2)
+#' @examples
+#' accelpass(30, 41, 11, -1000, -500, 14, 1, 2)
 #' @export
 accelpass  <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step) {
   xdet  <- {}

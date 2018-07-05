@@ -7,9 +7,9 @@
 passplot(df, title)
 }
 \arguments{
-\item{df}{from \code{freeflowpass}, a matrix}
+\item{df}{a matrix}
 
-\item{title, }{a character string}
+\item{title}{a character string}
 }
 \description{
 The function \code{passplot} plots the data from \code{brksummary}, \code{freeflowpass}, \code{decelmerge} data frames.

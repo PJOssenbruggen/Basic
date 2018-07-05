@@ -31,3 +31,6 @@ brksummary(k, tend, umn, usd, xstart, xfunnel, leff, lane, step)
 \description{
 The function \code{brksummary} is a wrapper for  \code{accelpass} and \code{passplot}.
 }
+\examples{
+brksummary(50, 30, 41, 11, -1000, -500, 14, 0, 2)
+}

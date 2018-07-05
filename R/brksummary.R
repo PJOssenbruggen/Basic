@@ -11,8 +11,8 @@
 #' @param lane number, a number
 #' @param step size in seconds, a number
 #' @usage brksummary(k, tend, umn, usd, xstart, xfunnel, leff, lane, step)
-# #' examples
-# #' brksummary(50, 30, 41, 11, -1000, -500,  14, 0, 2)
+#' @examples
+#' brksummary(50, 30, 41, 11, -1000, -500, 14, 0, 2)
 #' @export
 brksummary <- function(k, tend, umn, usd, xstart, xfunnel, leff, lane, step) {
   set.seed(123)

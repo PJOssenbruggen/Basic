@@ -10,8 +10,8 @@
 #' @param xfunnel upstream location where the lane drop starts (feet), a number
 #' @param leff effective vehicle lingth(feet), a number
 #' @usage freeflowpass(tstart, tend, umn, usd, xstart, xfunnel, leff)
-# #' @examples
-# #' freeflowpass(0, 10, 41, 0, -1000, -500, 14)
+#' @examples
+#' freeflowpass(0, 10, 41, 0, -1000, -500, 14)
 #' @export
 freeflowpass  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
   x1 <- x2 <- {}

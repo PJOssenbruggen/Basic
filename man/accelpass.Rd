@@ -30,3 +30,6 @@ another vehicle traveling side-by-side at the speed.
 \description{
 The \code{accelpass} function estimates the relative locations of two vehicles where one passes the other.
 }
+\examples{
+accelpass(30, 41, 11, -1000, -500, 14, 1, 2)
+}
