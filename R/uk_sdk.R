@@ -1,10 +1,13 @@
 #' A speed volatility model.
 #'
 #' @param QUKtdayX, a matrix
+#' @param type logical
+#' @return If \code{type} is TRUE, plot a denisty-speed plot is created and a data.frame is returned.
+#' If If \code{type} is FALSE,  a data.frame is returned.
 #' @examples
-#' uk_sdk(QUKtdayX)
+#' uk_sdk(QUKtdayX, TRUE)
 #' @export
-uk_sdk <- function(QUKtdayX) {
+uk_sdk <- function(QUKtdayX, type) {
   quk1 <- QUKtdayX[,c(1,2,3)]
   bin <- {}
   df <- as.data.frame(matrix(rep(NA,4*24), ncol = 4))
@@ -44,18 +47,19 @@ uk_sdk <- function(QUKtdayX) {
       df[bin,3] = mean(quk1bin[quk1bin[,1] == bin,3])
       df[bin,4] = sd(quk1bin[quk1bin[,1] == bin,3])
   }
-  par(mfrow = c(1,1), pty = "s")
-  plot(df[,2], df[,3], xlab = expression("Density k, vpm"), pch = 16,
+  if(type == TRUE) {
+    plot(df[,2], df[,3], xlab = expression("Density k, vpm"), pch = 16,
          ylab = "Speed, mph", col = gray(0.3), ylim = c(0,80))
-  for(i in 1:24) {
-    k = df[i,2]
-    lines(x = c(k,k), y = c(df[i,3] - df[i,4], df[i,3] + df[i,4]) )
+    for(i in 1:24) {
+      k = df[i,2]
+      lines(x = c(k,k), y = c(df[i,3] - df[i,4], df[i,3] + df[i,4]) )
+    }
+    legend("topright", legend = expression(bar(u) %+-% hat(sigma)[U]),
+           pch = 16,
+           lty = 1,
+           bty = "n"
+    )
   }
-  legend("topright", legend = expression(bar(u) %+-% hat(sigma)[U]),
-         pch = 16,
-         lty = 1,
-         bty = "n"
-         )
   return(df)
 }
 

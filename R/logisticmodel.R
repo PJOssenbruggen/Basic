@@ -1,10 +1,14 @@
 #' The function \code{logisticmodel} estimates the parameters of logistic regression model
 #' using a binomial formula and logit link function for data \code{QUKtdayX}.
 #'
-#' @param QUKtdayX, a matrix
-#' @usage logisticmodel(QUKtdayX)
+#' @param QUKtdayX a matrix
+#' @param type logical
+#' @examples
+#' logisticmodel(QUKtdayX, TRUE)
+#' @return If \code{type} is TRUE, plot a \code{k, pi} plot is created and a data.frame is returned.
+#' If If \code{type} is FALSE,  a data.frame is returned.
 #' @export
-logisticmodel <- function(QUKtdayX) {
+logisticmodel <- function(QUKtdayX, type) {
   par(mfrow = c(1,1))
   quk1 <- QUKtdayX[,c(1,2,3)]
   bin <- {}
@@ -48,19 +52,21 @@ logisticmodel <- function(QUKtdayX) {
     df[i,3] <- n <- length(ui[ui > 50])
     df[i,4] <- m/(m + n)
   }
-  plot(df[,1], df[,4], typ = "p", pch = 16, xlab = "k, veh/mi", ylab = expression(pi) )
   k <- df[,1]
-  fit1 <- glm(pf ~ k, data = df, family = binomial(link="logit"))
+  fit1 <- glm(pf ~ k, data = df, family = quasibinomial(link="logit"))
   k.factor <- gl(n = dim(df)[1], k = 1, labels = as.character(k))
   df <- cbind(df, k.factor)
   kseq <- seq(0,120,0.1)
   pi.hat <- pi.forecast(kseq)
   pi.hat2 = pi.forecast(df[,1])
-  lines(kseq, pi.hat)
   exp.failures <- pi.hat2 * (df[,2] + df[,3])
   df <- cbind(df, pi.hat2, exp.failures)
-  points(df[,1], df[,6])
   e <- df[,2] - exp.failures
   df <- cbind(df, e)
+  if(type == TRUE) {
+    plot(df[,1], df[,4], typ = "p", pch = 16, xlab = "k, veh/mi", ylab = expression(pi) )
+    lines(kseq, pi.hat)
+    points(df[,1], df[,6])
+  }
   return(df)
 }

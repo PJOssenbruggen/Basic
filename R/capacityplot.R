@@ -6,7 +6,7 @@
 #' capacityplot(QUKtdayX)
 #' @export
 capacityplot <- function(QUKtdayX) {
-  df <- cbind(uk_sdk(QUKtdayX), logisticmodel(QUKtdayX))
+  df <- cbind(uk_sdk(QUKtdayX, FALSE), logisticmodel(QUKtdayX, FALSE))
   df <- df[,c(2,3,8)]
   Q  <- df[,1] * df[,2]
   df <- cbind(df, Q)
