@@ -7,7 +7,6 @@
 # #' passplot(df, "Merge")
 #' @export
 passplot <- function(df, title) {
-#  if(!is.factor(df[,5])) lane <- factor(df[,5])
   df <- dplyr::as_tibble(df)
   ggplot2::ggplot(df, ggplot2::aes_string("y", "x")) +
   ggplot2::geom_point(ggplot2::aes_string(size = "u", color = "u")) +
