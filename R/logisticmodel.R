@@ -5,8 +5,8 @@
 #' @param type logical
 #' @examples
 #' logisticmodel(QUKtdayX, TRUE)
-#' @return If \code{type} is TRUE, plot a \code{k, pi} plot is created and a data.frame is returned.
-#' If If \code{type} is FALSE,  a data.frame is returned.
+#' @return If \code{type} is TRUE, plot a density-failure probability plot is created and a data frame is returned.
+#' If If \code{type} is FALSE, a data frame is returned.
 #' @export
 logisticmodel <- function(QUKtdayX, type) {
   par(mfrow = c(1,1))

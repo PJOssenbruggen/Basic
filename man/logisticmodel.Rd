@@ -13,8 +13,8 @@ logisticmodel(QUKtdayX, type)
 \item{type}{logical}
 }
 \value{
-If \code{type} is TRUE, plot a \code{k, pi} plot is created and a data.frame is returned.
-If If \code{type} is FALSE,  a data.frame is returned.
+If \code{type} is TRUE, plot a density-failure probability plot is created and a data frame is returned.
+If If \code{type} is FALSE, a data frame is returned.
 }
 \description{
 The function \code{logisticmodel} estimates the parameters of logistic regression model

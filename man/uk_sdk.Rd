@@ -12,8 +12,8 @@ uk_sdk(QUKtdayX, type)
 \item{type}{logical}
 }
 \value{
-If \code{type} is TRUE, plot a denisty-speed plot is created and a data.frame is returned.
-If If \code{type} is FALSE,  a data.frame is returned.
+If \code{type} is TRUE, plot a denisty-speed plot is created and a data frame is returned.
+If If \code{type} is FALSE,  a data frame is returned.
 }
 \description{
 A speed volatility model.
