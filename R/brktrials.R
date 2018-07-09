@@ -160,5 +160,9 @@ brktrials <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step) {
     }
 
   }
- return(list(dfcross, lst, lstorg))
+  legend("topleft",legend = c("Desired trajectory", "Leader","Leader", "Follower"),
+        lty = c(1,1,3,1), lwd = c(3,1,3,1), col = c(gray(0.5),gray(0), gray(0), gray(0)),
+        bty = "n")
+  title(main = "Bottleneck Merge", sub = "Brownian Motion Model")
+  return(list(dfcross, lst, lstorg))
 }

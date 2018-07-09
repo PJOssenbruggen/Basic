@@ -9,8 +9,7 @@
 #' @usage nopass(nope, merge.df, step)
 nopass <- function(veh, nope, merge.df, step) {
   # colnames(nope) <- c("t", "u.lead","x.lead","u.follow","x.follow")
-
-  lines(nope[,1], nope[,5], col = gray(0.5))
+#  lines(nope[,1], nope[,5], col = gray(0.5))
   hsafedown   <- violate <- u.fix <- x.fix <- rep(NA, dim(nope)[1])
   for(j in 1:dim(nope)[1]) {
     u <- as.numeric(nope[j,4])
