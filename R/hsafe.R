@@ -1,4 +1,5 @@
-#' Safe headway \code{h} between lead and following vehicles. Speed \code{u} of lead vehicle is measured in mph. \code{leff} = 14 feet.
+#' Safe headway \code{h} between lead and following vehicles.
+#' Speed \code{u} of lead vehicle is measured in fps.
 #'
 #' @param u speed in units of fps, a number
 #' @param leff effective vehicle length in feet, a number

@@ -26,7 +26,7 @@ rrtrials(umn, usd, k0, N, T, leff, nveh, xlim, ylim)
 \item{ylim}{plot range along the \code{x} axis, a vector}
 }
 \value{
-The \code{rrtrials} function returns a x-tractories or \code{t-x} plots
+The \code{rrtrials} function returns \code{t-x} tractories
 for the lead and following vehicles on a single-lane road. This is a strict car-following
 model. Crossing trajectories are disallowed. In addition,
 a following vehicle driver maintains a safe headway while attempting to minimize

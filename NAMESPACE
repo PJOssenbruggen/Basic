@@ -2,7 +2,9 @@
 
 export(acceldown)
 export(accelpass)
+export(brkcross0)
 export(brksummary)
+export(brktrials)
 export(capacityplot)
 export(decelmerge)
 export(formqueue)

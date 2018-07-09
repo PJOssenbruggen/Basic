@@ -1,6 +1,6 @@
 #' \code{rrtrials} produces \code{t-x} trajectories for lead and following vehicles on a ring road
 #'
-#' @return The \code{rrtrials} function returns a x-tractories or \code{t-x} plots
+#' @return The \code{rrtrials} function returns \code{t-x} tractories
 #' for the lead and following vehicles on a single-lane road. This is a strict car-following
 #' model. Crossing trajectories are disallowed. In addition,
 #' a following vehicle driver maintains a safe headway while attempting to minimize

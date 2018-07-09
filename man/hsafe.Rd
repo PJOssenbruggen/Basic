@@ -2,7 +2,8 @@
 % Please edit documentation in R/hsafe.R
 \name{hsafe}
 \alias{hsafe}
-\title{Safe headway \code{h} between lead and following vehicles. Speed \code{u} of lead vehicle is measured in mph. \code{leff} = 14 feet.}
+\title{Safe headway \code{h} between lead and following vehicles.
+Speed \code{u} of lead vehicle is measured in fps.}
 \usage{
 hsafe(u, leff)
 }
@@ -12,7 +13,8 @@ hsafe(u, leff)
 \item{leff}{effective vehicle length in feet, a number}
 }
 \description{
-Safe headway \code{h} between lead and following vehicles. Speed \code{u} of lead vehicle is measured in mph. \code{leff} = 14 feet.
+Safe headway \code{h} between lead and following vehicles.
+Speed \code{u} of lead vehicle is measured in fps.
 }
 \examples{
 hsafe(60, 14)

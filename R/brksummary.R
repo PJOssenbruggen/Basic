@@ -16,7 +16,7 @@
 #' @export
 brksummary <- function(k, tend, umn, usd, xstart, xfunnel, leff, lane, step) {
   set.seed(123)
-# accelpass(tstart, umn, usd, xstart, xfunnel, leff, lane, step)
+# accelpass(tend, umn, usd, xstart, xfunnel, leff, lane, step)
   df0 <- accelpass(30, 41, 11, -1000, -500,  14, 0, step)
   # vehicle 0 is ahead of vehicles 1 and 2. adjust x0
   l <- 5280/k
