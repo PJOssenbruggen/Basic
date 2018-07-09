@@ -20,6 +20,7 @@ Imports:
     graphics,
     grDevices,
     knitr,
+    rlist,
     rmarkdown,
     roxygen2,
     sde,

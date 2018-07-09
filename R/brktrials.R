@@ -17,6 +17,8 @@
 #' brktrials(30, 41, 11, xstart, -500, 14, lane, 0.5)
 #' @export
 brktrials <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step) {
+  lane <- c(0,1,2,1,2)
+  xstart <- c(-900,-1000,-1020, -1090, -1100)
   tend.save <- tend
   nveh <- length(lane)
   if(nveh == 1) stop("Warning: lane and xstart should be vectors.")
@@ -27,13 +29,13 @@ brktrials <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step) {
     # accelpass(tend, umn, usd, xstart, xfunnel, leff, lane, step)
     df    <- accelpass(tend, umn, usd, xstart[veh] , xfunnel, leff, lane[veh] , step)
     lst2  <- list(df[,c(1,5,6,7,8)])
-    lst   <- list.append(lst, lst2)
+    lst   <- rlist::list.append(lst, lst2)
   }
   # conflict test. t0 = time when vehicle i location is x = 0.
   dfcross <- {}
   for(veh in 1:nveh) {
     dftest  <- as.data.frame(lst[[veh]])
-    result  <- brkcross0(i, dftest)
+    result  <- brkcross0(i = veh, dftest)
     h <- u  <- x <- hobs <- time <- NA
     result  <- c(result, time = time, hsafe = h, u = u, x = x, hobs = hobs)
     dfcross <- rbind(dfcross, result)
@@ -65,8 +67,6 @@ brktrials <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step) {
   df5.  <- df5[df5[,3] > xfunnel & df5[,3] < 0,]
   df5.. <- df5[df5[,3] >= 0,]
   lstorg <- lst
-#  lstab <- list(df1., df2., df3., df4., df5.)
-#  lstdn <- lstdn. <- list(df1.., df2.., df3.., df4.., df5..)
   for(veh in 2:nveh) {
     # follower
     dfi     <- as.data.frame(lst[[veh]])
@@ -139,7 +139,7 @@ brktrials <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step) {
       # no passing allowed check
       nope <- cbind(tuxlead[,c(1,2,3)], tux[,c(2,3)])
       colnames(nope) <- c("t", "u.lead","x.lead","u.follow","x.follow")
-      downstream     <- nopass(veh, nope, merge.df, step)
+      downstream     <- nopass(veh, nope, merge.df, leff, step)
       # Fix tailgating
       lines(downstream[,1], downstream[,10], lwd = 1)
       nsteps <- dim(downstream)[1]
@@ -161,7 +161,7 @@ brktrials <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step) {
 
   }
   legend("topleft",legend = c("Desired trajectory", "Leader","Leader", "Follower"),
-        lty = c(1,1,3,1), lwd = c(3,1,3,1), col = c(gray(0.5),gray(0), gray(0), gray(0)),
+        lty = c(3,1,3,1), lwd = c(1,1,3,1), col = c(gray(0.5),gray(0), gray(0), gray(0)),
         bty = "n")
   title(main = "Bottleneck Merge", sub = "Brownian Motion Model")
   return(list(dfcross, lst, lstorg))

@@ -4,10 +4,11 @@
 #' \code{brktrials} is a wrapper function of \code{accelpass}.
 #' @param veh vehicle, a number
 #' @param nope is a data.frame of leading and following time, speed and location data, a dataframe
-#' @param merge.df is a data.frame of leading and following time, speed and location data, a dataframe
+#' @param merge.df is a data.frame of predictions for the merge zone, speed and location data, a dataframe
+#' @param leff effective vehicle length in feet, a number
 #' @param step size in seconds, a number
-#' @usage nopass(nope, merge.df, step)
-nopass <- function(veh, nope, merge.df, step) {
+#' @usage nopass(veh, nope, merge.df, leff, step)
+nopass <- function(veh, nope, merge.df, leff, step) {
   # colnames(nope) <- c("t", "u.lead","x.lead","u.follow","x.follow")
 #  lines(nope[,1], nope[,5], col = gray(0.5))
   hsafedown   <- violate <- u.fix <- x.fix <- rep(NA, dim(nope)[1])

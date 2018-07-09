@@ -4,14 +4,16 @@
 \alias{nopass}
 \title{\code{nopass} produces \code{t}, \code{u} and \code{x} for lead following vehicles downstream of a bottleneck}
 \usage{
-nopass(nope, merge.df, step)
+nopass(veh, nope, merge.df, leff, step)
 }
 \arguments{
 \item{veh}{vehicle, a number}
 
 \item{nope}{is a data.frame of leading and following time, speed and location data, a dataframe}
 
-\item{merge.df}{is a data.frame of leading and following time, speed and location data, a dataframe}
+\item{merge.df}{is a data.frame of predictions for the merge zone, speed and location data, a dataframe}
+
+\item{leff}{effective vehicle length in feet, a number}
 
 \item{step}{size in seconds, a number}
 }
