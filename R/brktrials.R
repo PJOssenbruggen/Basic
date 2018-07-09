@@ -92,8 +92,6 @@ brktrials <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step) {
     dfcross[veh,9] <- df..[2,3] - df..[1,3]
     x <- dfcross[veh,8]
     if(as.numeric(dfcross[veh,6]) >= as.numeric(dfcross[veh,9])) {
-      print(data.frame(vehicle = veh, status = "Fix"))
-      print(df..)
       x <- df..[2,3] - as.numeric(dfcross[veh,6])
       dfcross[veh,8] <- x
       df...     <- as.data.frame(lst[[veh]])
@@ -158,7 +156,6 @@ brktrials <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step) {
       text(dfi[nsteps,1], dfi[nsteps,3], labels = as.character(veh), pos = 4)
       lstdn.[[veh]] <- dfi
     }
-
   }
   legend("topleft",legend = c("Desired trajectory", "Leader","Leader", "Follower"),
         lty = c(3,1,3,1), lwd = c(1,1,3,1), col = c(gray(0.5),gray(0), gray(0), gray(0)),
