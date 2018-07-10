@@ -17,8 +17,6 @@
 #' brktrials(30, 41, 11, xstart, -500, 14, lane, 0.5)
 #' @export
 brktrials <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step) {
-  lane <- c(0,1,2,1,2)
-  xstart <- c(-900,-1000,-1020, -1090, -1100)
   tend.save <- tend
   nveh <- length(lane)
   if(nveh == 1) stop("Warning: lane and xstart should be vectors.")
