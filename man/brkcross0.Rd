@@ -2,15 +2,15 @@
 % Please edit documentation in R/brkcross0.R
 \name{brkcross0}
 \alias{brkcross0}
-\title{\code{brkcross0} estimates of speed and location of vehicle crossing bottleneck location \code{x}}
+\title{\code{brkcross0} estimates the time, speed and location that a vehicle crosses bottleneck location \code{x}}
 \usage{
-brkcross0(i, dftest)
+brkcross0(vehicle, df)
 }
 \arguments{
-\item{i}{index, a number}
+\item{vehicle, }{a number}
 
-\item{dftest, }{a dataframe}
+\item{df, }{a dataframe}
 }
 \description{
-\code{brkcross0} estimates of speed and location of vehicle crossing bottleneck location \code{x}
+\code{brkcross0} estimates the time, speed and location that a vehicle crosses bottleneck location \code{x}
 }

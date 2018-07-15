@@ -2,25 +2,20 @@
 % Please edit documentation in R/nopass.R
 \name{nopass}
 \alias{nopass}
-\title{\code{nopass} produces \code{t}, \code{u} and \code{x} for lead following vehicles downstream of a bottleneck}
+\title{\code{nopass} produces \code{t}, \code{u} and \code{x} for lead and following vehicles downstream of a bottleneck}
 \usage{
-nopass(veh, nope, merge.df, leff, step)
+nopass(veh, nope, leff)
 }
 \arguments{
 \item{veh}{vehicle, a number}
 
-\item{nope}{is a data.frame of leading and following time, speed and location data, a dataframe}
-
-\item{merge.df}{is a data.frame of predictions for the merge zone, speed and location data, a dataframe}
+\item{nope}{is a data.frame of leading and following vehicles: time, speed and location data, a data frame}
 
 \item{leff}{effective vehicle length in feet, a number}
-
-\item{step}{size in seconds, a number}
 }
 \value{
-\code{brktrials} returns  a data frame for a vehicle at a bottleneck.
-\code{brktrials} is a wrapper function of \code{accelpass}.
+\code{brktrials} returns a data frame speed and location downstream of bottleneck.
 }
 \description{
-\code{nopass} produces \code{t}, \code{u} and \code{x} for lead following vehicles downstream of a bottleneck
+\code{nopass} produces \code{t}, \code{u} and \code{x} for lead and following vehicles downstream of a bottleneck
 }

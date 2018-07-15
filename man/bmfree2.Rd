@@ -19,7 +19,7 @@ bmfree2(umn, usd, tstart, tend, xstart, step, type)
 
 \item{step}{time-step size, a number}
 
-\item{type}{logical}
+\item{type}{logical for plotting where TRUE creates a plot}
 }
 \description{
 The \code{bmfree2} function returns a \code{tux} matrix of time \code{t}, speed \code{u} and location \code{x} values.

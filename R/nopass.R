@@ -1,41 +1,29 @@
-#' \code{nopass} produces \code{t}, \code{u} and \code{x} for lead following vehicles downstream of a bottleneck
+#' \code{nopass} produces \code{t}, \code{u} and \code{x} for lead and following vehicles downstream of a bottleneck
 #'
-#' @return \code{brktrials} returns  a data frame for a vehicle at a bottleneck.
-#' \code{brktrials} is a wrapper function of \code{accelpass}.
+#' @return \code{brktrials} returns a data frame speed and location downstream of bottleneck.
 #' @param veh vehicle, a number
-#' @param nope is a data.frame of leading and following time, speed and location data, a dataframe
-#' @param merge.df is a data.frame of predictions for the merge zone, speed and location data, a dataframe
+#' @param nope is a data.frame of leading and following vehicles: time, speed and location data, a data frame
 #' @param leff effective vehicle length in feet, a number
-#' @param step size in seconds, a number
-#' @usage nopass(veh, nope, merge.df, leff, step)
-nopass <- function(veh, nope, merge.df, leff, step) {
-  # colnames(nope) <- c("t", "u.lead","x.lead","u.follow","x.follow")
-#  lines(nope[,1], nope[,5], col = gray(0.5))
-  hsafedown   <- violate <- u.fix <- x.fix <- rep(NA, dim(nope)[1])
+#' @usage nopass(veh, nope, leff)
+#' @export
+nopass <- function(veh, nope, leff) {
+  hcrit   <- u <- x <- rep(NA, dim(nope)[1])
   for(j in 1:dim(nope)[1]) {
     u <- as.numeric(nope[j,4])
-    hsafedown[j] <- hsafe(u, leff)
+    hcrit[j] <- hsafe(u, leff)
   }
-  hobsdown <- nope[,3] - nope[,5]
+  hobs <- nope[,3] - nope[,5]
   for(j in 1:dim(nope)[1]) {
-    if(hobsdown[j] < hsafedown[j]) {
-      violate[j]  <- 1
-      u.fix[j]    <- nope[j,2]
-      if(j == 1) x.fix[j] <- merge.df[dim(merge.df)[1],3]
-      else {
-        u         <- as.numeric(nope[j,2])
-        hsafe     <- hsafe(u, leff)
-        x.fix[j]  <- nope[j,3] - hsafe
-      }
+    if(hobs[j] < hcrit[j]) {
+      u.      <- as.numeric(nope[j,2])
+      u[j]    <- nope[j,2]
+      hfix    <- hsafe(u., leff)
+      x[j]    <- nope[j,3] - hfix
     }  else {
-      violate[j] <- 0
-      u.fix[j]   <- nope[j,4]
-      x.fix[j]   <- nope[j,5]
+      u[j]   <- nope[j,4]
+      x[j]   <- nope[j,5]
     }
   }
-  lines(nope[,1], x.fix, col = gray(0.5), lty = 3, lwd = 2)
-  lines(nope[,1], nope[,3], col = gray(0.), lty = 3, lwd = 4)
-  nope  <- cbind(nope, hobsdown, hsafedown, violate, u.fix, x.fix)
- # if(veh == 4) browser()
-  return(nope)
+  fix  <- data.frame(u, x)
+  return(fix)
 }
