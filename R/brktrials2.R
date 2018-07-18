@@ -61,7 +61,7 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
   }
   # df0 = with driver constraints
   df0 <- df
-
+#  browser()
   # dfcross = data frame t0 = times when vehicle i location is x = 0.
   dfcross <- {}
   for(veh in 1:nveh) {
@@ -83,14 +83,16 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
   title(main = "Lane 1")
   df <- plotupstream(pick, lane., nveh, df, xfunnel, leff, type)
   title(main = "Lane 2")
-
+#  browser()
 
   type <- 1
   par(mfrow = c(1,1), pty = "m")
   plotoptimize(df, xfunnel)
   title("Car Following Constraints")
   for(veh in 1:nveh) lines(df0[,1], df0[,3], lty = 4)
+#  browser()
 
+  # Model forecast plot
   for(veh in 1:nveh) {
     dfij    <- vehdf(veh, nveh, df)
     dfij0   <- dfij[dfij[,3] < 0,]
@@ -99,7 +101,6 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
     dfx0.   <- data.frame(t = dfij0[1], u = dfij0[2], x = dfij0[3], vehicle = veh)
     if(veh > 1) dfx0 <- rbind(dfx0, dfx0.) else dfx0 = dfx0.
   }
-
   o <- order(dfx0[,1])
   dfx0 <- dfx0[o,]
   vehorder <- dfx0[,4]
@@ -110,25 +111,30 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
     xlimit <- c(xlimit, vehdf(i, nveh, df)[,3])
   }
   ylim <- c(min(xlimit), max(xlimit))
-  ylim
   par(mfrow = c(1,1), pty = "m")
   for(i in 1:nveh) {
     if(i == 1) {
       veh     <- vehorder[i]
       dfij    <- vehdf(veh, nveh, df)
-      plot(dfij[,1], dfij[,3], xlab = "t", ylab = "x", typ = "l",
-           xlim = c(0,tend.save), ylim = ylim)
+      if(dfij[1,5] == "1") {
+        plot(dfij[,1], dfij[,3], xlab = "t", ylab = "x", typ = "l",
+             xlim = c(0,tend.save), ylim = ylim)
+      } else {
+        plot(dfij[,1], dfij[,3], xlab = "t", ylab = "x", typ = "l",
+             xlim = c(0,tend.save), ylim = ylim, col = "blue")
+      }
+
       abline(h = c(0, xfunnel), col = gray(0.8))
       abline(v = 0, col = gray(0.8))
       text(dfij[tlen,1], dfij[tlen,3], labels = as.character(veh), pos = 4, cex = 1)
     } else {
       veh     <- vehorder[i]
       dfij    <- vehdf(veh, nveh, df)
-      if(as.numeric(dfij[1,5] == 1)) lines(dfij[,1], dfij[,3], lty = 4)
-      else  lines(dfij[,1], dfij[,3], lty = 4)
+      if(dfij[1,5] == "1") lines(dfij[,1], dfij[,3], lty = 4)
+      else  lines(dfij[,1], dfij[,3], lty = 4, col = "blue")
     }
   }
-
+#      browser()
   # Filter the upstream data to assure drivers conform to safe driving hsafe rules.
   for(i in 2:nveh) {
     # follower
@@ -149,21 +155,39 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
     # no safety violation for xab.
       dfij      <- vehdf(veh, nveh, df)
       dfij0     <- dfij[dfij[,1] <= dfcross[i,5],]
-      lines(dfij0[,1], dfij0[,3])
+# browser()
+      if(dfij0[1,5] == "1") {
+        lines(dfij0[,1], dfij0[,3])
+      } else {
+        lines(dfij0[,1], dfij0[,3], col = "blue")
+      }
       tindex    <- as.numeric(dfcross[i,5])
       tux       <- dfij[dfij[,1] >= tindex,]
       # check downstream for hsafe violations
       tuxlead   <- vehdf(veh = vehorder[i-1], nveh, df)
       tuxlead   <- tuxlead[tuxlead[,1] >= tindex,]
       # no passing allowed check
-      nope    <- cbind(tuxlead[,c(1,2,3)], tux[,c(2,3)])
-      colnames(nope) <- c("t", "u.lead","x.lead","u.follow","x.follow")
+      if(is.null(dim(tux))) nope <- c(tuxlead[c(1,2,3)], tux[c(2,3)])
+      else {
+        nope    <- cbind(tuxlead[,c(1,2,3)], tux[,c(2,3)])
+        colnames(nope) <- c("t", "u.lead","x.lead","u.follow","x.follow")
+      }
       tuxfix     <- nopass(veh, nope, leff)
       # Fix tailgating
-      lines(tux[,1], tuxfix[,2], lwd = 1)
-      nsteps <- dim(tuxfix)[1]
-      text(tux[nsteps,1], tuxfix[nsteps,2],
-           labels = as.character(veh), pos = 4, cex = 1)
+      if(is.data.frame(tuxfix)) {
+        if(dfij0[1,5] == "1") {
+          lines(tux[,1], tuxfix[,2], lwd = 1)
+        } else {
+          lines(tux[,1], tuxfix[,2], lwd = 1, col = "blue")
+        }
+        nsteps <- dim(tuxfix)[1]
+        text(tux[nsteps,1], tuxfix[nsteps,2],
+             labels = as.character(veh), pos = 4, cex = 1)
+      } else {
+        text(tend, tux[3],
+             labels = as.character(veh), pos = 4, cex = 1)
+      }
+#      browser()
     } else {
       # Safe headway violation
       dfij            <- vehdf(veh, nveh, df)
@@ -207,23 +231,34 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
       tstart  <- tendab
       xstart  <- xmab[length(xmab)]
       umn     <- 3600/5280*uab[length(uab)]
-      tux     <- bmfree2(umn, usd, tstart, tend, xstart, step, FALSE)
-      lines(tux[,1],tux[,3])
-      tuxlead <- vehdf(veh = vehorder[i - 1], nveh, df)
-      tuxlead <- tuxlead[tuxlead[,1] >= tstart,]
-      # no passing allowed check
-      nope           <- cbind(tuxlead[,c(1,2,3)], tux[,c(2,3)])
-      colnames(nope) <- c("t", "u.lead","x.lead","u.follow","x.follow")
-      tuxfix     <- nopass(veh, nope, leff)
-      # Fix tailgating
-      lines(tux[,1], tuxfix[,2], lwd = 1)
-      nsteps <- dim(tuxfix)[1]
-      text(tux[nsteps,1], tuxfix[nsteps,2],
-           labels = as.character(veh), pos = 4, cex = 1)
+#      browser()
+      if(tstart < tend) {
+        tux     <- bmfree2(umn, usd, tstart, tend, xstart, step, FALSE)
+        lines(tux[,1],tux[,3])
+        tuxlead <- vehdf(veh = vehorder[i - 1], nveh, df)
+        tuxlead <- tuxlead[tuxlead[,1] >= tstart,]
+        # no passing allowed check
+        nope           <- cbind(tuxlead[,c(1,2,3)], tux[,c(2,3)])
+        colnames(nope) <- c("t", "u.lead","x.lead","u.follow","x.follow")
+        tuxfix     <- nopass(veh, nope, leff)
+        # Fix tailgating
+        lines(tux[,1], tuxfix[,2], lwd = 1)
+        nsteps <- dim(tuxfix)[1]
+        text(tux[nsteps,1], tuxfix[nsteps,2],
+             labels = as.character(veh), pos = 4, cex = 1)
+      }
+
     }
+#    browser()
   }
   title(main = "Model Predictions")
-  legend("topleft",legend = c("No CF constraints","CF constraints"),
-         lty = c(4,1), bty = "n")
+  legend("topleft", legend = c(
+    "Leading vehicle",
+    "Following vehicles",
+    "Lane 1", "Lane 2"
+  ),
+  lty = c(1,4,1,1),
+  col = c("black","black","black","blue"),
+  bty = "n")
   return(list(dfcross, df, df0))
 }

@@ -7,23 +7,27 @@
 #' @usage nopass(veh, nope, leff)
 #' @export
 nopass <- function(veh, nope, leff) {
-  hcrit   <- u <- x <- rep(NA, dim(nope)[1])
-  for(j in 1:dim(nope)[1]) {
-    u <- as.numeric(nope[j,4])
-    hcrit[j] <- hsafe(u, leff)
-  }
-  hobs <- nope[,3] - nope[,5]
-  for(j in 1:dim(nope)[1]) {
-    if(hobs[j] < hcrit[j]) {
-      u.      <- as.numeric(nope[j,2])
-      u[j]    <- nope[j,2]
-      hfix    <- hsafe(u., leff)
-      x[j]    <- nope[j,3] - hfix
-    }  else {
-      u[j]   <- nope[j,4]
-      x[j]   <- nope[j,5]
+  if(is.null(dim(nope))) {
+    fix <- nope[c(4,5)]
+  } else {
+    hcrit   <- u <- x <- rep(NA, dim(nope)[1])
+    for(j in 1:dim(nope)[1]) {
+      u <- as.numeric(nope[j,4])
+      hcrit[j] <- hsafe(u, leff)
     }
+    hobs <- nope[,3] - nope[,5]
+    for(j in 1:dim(nope)[1]) {
+      if(hobs[j] < hcrit[j]) {
+        u.      <- as.numeric(nope[j,2])
+        u[j]    <- nope[j,2]
+        hfix    <- hsafe(u., leff)
+        x[j]    <- nope[j,3] - hfix
+      }  else {
+        u[j]   <- nope[j,4]
+        x[j]   <- nope[j,5]
+      }
+    }
+    fix  <- data.frame(u, x)
   }
-  fix  <- data.frame(u, x)
   return(fix)
 }

@@ -22,12 +22,21 @@ plotupstream <- function(pick, lane, nveh, df, xfunnel, leff, type) {
   }
   ylim <- c(min(xlimit), max(xlimit))
   dfij <- vehdf(vehs[1], nveh, df)
+
   if(type == 2) {
-    plot(dfij[,1], dfij[,3], xlab = "t", ylab = "x", typ = "l",
-         xlim = c(0,tend), ylim = ylim)
-    abline(h = c(0, xfunnel), col = gray(0.8))
-    abline(v = 0, col = gray(0.8))
-    text(dfij[tlen,1], dfij[tlen,3], labels = as.character(vehs[1]), pos = 1)
+    if(dfij[1,5] == "1") {
+      plot(dfij[,1], dfij[,3], xlab = "t", ylab = "x", typ = "l",
+           xlim = c(0,tend), ylim = ylim)
+      abline(h = c(0, xfunnel), col = gray(0.8))
+      abline(v = 0, col = gray(0.8))
+      text(dfij[tlen,1], dfij[tlen,3], labels = as.character(vehs[1]), pos = 1)
+    } else {
+      plot(dfij[,1], dfij[,3], xlab = "t", ylab = "x", typ = "l",
+           xlim = c(0,tend), ylim = ylim, col = "blue")
+      abline(h = c(0, xfunnel), col = gray(0.8))
+      abline(v = 0, col = gray(0.8))
+      text(dfij[tlen,1], dfij[tlen,3], labels = as.character(vehs[1]), pos = 1)
+    }
   }
   vehs <- vehs[-1]
   if(type == 2) {
@@ -36,6 +45,11 @@ plotupstream <- function(pick, lane, nveh, df, xfunnel, leff, type) {
       x <- as.numeric(dfij[,1])
       y <- as.numeric(dfij[,3])
       lines(x, y, lty = 4)
+      if(dfij[1,5] == "1") {
+        lines(x, y, lty = 4)
+      } else {
+        lines(x, y, lty = 4, lwd = 2, col = "blue")
+      }
       text(dfij[tlen,1], dfij[tlen,3], labels = as.character(vehs[veh]), pos = 1)
     }
   }
@@ -47,7 +61,11 @@ plotupstream <- function(pick, lane, nveh, df, xfunnel, leff, type) {
     nope     <- cbind(tuxlead[,c(1,2,3)], tux[,c(2,3)])
     colnames(nope) <- c("t", "u.lead","x.lead","u.follow","x.follow")
     tuxfix   <- nopass(veh = vehs[veh+1], nope, leff)
-    if(type == 2) lines(tseq, tuxfix[,2])
+    if(type == 2 & dfij[1,5] == "1") {
+      lines(tseq, tuxfix[,2])
+    } else {
+      lines(tseq, tuxfix[,2], col = "blue")
+    }
     ufix <- tuxfix[,1]
     xfix <- tuxfix[,2]
     yfix <- dfij[,4]

@@ -18,16 +18,31 @@ plotoptimize <- function(df,xfunnel) {
   ylim <- c(min(xlimit), max(xlimit))
   # plot
   dfij <- vehdf(1, nveh, df)
-  plot(dfij[,1], dfij[,3], xlab = "t", ylab = "x", typ = "l",
-       xlim = c(0,tseq[tlen]), ylim = ylim)
+  if(dfij[1,5] == "1") {
+    plot(dfij[,1], dfij[,3], xlab = "t", ylab = "x", typ = "l",
+         xlim = c(0,tseq[tlen]), ylim = ylim)
+  } else {
+    plot(dfij[,1], dfij[,3], xlab = "t", ylab = "x", typ = "l",
+         xlim = c(0,tseq[tlen]), ylim = ylim, col = "blue")
+  }
   abline(h = c(0, xfunnel), col = gray(0.8))
   abline(v = 0, col = gray(0.8))
   text(dfij[tlen,1], dfij[tlen,3], labels = "1", pos = 4)
   for(veh in 2:nveh) {
     dfij <- vehdf(veh, nveh, df)
-    lines(dfij[,1], dfij[,3], lty = 4)
+    if(dfij[1,5] == "1") {
+      lines(dfij[,1], dfij[,3], lty = 4)
+    } else {
+      lines(dfij[,1], dfij[,3], lty = 4, lwd = 2, col = "blue")
+    }
     text(dfij[tlen,1], dfij[tlen,3], labels = veh, pos = 4)
   }
-  legend("topleft", legend = c("Leading vehicle","Following vehicles"),
-         lty = c(1,4), bty = "n")
+  legend("topleft", legend = c(
+    "Leading vehicle",
+    "Following vehicles",
+    "Lane 1", "Lane 2"
+    ),
+    lty = c(1,4,1,1),
+    col = c("black","black","black","blue"),
+    bty = "n")
 }
