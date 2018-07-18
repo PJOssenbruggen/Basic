@@ -16,6 +16,7 @@
 #' brktrials2(5, 30, 41, 11, xstart, -500, 14, lane, 0.5, 0)
 #' @export
 brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, type) {
+  plot.new()
   set.seed(127)
   tend.save  <- tend
   lane.      <- lane
@@ -75,11 +76,12 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
   rownames(dfcross) <- paste("", sep = "",1:nveh)
   # plot lead vehicle trajectories
   par(mfrow = c(1,2), pty = "s")
+  if(type == 2) type. <- 2 else type. <- 0
   pick <- 1
-  df   <- plotupstream(pick, lane., nveh, df, xfunnel, leff, type)
+  df   <- plotupstream(pick, lane., nveh, df, xfunnel, leff, type = type.)
   pick <- 2
   title(main = "Lane 1")
-  df   <- plotupstream(pick, lane., nveh, df, xfunnel, leff, type)
+  df   <- plotupstream(pick, lane., nveh, df, xfunnel, leff, type = type.)
   title(main = "Lane 2")
 #  browser()
   if(type == 2) {
