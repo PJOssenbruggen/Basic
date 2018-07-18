@@ -10,7 +10,7 @@
 #' @param leff effective vehicle length(feet), a number
 #' @param lane a vector of \code{nveh} numbers, a vector
 #' @param step size in seconds, a number
-#' @param type a number to create a plot certain kind of plot, a number
+#' @param type 0 no plots, 1 prediction plot, 2 all plots, a number
 #' @usage brktrials2(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, type)
 #' @examples
 #' brktrials2(5, 30, 41, 11, xstart, -500, 14, lane, 0.5, 0)
@@ -53,8 +53,7 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
     yfix <- df.[,4]
     df   <- vehfix(veh, nveh, ufix, xfix, yfix, df)
   }
-  type <- 1
-  if(type == 1) {
+  if(type == 2) {
     par(mfrow = c(1,1), pty = "m")
     plotoptimize(df, xfunnel)
     title("Driver Conflicts")
@@ -76,20 +75,20 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
   rownames(dfcross) <- paste("", sep = "",1:nveh)
   # plot lead vehicle trajectories
   par(mfrow = c(1,2), pty = "s")
-  type <- 2
   pick <- 1
-  df <- plotupstream(pick, lane., nveh, df, xfunnel, leff, type)
+  df   <- plotupstream(pick, lane., nveh, df, xfunnel, leff, type)
   pick <- 2
   title(main = "Lane 1")
-  df <- plotupstream(pick, lane., nveh, df, xfunnel, leff, type)
+  df   <- plotupstream(pick, lane., nveh, df, xfunnel, leff, type)
   title(main = "Lane 2")
 #  browser()
+  if(type == 2) {
+    par(mfrow = c(1,1), pty = "m")
+    plotoptimize(df, xfunnel)
+    title("Car Following Constraints")
+    for(veh in 1:nveh) lines(df0[,1], df0[,3], lty = 4)
+  }
 
-  type <- 1
-  par(mfrow = c(1,1), pty = "m")
-  plotoptimize(df, xfunnel)
-  title("Car Following Constraints")
-  for(veh in 1:nveh) lines(df0[,1], df0[,3], lty = 4)
 #  browser()
 
   # Model forecast plot
@@ -155,7 +154,6 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
     # no safety violation for xab.
       dfij      <- vehdf(veh, nveh, df)
       dfij0     <- dfij[dfij[,1] <= dfcross[i,5],]
-# browser()
       if(dfij0[1,5] == "1") {
         lines(dfij0[,1], dfij0[,3])
       } else {
@@ -193,63 +191,72 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
       dfij            <- vehdf(veh, nveh, df)
       dfijab          <- dfij[dfij[,3] >= xfunnel & dfij[,3] <= 0,]
       index           <- dim(dfijab)[1]
-      dfcross[i,5]  <- tindex <- as.numeric(dfijab[index,1])
-      dfcross[i,6]  <- as.numeric(dfijab[1,2])
-      dfcross[i,7]  <- as.numeric(dfijab[1,2])
-      dfcross[i,8]  <- hsafe(as.numeric(dfijab[1,2]), leff)
-      dfijlead        <- vehdf(veh-1, nveh, df)
-      hobs            <- as.numeric(dfijlead[dfijlead[,1] == tindex,3])
-      dfcross[i,9]  <- hobs
-      dfijfun   <- dfij[dfij[,3] <= xfunnel,]
-      lines(dfijfun[,1], dfijfun[,3], lwd = 1)
-      index     <- dim(dfijfun)[1]
-      tstartab  <- dfijfun[index,1]
-      ustartab  <- dfijfun[index,2]
-      xstartab  <- dfijfun[index,3]
-      tendab    <- as.numeric(dfcross[i,5])
-      uendab    <- as.numeric(dfcross[i,6])
-      xendab    <- as.numeric(dfcross[i,7])
-      ab        <- xabparam(tstart = tstartab, tend = tendab,
-                      ustart = ustartab, uend = uendab,
-                      xstart = xstartab, xend = xendab)
-      a    <- ab[1]
-      b    <- ab[2]
-      x0   <- xstartab
-      u0   <- ustartab
-      t0   <- tstartab
-      tseq <- seq(tstartab, tendab, step)
-      xmab <- uab  <- yab  <- {}
-      for(j in 1:length(tseq)) {
-        xmab <- c(xmab, xab(x0,u0,a,b,t = tseq[j],t0))
-        uab  <- c(uab, uab(u0,a,b,t = tseq[j],t0))
-        yab  <- c(yab, df[df[,1] == tseq[j], 4])
+      if(index > 0) {
+        dfcross[i,5]    <- tindex <- as.numeric(dfijab[index,1])
+        dfcross[i,6]    <- as.numeric(dfijab[1,2])
+        dfcross[i,7]    <- as.numeric(dfijab[1,2])
+        dfcross[i,8]    <- hsafe(as.numeric(dfijab[1,2]), leff)
+        dfijlead        <- vehdf(veh-1, nveh, df)
+        hobs            <- as.numeric(dfijlead[dfijlead[,1] == tindex,3])
+        dfcross[i,9]    <- hobs
+        dfijfun         <- dfij[dfij[,3] <= xfunnel,]
+#        browser()
+        lines(dfijfun[,1], dfijfun[,3], lwd = 1)
+        index           <- dim(dfijfun)[1]
+        tstartab        <- dfijfun[index,1]
+        ustartab        <- dfijfun[index,2]
+        xstartab        <- dfijfun[index,3]
+        tendab          <- as.numeric(dfcross[i,5])
+        uendab          <- as.numeric(dfcross[i,6])
+        xendab          <- as.numeric(dfcross[i,7])
+        ab              <- xabparam(tstart = tstartab, tend = tendab,
+                              ustart = ustartab, uend = uendab,
+                              xstart = xstartab, xend = xendab)
+        a               <- ab[1]
+        b               <- ab[2]
+        x0              <- xstartab
+        u0              <- ustartab
+        t0              <- tstartab
+        tseq            <- seq(tstartab, tendab, step)
+        xmab <- uab  <- yab  <- {}
+        for(j in 1:length(tseq)) {
+          xmab <- c(xmab, xab(x0,u0,a,b,t = tseq[j],t0))
+          uab  <- c(uab, uab(u0,a,b,t = tseq[j],t0))
+          yab  <- c(yab, df[df[,1] == tseq[j], 4])
+        }
+        xabpoints <- rbind(data.frame(t = tstartab, u = ustartab, x = xstartab),
+                           data.frame(t = tendab, u = uendab, x = xendab)
+        )
+#        browser()
+        lines(tseq, xmab, lwd = 1)
+        tstart  <- tendab
+        xstart  <- xmab[length(xmab)]
+        umn     <- 3600/5280*uab[length(uab)]
+        if(tstart < tend) {
+          tux     <- bmfree2(umn, usd, tstart, tend, xstart, step, FALSE)
+          lines(tux[,1],tux[,3])
+          tuxlead <- vehdf(veh = vehorder[i - 1], nveh, df)
+          tuxlead <- tuxlead[tuxlead[,1] >= tstart,]
+          # no passing allowed check
+          nope           <- cbind(tuxlead[,c(1,2,3)], tux[,c(2,3)])
+          colnames(nope) <- c("t", "u.lead","x.lead","u.follow","x.follow")
+          tuxfix     <- nopass(veh, nope, leff)
+          # Fix tailgating
+          lines(tux[,1], tuxfix[,2], lwd = 1)
+          nsteps <- dim(tuxfix)[1]
+          text(tux[nsteps,1], tuxfix[nsteps,2],
+               labels = as.character(veh), pos = 4, cex = 1)
+        }
+      } else {
+        if(dfij[1,5] == "1") {
+          lines(dfij[,1], dfij[,3])
+          text(dfij[tlen,1], dfij[tlen,3], labels = veh, pos = 4)
+        } else {
+          lines(dfij[,1], dfij[,3], col = "blue")
+          text(dfij[tlen,1], dfij[tlen,3], labels = veh, pos = 4)
+        }
       }
-      xabpoints <- rbind(data.frame(t = tstartab, u = ustartab, x = xstartab),
-            data.frame(t = tendab, u = uendab, x = xendab)
-      )
-      lines(tseq, xmab, lwd = 1)
-      tstart  <- tendab
-      xstart  <- xmab[length(xmab)]
-      umn     <- 3600/5280*uab[length(uab)]
-#      browser()
-      if(tstart < tend) {
-        tux     <- bmfree2(umn, usd, tstart, tend, xstart, step, FALSE)
-        lines(tux[,1],tux[,3])
-        tuxlead <- vehdf(veh = vehorder[i - 1], nveh, df)
-        tuxlead <- tuxlead[tuxlead[,1] >= tstart,]
-        # no passing allowed check
-        nope           <- cbind(tuxlead[,c(1,2,3)], tux[,c(2,3)])
-        colnames(nope) <- c("t", "u.lead","x.lead","u.follow","x.follow")
-        tuxfix     <- nopass(veh, nope, leff)
-        # Fix tailgating
-        lines(tux[,1], tuxfix[,2], lwd = 1)
-        nsteps <- dim(tuxfix)[1]
-        text(tux[nsteps,1], tuxfix[nsteps,2],
-             labels = as.character(veh), pos = 4, cex = 1)
-      }
-
     }
-#    browser()
   }
   title(main = "Model Predictions")
   legend("topleft", legend = c(

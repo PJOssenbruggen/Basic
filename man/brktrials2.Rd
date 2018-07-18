@@ -25,7 +25,7 @@ brktrials2(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, type)
 
 \item{step}{size in seconds, a number}
 
-\item{type}{a number to create a plot certain kind of plot, a number}
+\item{type}{0 no plots, 1 prediction plot, 2 all plots, a number}
 }
 \value{
 \code{brktrials2} returns  \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
