@@ -80,11 +80,11 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
   # plot Lane 1 and 2 trajectories
   if(type == 2) type. <- 2 else type. <- 0
   pick <- 1
-  browser()
+#  browser()
   df   <- plotupstream(pick, lane., nveh, df, xfunnel, leff, type = type.)
   pick <- 2
   df   <- plotupstream(pick, lane., nveh, df, xfunnel, leff, type = type.)
-  browser()
+#  browser()
   # plot car-following
   df <-  plotoptimize(df, xfunnel, type)
 
