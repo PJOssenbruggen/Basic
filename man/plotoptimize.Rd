@@ -4,12 +4,14 @@
 \alias{plotoptimize}
 \title{\code{plotoptimise} produces \code{t-x} trajectories for \code{nveh} drivers}
 \usage{
-plotoptimize(df,xfunnel)
+plotoptimize(df,xfunnel, type)
 }
 \arguments{
 \item{df}{a data frame from \code{brktrials2}}
 
 \item{xfunnel}{upstream location where the lane drop starts (feet), a number}
+
+\item{type}{2 to create a plot, a number}
 }
 \value{
 \code{plotoptimize} returns  \code{t-x} tractories for \code{nveh} drivers,

@@ -16,8 +16,12 @@
 #' brktrials2(5, 30, 41, 11, xstart, -500, 14, lane, 0.5, 0)
 #' @export
 brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, type) {
-  plot.new()
   set.seed(127)
+  if(type == 2) {
+    layout(matrix(c(1,1,2,3,4,4,5,5), 4,2, byrow = TRUE))
+  } else {
+    par(mfrow = c(1,1), pty = "m")
+  }
   tend.save  <- tend
   lane.      <- lane
   tseq       <- seq(0,tend,step)
@@ -55,8 +59,7 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
     df   <- vehfix(veh, nveh, ufix, xfix, yfix, df)
   }
   if(type == 2) {
-    par(mfrow = c(1,1), pty = "m")
-    plotoptimize(df, xfunnel)
+    plotoptimize(df, xfunnel, type)
     title("Driver Conflicts")
   }
   # df0 = with driver constraints
@@ -74,22 +77,16 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
   }
   colnames(dfcross) <- c("vehicle","tl0","ul0","xl0","tf0","uf0","xf0","hsafef","hobs")
   rownames(dfcross) <- paste("", sep = "",1:nveh)
-  # plot lead vehicle trajectories
-  par(mfrow = c(1,2), pty = "s")
+  # plot Lane 1 and 2 trajectories
   if(type == 2) type. <- 2 else type. <- 0
   pick <- 1
+  browser()
   df   <- plotupstream(pick, lane., nveh, df, xfunnel, leff, type = type.)
   pick <- 2
-  title(main = "Lane 1")
   df   <- plotupstream(pick, lane., nveh, df, xfunnel, leff, type = type.)
-  title(main = "Lane 2")
-#  browser()
-  if(type == 2) {
-    par(mfrow = c(1,1), pty = "m")
-    plotoptimize(df, xfunnel)
-    title("Car Following Constraints")
-    for(veh in 1:nveh) lines(df0[,1], df0[,3], lty = 4)
-  }
+  browser()
+  # plot car-following
+  df <-  plotoptimize(df, xfunnel, type)
 
 #  browser()
 
@@ -106,13 +103,11 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
   dfx0 <- dfx0[o,]
   vehorder <- dfx0[,4]
   dfcross  <- dfcross[o,]
-
   xlimit <- vehdf(1, nveh, df)[,3]
   for(i in 2:nveh) {
     xlimit <- c(xlimit, vehdf(i, nveh, df)[,3])
   }
   ylim <- c(min(xlimit), max(xlimit))
-  par(mfrow = c(1,1), pty = "m")
   for(i in 1:nveh) {
     if(i == 1) {
       veh     <- vehorder[i]
@@ -260,14 +255,16 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
       }
     }
   }
-  title(main = "Model Predictions")
-  legend("topleft", legend = c(
-    "Leading vehicle",
-    "Following vehicles",
-    "Lane 1", "Lane 2"
-  ),
-  lty = c(1,4,1,1),
-  col = c("black","black","black","blue"),
-  bty = "n")
+  if(type != 0) {
+    title(main = "Model Predictions")
+    legend("topleft", legend = c(
+      "Leading vehicle",
+      "Following vehicles",
+      "Lane 1", "Lane 2"
+    ),
+    lty = c(1,4,1,1),
+    col = c("black","black","black","blue"),
+    bty = "n")
+  }
   return(list(dfcross, df, df0))
 }

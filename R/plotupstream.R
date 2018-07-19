@@ -15,14 +15,13 @@ plotupstream <- function(pick, lane, nveh, df, xfunnel, leff, type) {
   tlen <- length(tseq)
   tend <- tseq[tlen]
   vehs <- lanedf(pick, nveh, lane)[,1]
-  # determine tlim for data frame df
+  # determine ylim for data frame df
   xlimit <- vehdf(1, nveh, df)[,3]
   for(i in 2:nveh) {
     xlimit <- c(xlimit, vehdf(i, nveh, df)[,3])
   }
   ylim <- c(min(xlimit), max(xlimit))
   dfij <- vehdf(vehs[1], nveh, df)
-
   if(type == 2) {
     if(dfij[1,5] == "1") {
       plot(dfij[,1], dfij[,3], xlab = "t", ylab = "x", typ = "l",
@@ -71,7 +70,8 @@ plotupstream <- function(pick, lane, nveh, df, xfunnel, leff, type) {
     yfix <- dfij[,4]
     df   <- vehfix(veh = vehs[veh+1], nveh, ufix, xfix, yfix, df)
   }
-  legend("topleft",legend = c("No CF constraints","CF constraints"),
+  if(pick != 0) legend("topleft",legend = c("No CF constraints","CF constraints"),
          lty = c(4,1), bty = "n")
+  if(pick == 1) title(main = "Lane 1") else title(main = "Lane 2")
   return(df)
 }
