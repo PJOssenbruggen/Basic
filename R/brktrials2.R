@@ -115,9 +115,11 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
       if(dfij[1,5] == "1") {
         plot(dfij[,1], dfij[,3], xlab = "t", ylab = "x", typ = "l",
              xlim = c(0,tend.save), ylim = ylim)
+
       } else {
         plot(dfij[,1], dfij[,3], xlab = "t", ylab = "x", typ = "l",
              xlim = c(0,tend.save), ylim = ylim, col = "blue")
+
       }
 
       abline(h = c(0, xfunnel), col = gray(0.8))

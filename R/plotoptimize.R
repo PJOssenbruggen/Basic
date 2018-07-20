@@ -39,6 +39,7 @@ plotoptimize <- function(df,xfunnel,type) {
       }
       text(dfij[tlen,1], dfij[tlen,3], labels = veh, pos = 4)
     }
+    title("Car Following Constraints")
     legend("topleft", legend = c(
       "Leading vehicle",
       "Following vehicles",
