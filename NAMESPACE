@@ -3,6 +3,7 @@
 export(acceldown)
 export(accelpass)
 export(brkcross0)
+export(brkdelay)
 export(brksummary)
 export(brktrials2)
 export(capacityplot)

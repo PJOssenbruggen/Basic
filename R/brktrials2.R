@@ -1,7 +1,6 @@
 #' \code{brktrials2} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
 #'
 #' @return \code{brktrials2} returns  \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
-#' @param nveh number of vehicles in the simulation, a number
 #' @param tend end time for simualted run, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
 #' @param usd speed volatility for \code{umn}, a number
@@ -11,21 +10,23 @@
 #' @param lane a vector of \code{nveh} numbers, a vector
 #' @param step size in seconds, a number
 #' @param type 0 no plots, 1 prediction plot, 2 all plots, a number
-#' @usage brktrials2(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, type)
+#' @usage brktrials2(tend, umn, usd, xstart, xfunnel, leff, lane, step, type)
 #' @examples
-#' brktrials2(5, 30, 41, 11, xstart, -500, 14, lane, 0.5, 0)
+#' brktrials2(30, 41, 11, xstart, -500, 14, lane, 0.5, 0)
 #' @export
-brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, type) {
-  set.seed(127)
-  if(type == 2) {
-    layout(matrix(c(1,1,2,3,4,4,5,5), 4,2, byrow = TRUE))
-  } else {
-    par(mfrow = c(1,1), pty = "m")
+brktrials2 <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step, type) {
+  if(type != 0) {
+    if(type == 2) {
+      layout(matrix(c(1,1,2,3,4,4,5,5), 4,2, byrow = TRUE))
+    } else {
+      par(mfrow = c(1,1), pty = "m")
+    }
   }
   tend.save  <- tend
   lane.      <- lane
   tseq       <- seq(0,tend,step)
   tlen       <- length(tseq)
+  nveh       <- length(lane)
   # store bmfree2 output in a data frame "df". Dimension: tlen by  nveh.
   tstart <- 0
   for(veh in 1:nveh) {
@@ -88,7 +89,7 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
   # plot car-following
   df <-  plotoptimize(df, xfunnel, type)
 
-#  browser()
+# browser()
 
   # Model forecast plot
   for(veh in 1:nveh) {
@@ -109,27 +110,27 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
   }
   ylim <- c(min(xlimit), max(xlimit))
   for(i in 1:nveh) {
-    if(i == 1) {
-      veh     <- vehorder[i]
-      dfij    <- vehdf(veh, nveh, df)
-      if(dfij[1,5] == "1") {
-        plot(dfij[,1], dfij[,3], xlab = "t", ylab = "x", typ = "l",
-             xlim = c(0,tend.save), ylim = ylim)
-
+    if(type != 0) {
+      if(i == 1) {
+        veh     <- vehorder[i]
+        dfij    <- vehdf(veh, nveh, df)
+        if(type != 0) {}
+        if(dfij[1,5] == "1") {
+          plot(dfij[,1], dfij[,3], xlab = "t", ylab = "x", typ = "l",
+               xlim = c(0,tend.save), ylim = ylim)
+        } else {
+          plot(dfij[,1], dfij[,3], xlab = "t", ylab = "x", typ = "l",
+               xlim = c(0,tend.save), ylim = ylim, col = "blue")
+        }
+        abline(h = c(0, xfunnel), col = gray(0.8))
+        abline(v = 0, col = gray(0.8))
+        text(dfij[tlen,1], dfij[tlen,3], labels = as.character(veh), pos = 4, cex = 1)
       } else {
-        plot(dfij[,1], dfij[,3], xlab = "t", ylab = "x", typ = "l",
-             xlim = c(0,tend.save), ylim = ylim, col = "blue")
-
+        veh     <- vehorder[i]
+        dfij    <- vehdf(veh, nveh, df)
+        if(dfij[1,5] == "1") lines(dfij[,1], dfij[,3], lty = 4)
+        else  lines(dfij[,1], dfij[,3], lty = 4, col = "blue")
       }
-
-      abline(h = c(0, xfunnel), col = gray(0.8))
-      abline(v = 0, col = gray(0.8))
-      text(dfij[tlen,1], dfij[tlen,3], labels = as.character(veh), pos = 4, cex = 1)
-    } else {
-      veh     <- vehorder[i]
-      dfij    <- vehdf(veh, nveh, df)
-      if(dfij[1,5] == "1") lines(dfij[,1], dfij[,3], lty = 4)
-      else  lines(dfij[,1], dfij[,3], lty = 4, col = "blue")
     }
   }
 #      browser()
@@ -153,10 +154,12 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
     # no safety violation for xab.
       dfij      <- vehdf(veh, nveh, df)
       dfij0     <- dfij[dfij[,1] <= dfcross[i,5],]
-      if(dfij0[1,5] == "1") {
-        lines(dfij0[,1], dfij0[,3])
-      } else {
-        lines(dfij0[,1], dfij0[,3], col = "blue")
+      if(type != 0) {
+        if(dfij0[1,5] == "1") {
+          lines(dfij0[,1], dfij0[,3])
+        } else {
+          lines(dfij0[,1], dfij0[,3], col = "blue")
+        }
       }
       tindex    <- as.numeric(dfcross[i,5])
       tux       <- dfij[dfij[,1] >= tindex,]
@@ -171,8 +174,8 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
       }
       tuxfix     <- nopass(veh, nope, leff)
       # Fix tailgating
-      if(is.data.frame(tuxfix)) {
-        if(dfij0[1,5] == "1") {
+      if(is.data.frame(tuxfix) & type != 0) {
+        if(dfij0[1,5] == "1" ) {
           lines(tux[,1], tuxfix[,2], lwd = 1)
         } else {
           lines(tux[,1], tuxfix[,2], lwd = 1, col = "blue")
@@ -200,7 +203,7 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
         dfcross[i,9]    <- hobs
         dfijfun         <- dfij[dfij[,3] <= xfunnel,]
 #        browser()
-        lines(dfijfun[,1], dfijfun[,3], lwd = 1)
+        if(type != 0) lines(dfijfun[,1], dfijfun[,3], lwd = 1)
         index           <- dim(dfijfun)[1]
         tstartab        <- dfijfun[index,1]
         ustartab        <- dfijfun[index,2]
@@ -227,13 +230,13 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
                            data.frame(t = tendab, u = uendab, x = xendab)
         )
 #        browser()
-        lines(tseq, xmab, lwd = 1)
+        if(type != 0) lines(tseq, xmab, lwd = 1)
         tstart  <- tendab
         xstart  <- xmab[length(xmab)]
         umn     <- 3600/5280*uab[length(uab)]
         if(tstart < tend) {
           tux     <- bmfree2(umn, usd, tstart, tend, xstart, step, FALSE)
-          lines(tux[,1],tux[,3])
+          if(type != 0) lines(tux[,1],tux[,3])
           tuxlead <- vehdf(veh = vehorder[i - 1], nveh, df)
           tuxlead <- tuxlead[tuxlead[,1] >= tstart,]
           # no passing allowed check
@@ -241,18 +244,22 @@ brktrials2 <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, 
           colnames(nope) <- c("t", "u.lead","x.lead","u.follow","x.follow")
           tuxfix     <- nopass(veh, nope, leff)
           # Fix tailgating
-          lines(tux[,1], tuxfix[,2], lwd = 1)
-          nsteps <- dim(tuxfix)[1]
-          text(tux[nsteps,1], tuxfix[nsteps,2],
-               labels = as.character(veh), pos = 4, cex = 1)
+          if(type != 0) {
+            lines(tux[,1], tuxfix[,2], lwd = 1)
+            nsteps <- dim(tuxfix)[1]
+            text(tux[nsteps,1], tuxfix[nsteps,2],
+                 labels = as.character(veh), pos = 4, cex = 1)
+          }
         }
       } else {
-        if(dfij[1,5] == "1") {
-          lines(dfij[,1], dfij[,3])
-          text(dfij[tlen,1], dfij[tlen,3], labels = veh, pos = 4)
-        } else {
-          lines(dfij[,1], dfij[,3], col = "blue")
-          text(dfij[tlen,1], dfij[tlen,3], labels = veh, pos = 4)
+        if(type != 0) {
+          if(dfij[1,5] == "1") {
+            lines(dfij[,1], dfij[,3])
+            text(dfij[tlen,1], dfij[tlen,3], labels = veh, pos = 4)
+          } else {
+            lines(dfij[,1], dfij[,3], col = "blue")
+            text(dfij[tlen,1], dfij[tlen,3], labels = veh, pos = 4)
+          }
         }
       }
     }

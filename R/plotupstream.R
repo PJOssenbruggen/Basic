@@ -23,7 +23,7 @@ plotupstream <- function(pick, lane, nveh, df, xfunnel, leff, type) {
   ylim <- c(min(xlimit), max(xlimit))
   dfij <- vehdf(vehs[1], nveh, df)
   if(type == 2) {
-    if(dfij[1,5] == "1") {
+    if(dfij[1,5] == "1" & type != 0) {
       plot(dfij[,1], dfij[,3], xlab = "t", ylab = "x", typ = "l",
            xlim = c(0,tend), ylim = ylim)
       abline(h = c(0, xfunnel), col = gray(0.8))
@@ -60,18 +60,21 @@ plotupstream <- function(pick, lane, nveh, df, xfunnel, leff, type) {
     nope     <- cbind(tuxlead[,c(1,2,3)], tux[,c(2,3)])
     colnames(nope) <- c("t", "u.lead","x.lead","u.follow","x.follow")
     tuxfix   <- nopass(veh = vehs[veh+1], nope, leff)
-    if(type == 2 & dfij[1,5] == "1") {
+    if(type == 2 & dfij[1,5] == "1" & type != 0) {
       lines(tseq, tuxfix[,2])
     } else {
-      lines(tseq, tuxfix[,2], col = "blue")
+      if(type != 0) lines(tseq, tuxfix[,2], col = "blue")
     }
     ufix <- tuxfix[,1]
     xfix <- tuxfix[,2]
     yfix <- dfij[,4]
     df   <- vehfix(veh = vehs[veh+1], nveh, ufix, xfix, yfix, df)
   }
-  if(pick != 0) legend("topleft",legend = c("No CF constraints","CF constraints"),
+  if(pick != 0 & type != 0) legend("topleft",
+         legend = c("No CF constraints","CF constraints"),
          lty = c(4,1), bty = "n")
-  if(pick == 1) title(main = "Lane 1") else title(main = "Lane 2")
+  if(pick == 1 & type != 0) title(main = "Lane 1") else {
+    if(type != 0)  title(main = "Lane 2")
+  }
   return(df)
 }

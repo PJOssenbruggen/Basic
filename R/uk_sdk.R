@@ -54,7 +54,7 @@ uk_sdk <- function(QUKtdayX, type) {
       k = df[i,2]
       lines(x = c(k,k), y = c(df[i,3] - df[i,4], df[i,3] + df[i,4]) )
     }
-    legend("topright", legend = expression(bar(u) %+-% hat(sigma)[U]),
+    legend("topright", legend = expression(bar(u) %+-% sigma[U]),
            pch = 16,
            lty = 1,
            bty = "n"

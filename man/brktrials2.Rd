@@ -4,11 +4,9 @@
 \alias{brktrials2}
 \title{\code{brktrials2} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck}
 \usage{
-brktrials2(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, type)
+brktrials2(tend, umn, usd, xstart, xfunnel, leff, lane, step, type)
 }
 \arguments{
-\item{nveh}{number of vehicles in the simulation, a number}
-
 \item{tend}{end time for simualted run, a number}
 
 \item{umn}{start speed (mph) for vehicle in lane 1, a number}
@@ -34,5 +32,5 @@ brktrials2(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step, type)
 \code{brktrials2} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
 }
 \examples{
-brktrials2(5, 30, 41, 11, xstart, -500, 14, lane, 0.5, 0)
+brktrials2(30, 41, 11, xstart, -500, 14, lane, 0.5, 0)
 }
