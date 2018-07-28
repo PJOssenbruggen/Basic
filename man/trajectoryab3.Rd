@@ -5,7 +5,7 @@
 \title{\code{trajectoryab3} fits a second-order velocity model and produces a \code{t-x} trajectory
 for \code{vehicle = i} where \code{i = 3,4, ..., nveh}.}
 \usage{
-trajectoryab3(tstart, tend, ustart, uend, xstart, xend, step)
+trajectoryab3(tstart, tend, ustart, uend, xstart, xend, step,type)
 }
 \arguments{
 \item{tstart}{time, a number}
@@ -21,6 +21,8 @@ trajectoryab3(tstart, tend, ustart, uend, xstart, xend, step)
 \item{xend}{location, a number}
 
 \item{step}{line type, a number}
+
+\item{type}{TRUE to create plots or FALSE otherwise, a logical}
 }
 \description{
 \code{trajectoryab3} fits a second-order velocity model and produces a \code{t-x} trajectory

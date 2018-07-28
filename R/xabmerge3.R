@@ -92,16 +92,17 @@ xabmerge3 <- function(df1, df2, leff, step, k, type) {
       xend <- as.numeric(df3[tlen,3]) - as.numeric(df3[tlen,7])
     }
     dfab <- data.frame(tstart, tend, ustart, uend, xstart, xend, step)
-    trj  <- trajectoryab(
+    trj  <- trajectoryab3(
       tstart = tstart,
       tend   = tend,
       ustart = ustart,
       uend   = uend,
       xstart = xstart,
       xend   = xend,
-      step   = step)
-    u.fix <- as.numeric(trj[[3]])
-    x.fix <- as.numeric(trj[[4]])
+      step   = step,
+      type   = FALSE)
+    u.fix <- as.numeric(trj[,2])
+    x.fix <- as.numeric(trj[,3])
     u     <- c(df3[df3[,1] < tstart,4], u.fix, df3[df3[,1] > tend,4])
     x     <- c(df3[df3[,1] < tstart,5], x.fix, df3[df3[,1] > tend,5])
     df3[,4] <- u
@@ -143,14 +144,15 @@ xabmerge3 <- function(df1, df2, leff, step, k, type) {
       points(tend1,xend1, pch = 16)
       text(tend1,xend1, label = k, pos = 4)
     }
-    trj1  <- trajectoryab(
+    trj1  <- trajectoryab3(
       tstart = tstart1,
       tend   = tend1,
       ustart = ustart1,
       uend   = uend1,
       xstart = xstart1,
       xend   = xend1,
-      step   = step)
+      step   = step,
+      type   = FALSE)
     t.fix1 <- as.numeric(trj1[[2]])
     u.fix1 <- as.numeric(trj1[[3]])
     x.fix1 <- as.numeric(trj1[[4]])
@@ -184,14 +186,15 @@ xabmerge3 <- function(df1, df2, leff, step, k, type) {
       if(type == TRUE) points(as.numeric(df3.[i,1]),  as.numeric(df3.[i,5]))
       if(!is.null(tend)) break
     }
-    trj2   <- trajectoryab(
+    trj2   <- trajectoryab3(
       tstart = tstart,
       tend   = tend,
       ustart = ustart,
       uend   = uend,
       xstart = xstart,
       xend   = xend,
-      step   = step)
+      step   = step,
+      type   = FALSE)
     t.fix2 <- as.numeric(trj2[[2]])
     u.fix2 <- as.numeric(trj2[[3]])
     x.fix2 <- as.numeric(trj2[[4]])

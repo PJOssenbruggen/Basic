@@ -8,16 +8,16 @@
 #' @param xstart location, a number
 #' @param xend location, a number
 #' @param step line type, a number
-#' @usage trajectoryab3(tstart, tend, ustart, uend, xstart, xend, step)
+#' @param type TRUE to create plots or FALSE otherwise, a logical
+#' @usage trajectoryab3(tstart, tend, ustart, uend, xstart, xend, step,type)
 #' @export
-trajectoryab3 <- function(tstart, tend, ustart, uend, xstart, xend, step) {
+trajectoryab3 <- function(tstart, tend, ustart, uend, xstart, xend, step,type) {
   start  <- as.numeric(tstart)
   tend   <- as.numeric(tend)
   ustart <- as.numeric(ustart)
   uend   <- as.numeric(uend)
   xstart <- as.numeric(xstart)
   xend   <- as.numeric(xend)
-
   ab    <- xabparam(
     tstart = tstart,
     tend   = tend,
@@ -36,8 +36,7 @@ trajectoryab3 <- function(tstart, tend, ustart, uend, xstart, xend, step) {
   useq <- rep(NA, tlen)
   for(i in 1:tlen) useq[i] <- uab(u0 = ustart, a, b, tseq[i], t0 = tstart)
   for(i in 1:tlen) xseq[i] <- xab(x0 = xstart, u0 = ustart, a, b, tseq[i], t0 = tstart)
-  lines(tseq, xseq, col = "black")
+  if(type == TRUE) lines(tseq, xseq, col = "black")
   tux <- as.matrix(data.frame(t = tseq, u = useq, x = xseq))
-  print(ab)
   return(tux)
 }

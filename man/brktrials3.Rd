@@ -21,7 +21,7 @@ brktrials3(nveh, umn, usd, tstart, tend, xstart, step, type, leff, xfunnel)
 
 \item{step}{size in seconds, a number}
 
-\item{type}{TRUE or FALSE, a logical}
+\item{type}{TRUE to create plots or FALSE otherwise, a logical}
 
 \item{leff}{vehicle length in feet, a number}
 

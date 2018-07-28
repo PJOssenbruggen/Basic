@@ -4,7 +4,7 @@
 \alias{merge3}
 \title{\code{merge3} produces \code{t-x} trajectories for a pair of lead and following vehicles for \code{brktrial3}.}
 \usage{
-merge3(df1,df2,leff,step,xfunnel,usd,ylim)
+merge3(df1,df2,leff,step,xfunnel,usd,ylim,type)
 }
 \arguments{
 \item{df1}{leading vehicle, a matrix}
@@ -20,6 +20,8 @@ merge3(df1,df2,leff,step,xfunnel,usd,ylim)
 \item{usd}{speed volatility (mph) for \code{umn}, a number}
 
 \item{ylim}{for plot, a vector}
+
+\item{type}{TRUE to create plots or FALSE otherwise, a logical}
 }
 \value{
 The \code{merge3}, a wrapper function for \code{bmfree2}, \code{xabparam} and
