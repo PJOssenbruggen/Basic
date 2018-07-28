@@ -1,6 +1,7 @@
 #' \code{plotupstream} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
 #'
-#' @return \code{plotupstream} returns  \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
+#' @return \code{plotupstream} returns \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
+#' Wrapper for \code{vehdf}, \code{nopass} and \code{vehfix}
 #' @param pick a lane number
 #' @param lane, a vector
 #' @param nveh, a number
@@ -38,11 +39,12 @@ plotupstream <- function(pick, lane, nveh, df, xfunnel, leff, type) {
     }
   }
   vehs <- vehs[-1]
+  # plot "desire" lines
   if(type == 2) {
     for(veh in 1:length(vehs)) {
       dfij <- vehdf(vehs[veh], nveh, df)
-      x <- as.numeric(dfij[,1])
-      y <- as.numeric(dfij[,3])
+      x    <- as.numeric(dfij[,1])
+      y    <- as.numeric(dfij[,3])
       lines(x, y, lty = 4)
       if(dfij[1,5] == "1") {
         lines(x, y, lty = 4)
@@ -52,8 +54,8 @@ plotupstream <- function(pick, lane, nveh, df, xfunnel, leff, type) {
       text(dfij[tlen,1], dfij[tlen,3], labels = as.character(vehs[veh]), pos = 1)
     }
   }
-  vehs     <- lanedf(pick, nveh, lane)[,1]
-  vlen     <- length(vehs) - 1
+  vehs       <- lanedf(pick, nveh, lane)[,1]
+  vlen       <- length(vehs) - 1
   for(veh in 1:vlen) {
     tuxlead  <- vehdf(veh = vehs[veh], nveh, df)
     tux      <- vehdf(veh = vehs[veh+1], nveh, df)

@@ -1,4 +1,5 @@
-#' The \code{bmfree2} function returns a \code{tux} matrix of time \code{t}, speed \code{u} and location \code{x} values.
+#' The \code{bmfree2} function returns a \code{tux} matrix of time \code{t}, speed \code{u} (fps)
+#'  and location \code{x} (feet).
 #'
 #' @param umn mean speed (mph), a number
 #' @param usd standard deviation of \code{usd} (mph), a number

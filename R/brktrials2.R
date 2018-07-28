@@ -12,12 +12,13 @@
 #' @param type 0 no plots, 1 prediction plot, 2 all plots, a number
 #' @usage brktrials2(tend, umn, usd, xstart, xfunnel, leff, lane, step, type)
 #' @examples
-#' brktrials2(30, 41, 11, xstart, -500, 14, lane, 0.5, 0)
+#' brktrials2(30, 41, 11, xstart, -500, 14, lane, 0.5, 1)
 #' @export
 brktrials2 <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step, type) {
   if(type != 0) {
     if(type == 2) {
-      layout(matrix(c(1,1,2,3,4,4,5,5), 4,2, byrow = TRUE))
+      # layout(matrix(c(1,1,2,3,4,4,5,5), 4,2, byrow = TRUE))
+      layout(matrix(c(1,1,2,3), 2,2, byrow = TRUE))
     } else {
       par(mfrow = c(1,1), pty = "m")
     }
@@ -27,8 +28,9 @@ brktrials2 <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step, type) 
   tseq       <- seq(0,tend,step)
   tlen       <- length(tseq)
   nveh       <- length(lane)
-  # store bmfree2 output in a data frame "df". Dimension: tlen by  nveh.
-  tstart <- 0
+  tstart     <- 0
+  # 1. store bmfree2 output in a data frame "df = nveh * tux matrices".
+  # df. = tux: tlen by  6 matrix. colnames(tux) = t, u, x, y, lane, vehicle
   for(veh in 1:nveh) {
     # bmfree2(umn, usd, tstart, tend, xstart, step, type)
     df.     <- bmfree2(umn, usd, tstart, tend, xstart[veh], step, type = FALSE)
@@ -38,6 +40,8 @@ brktrials2 <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step, type) 
     df.     <- cbind(df., y, lane, vehicle)
     if(veh == 1) df <- df. else df <- cbind(df, df.)
   }
+
+  # 2. Calculate y = f(x, lane, xfunnel)
   for(veh in 1:nveh) {
     df.   <- vehdf(veh, nveh, df)
     x.    <- vehdf(veh, nveh, df)[,3]
@@ -59,14 +63,15 @@ brktrials2 <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step, type) 
     yfix <- df.[,4]
     df   <- vehfix(veh, nveh, ufix, xfix, yfix, df)
   }
+  # 3. plot "driver desire lines."
+
   if(type == 2) {
     plotoptimize(df, xfunnel, type)
-    title("Driver Conflicts")
   }
   # df0 = with driver constraints
   df0 <- df
-#  browser()
-  # dfcross = data frame t0 = times when vehicle i location is x = 0.
+  # dfcross = data frame t0 = times when lead vehicles cross line x = 0.
+  # Use brkcross0(veh, dfij)
   dfcross <- {}
   for(veh in 1:nveh) {
     dfij    <- vehdf(veh, nveh, df)
@@ -76,22 +81,19 @@ brktrials2 <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step, type) 
     result  <- c(result, result2)
     dfcross <- rbind(dfcross, result)
   }
-  colnames(dfcross) <- c("vehicle","tl0","ul0","xl0","tf0","uf0","xf0","hsafef","hobs")
+  colnames(dfcross) <- c("vehicle","tl","ul","xl","tf","uf","xf","hsafef","hobs")
   rownames(dfcross) <- paste("", sep = "",1:nveh)
-  # plot Lane 1 and 2 trajectories
+  # 4. plot Lane 1 and 2 "desire line" trajectories
   if(type == 2) type. <- 2 else type. <- 0
   pick <- 1
-#  browser()
   df   <- plotupstream(pick, lane., nveh, df, xfunnel, leff, type = type.)
   pick <- 2
   df   <- plotupstream(pick, lane., nveh, df, xfunnel, leff, type = type.)
+
 #  browser()
-  # plot car-following
-  df <-  plotoptimize(df, xfunnel, type)
 
-# browser()
-
-  # Model forecast plot
+  # 5. Model forecast plot
+  df   <- plotoptimize(df, xfunnel, type)
   for(veh in 1:nveh) {
     dfij    <- vehdf(veh, nveh, df)
     dfij0   <- dfij[dfij[,3] < 0,]
@@ -100,13 +102,13 @@ brktrials2 <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step, type) 
     dfx0.   <- data.frame(t = dfij0[1], u = dfij0[2], x = dfij0[3], vehicle = veh)
     if(veh > 1) dfx0 <- rbind(dfx0, dfx0.) else dfx0 = dfx0.
   }
-  o <- order(dfx0[,1])
-  dfx0 <- dfx0[o,]
-  vehorder <- dfx0[,4]
-  dfcross  <- dfcross[o,]
-  xlimit <- vehdf(1, nveh, df)[,3]
+  o         <- order(dfx0[,1])
+  dfx0      <- dfx0[o,]
+  vehorder  <- dfx0[,4]
+  dfcross   <- dfcross[o,]
+  xlimit    <- vehdf(1, nveh, df)[,3]
   for(i in 2:nveh) {
-    xlimit <- c(xlimit, vehdf(i, nveh, df)[,3])
+    xlimit  <- c(xlimit, vehdf(i, nveh, df)[,3])
   }
   ylim <- c(min(xlimit), max(xlimit))
   for(i in 1:nveh) {

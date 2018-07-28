@@ -2,8 +2,7 @@
 % Please edit documentation in R/vehtfix.R
 \name{vehtfix}
 \alias{vehtfix}
-\title{\code{vehtfix} selects a information over a time range about vehicle \code{veh}
-of the \code{df} matrix for analysis with the \code{brktrials2} function.}
+\title{\code{vehtfix} fixes \code{hsafe} violations for vehicle \code{veh}.}
 \usage{
 vehtfix(veh, nveh, df, tstart, tend, step, ufix, xfix)
 }
@@ -25,6 +24,5 @@ vehtfix(veh, nveh, df, tstart, tend, step, ufix, xfix)
 \item{xfix}{new locations, a vector}
 }
 \description{
-\code{vehtfix} selects a information over a time range about vehicle \code{veh}
-of the \code{df} matrix for analysis with the \code{brktrials2} function.
+\code{vehtfix} fixes \code{hsafe} violations for vehicle \code{veh}.
 }

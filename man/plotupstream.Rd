@@ -22,7 +22,8 @@ plotupstream(pick, lane, nveh, df, xfunnel, leff, type)
 \item{type}{2 to create a plot, a number}
 }
 \value{
-\code{plotupstream} returns  \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
+\code{plotupstream} returns \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
+Wrapper for \code{vehdf}, \code{nopass} and \code{vehfix}
 }
 \description{
 \code{plotupstream} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck

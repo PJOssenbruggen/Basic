@@ -2,7 +2,8 @@
 % Please edit documentation in R/bmfree2.R
 \name{bmfree2}
 \alias{bmfree2}
-\title{The \code{bmfree2} function returns a \code{tux} matrix of time \code{t}, speed \code{u} and location \code{x} values.}
+\title{The \code{bmfree2} function returns a \code{tux} matrix of time \code{t}, speed \code{u} (fps)
+ and location \code{x} (feet).}
 \usage{
 bmfree2(umn, usd, tstart, tend, xstart, step, type)
 }
@@ -22,5 +23,6 @@ bmfree2(umn, usd, tstart, tend, xstart, step, type)
 \item{type}{logical for plotting where TRUE creates a plot}
 }
 \description{
-The \code{bmfree2} function returns a \code{tux} matrix of time \code{t}, speed \code{u} and location \code{x} values.
+The \code{bmfree2} function returns a \code{tux} matrix of time \code{t}, speed \code{u} (fps)
+ and location \code{x} (feet).
 }

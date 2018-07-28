@@ -2,7 +2,7 @@
 % Please edit documentation in R/vehfix.R
 \name{vehfix}
 \alias{vehfix}
-\title{\code{vehfix} fixes or replaces speed \code{ufix} and location \code{xfix} and \code{yfix} vectors from \code{brktrials2}}
+\title{\code{vehfix} fixes \code{hsafe} violation with speed \code{ufix} and location \code{xfix} and \code{yfix} vectors from \code{brktrials2}}
 \usage{
 vehfix(veh, nveh, ufix, xfix, yfix, df)
 }
@@ -20,5 +20,5 @@ vehfix(veh, nveh, ufix, xfix, yfix, df)
 \item{df}{a data frame created in \code{bk2trials}, a data frame}
 }
 \description{
-\code{vehfix} fixes or replaces speed \code{ufix} and location \code{xfix} and \code{yfix} vectors from \code{brktrials2}
+\code{vehfix} fixes \code{hsafe} violation with speed \code{ufix} and location \code{xfix} and \code{yfix} vectors from \code{brktrials2}
 }

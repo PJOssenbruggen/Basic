@@ -21,7 +21,8 @@ findt2ab <- function(tstart, tmid, tend, ulstart, ulmid, xlstart, xlmid, xfstart
   uend   <- ulmid
   xstart <- xlstart
   xend   <- xlmid
-  ab     <- trajectoryab(tstart, tend, ustart, uend, xstart, xend, lty, lwd, col)
+  step   <- 0.25
+  ab     <- trajectoryab(tstart, tend, ustart, uend, xstart, xend, step)
   a      <- ab[[1]][1]
   b      <- ab[[1]][2]
   h01 <- function(t, tstart, ulstart, ulmid, xlstart, xlmid, xfstart, uf, a, b)

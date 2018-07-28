@@ -1,5 +1,4 @@
-#' \code{vehtfix} selects a information over a time range about vehicle \code{veh}
-#' of the \code{df} matrix for analysis with the \code{brktrials2} function.
+#' \code{vehtfix} fixes \code{hsafe} violations for vehicle \code{veh}.
 #'
 #' @param veh vehicle, a number
 #' @param nveh number of vehicle in \code{df}, a number

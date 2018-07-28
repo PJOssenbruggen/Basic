@@ -8,14 +8,14 @@
 #' @export
 nopass <- function(veh, nope, leff) {
   if(is.null(dim(nope))) {
-    fix <- nope[c(4,5)]
+    fix          <- nope[c(4,5)]
   } else {
-    hcrit   <- u <- x <- rep(NA, dim(nope)[1])
+    hcrit        <- u <- x <- rep(NA, dim(nope)[1])
     for(j in 1:dim(nope)[1]) {
-      u <- as.numeric(nope[j,4])
-      hcrit[j] <- hsafe(u, leff)
+      u          <- as.numeric(nope[j,4])
+      hcrit[j]   <- hsafe(u, leff)
     }
-    hobs <- nope[,3] - nope[,5]
+    hobs         <- nope[,3] - nope[,5]
     for(j in 1:dim(nope)[1]) {
       if(hobs[j] < hcrit[j]) {
         u.      <- as.numeric(nope[j,2])
@@ -27,7 +27,7 @@ nopass <- function(veh, nope, leff) {
         x[j]   <- nope[j,5]
       }
     }
-    fix  <- data.frame(u, x)
+    fix        <- data.frame(u, x)
   }
   return(fix)
 }

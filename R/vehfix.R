@@ -1,4 +1,4 @@
-#' \code{vehfix} fixes or replaces speed \code{ufix} and location \code{xfix} and \code{yfix} vectors from \code{brktrials2}
+#' \code{vehfix} fixes \code{hsafe} violation with speed \code{ufix} and location \code{xfix} and \code{yfix} vectors from \code{brktrials2}
 #'
 #' @param veh vehicle, a number
 #' @param nveh number of vehicle in \code{df}, a number

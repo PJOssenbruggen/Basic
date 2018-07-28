@@ -32,5 +32,5 @@ brktrials2(tend, umn, usd, xstart, xfunnel, leff, lane, step, type)
 \code{brktrials2} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
 }
 \examples{
-brktrials2(30, 41, 11, xstart, -500, 14, lane, 0.5, 0)
+brktrials2(30, 41, 11, xstart, -500, 14, lane, 0.5, 1)
 }

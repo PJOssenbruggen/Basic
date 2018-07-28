@@ -1,4 +1,4 @@
-#' \code{brkcross0} estimates the time, speed and location that a vehicle crosses bottleneck location \code{x}
+#' \code{brkcross0} estimates the time, speed and location that a vehicle crosses bottleneck location \code{x} = 0.
 #'
 #' @param vehicle, a number
 #' @param df, a dataframe
