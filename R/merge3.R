@@ -56,7 +56,7 @@ merge3 <- function(df1, df2,leff,step,xfunnel,usd,ylim,type) {
   if(type == TRUE) points(tstart,xstart)
   tux2    <- trajectoryab3(tstart, tend, ustart, uend, xstart, xend, step, FALSE)
   accel2  <- (xend-xstart-ustart*(tend-tstart))/(tend-tstart)^2
-  print(accel2)
+ # print(accel2)
   umn     <- uend * 3600/5280
   tstart  <- tend
   rnum    <- as.numeric(dim(df2)[1])
