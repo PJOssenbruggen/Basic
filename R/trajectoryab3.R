@@ -11,7 +11,7 @@
 #' @param type TRUE to create plots or FALSE otherwise, a logical
 #' @usage trajectoryab3(tstart, tend, ustart, uend, xstart, xend, step,type)
 #' @export
-trajectoryab3 <- function(tstart, tend, ustart, uend, xstart, xend, step,type) {
+trajectoryab3 <- function(tstart, tend, ustart, uend, xstart, xend, step, type) {
   start  <- as.numeric(tstart)
   tend   <- as.numeric(tend)
   ustart <- as.numeric(ustart)
@@ -30,6 +30,8 @@ trajectoryab3 <- function(tstart, tend, ustart, uend, xstart, xend, step,type) {
   # Warning messages:
   #  1: In get(object, envir = currentEnv, inherits = TRUE) :
   #    restarting interrupted promise evaluation
+  print(data.frame("trajectoryab3", tstart, tend, step))
+
   tseq <- seq(tstart, tend, by = step)
   tlen <- length(tseq)
   xseq <- rep(NA, tlen)

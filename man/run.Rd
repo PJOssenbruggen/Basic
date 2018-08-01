@@ -4,7 +4,8 @@
 \alias{run}
 \title{The \code{run} function is a wrapper for the \code{trial} and \code{plotfollow3} functions.}
 \usage{
-run(nveh, ulead, ulead.sd, ubrkdown, ubrkdown.sd, k, k.sd, d, leff, xlim, ylim)
+run(nveh, ulead, ulead.sd, ubrkdown, ubrkdown.sd, k, k.sd, d, leff, xlim,
+  ylim)
 }
 \arguments{
 \item{nveh}{number of vehicles in the investigation or \code{vehicle} = {1, 2, ..., \code{nveh}}, a number}

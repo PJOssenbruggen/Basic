@@ -4,9 +4,11 @@
 \alias{merge3}
 \title{\code{merge3} produces \code{t-x} trajectories for a pair of lead and following vehicles for \code{brktrial3}.}
 \usage{
-merge3(df1,df2,leff,step,xfunnel,usd,ylim,type)
+merge3(i,df1,df2,leff,step,xfunnel,usd,ylim,type)
 }
 \arguments{
+\item{i}{vehicle, a number}
+
 \item{df1}{leading vehicle, a matrix}
 
 \item{df2}{following vehicle, a matrix}

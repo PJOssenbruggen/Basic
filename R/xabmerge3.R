@@ -91,6 +91,12 @@ xabmerge3 <- function(df1, df2, leff, step, k, type) {
       uend <- as.numeric(df3[tlen,4])
       xend <- as.numeric(df3[tlen,3]) - as.numeric(df3[tlen,7])
     }
+    if(tstart >= tend) {
+      rnum <- dim(df3)[1]
+      tend <- as.numeric(df3[rnum,1])
+      uend <- as.numeric(df3[rnum,4])
+      xend <- as.numeric(df3[rnum,5])
+    }
     dfab <- data.frame(tstart, tend, ustart, uend, xstart, xend, step)
     trj  <- trajectoryab3(
       tstart = tstart,
@@ -144,6 +150,7 @@ xabmerge3 <- function(df1, df2, leff, step, k, type) {
       points(tend1,xend1, pch = 16)
       text(tend1,xend1, label = k, pos = 4)
     }
+    if(tstart1 >= tend1) browser()
     trj1  <- trajectoryab3(
       tstart = tstart1,
       tend   = tend1,
@@ -186,6 +193,7 @@ xabmerge3 <- function(df1, df2, leff, step, k, type) {
       if(type == TRUE) points(as.numeric(df3.[i,1]),  as.numeric(df3.[i,5]))
       if(!is.null(tend)) break
     }
+    if(tstart >= tend) browser()
     trj2   <- trajectoryab3(
       tstart = tstart,
       tend   = tend,

@@ -1,28 +1,29 @@
-#' \code{brkdelay} is a wrapper function for \code{brktrials2}.
+#' \code{brkdelay3} is a wrapper function for \code{brktrials3}.
 #'
-#' @return \code{brkdelay} returns  \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
+#' @return \code{brkdelay3} returns  \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
 #' @param niter number of iterations, a number
 #' @param tend end time for simualted run, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
 #' @param usd speed volatility for \code{umn}, a number
-#' @param xstart a vector of  \code{nveh} start locations, (feet), a vector
+#' @param xstart start location, (feet), a number
 #' @param xfunnel upstream location where the lane drop starts (feet), a number
 #' @param leff effective vehicle length(feet), a number
 #' @param lane a vector of \code{nveh} numbers, a vector
 #' @param step size in seconds, a number
-#' @usage brkdelay(niter, tend, umn, usd, xstart, xfunnel, leff, lane, step)
+#' @usage brkdelay3(niter, tend, umn, usd, xstart, xfunnel, leff, lane, step)
 # #' @examples
-# #' brkdelay(2, 30, 41, 11, xstart, -500, 14, lane, 0.5)
+# #' brkdelay3(2, 30, 68.8, 4.4, -700, -500, 14, lane, 0.5)
 #' @export
-brkdelay <- function(niter, tend, umn, usd, xstart, xfunnel, leff, lane, step) {
-  df   <- brktrials2(tend, umn, usd, xstart, xfunnel, leff, lane, step, type = 0)[[2]]
+brkdelay3 <- function(niter, tend, umn, usd, xstart, xfunnel, leff, lane, step) {
+  df   <- brktrials3(nveh, umn, usd, tstart, tend, xstart, step, type, leff, xfunnel)[[2]]
+
   tseq <- df[,1]
   udf  <- df[,seq(2,dim(df)[2],6)]
   u    <- rowMeans(udf)
   df.  <- cbind(t = tseq, u)
 
   for(i in 2:niter) {
-    df   <- brktrials2(tend, umn, usd, xstart, xfunnel, leff, lane, step, type = 0)[[2]]
+    df   <- brktrials3(tend, umn, usd, xstart, xfunnel, leff, lane, step, type = 0)[[2]]
     udf  <- df[,seq(2,dim(df)[2],6)]
     u    <- rowMeans(udf)
     df.  <- cbind(df., u)
