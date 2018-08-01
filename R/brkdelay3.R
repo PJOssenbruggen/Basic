@@ -2,38 +2,39 @@
 #'
 #' @return \code{brkdelay3} returns  \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
 #' @param niter number of iterations, a number
+#' @param nveh number of vehicles, a number
+#' @param tstart start time for simualted run, a number
 #' @param tend end time for simualted run, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
 #' @param usd speed volatility for \code{umn}, a number
 #' @param xstart start location, (feet), a number
 #' @param xfunnel upstream location where the lane drop starts (feet), a number
 #' @param leff effective vehicle length(feet), a number
-#' @param lane a vector of \code{nveh} numbers, a vector
 #' @param step size in seconds, a number
-#' @usage brkdelay3(niter, tend, umn, usd, xstart, xfunnel, leff, lane, step)
+#' @usage brkdelay3(niter, nveh, tstart, tend, umn, usd, xstart, xfunnel, leff, step)
 # #' @examples
-# #' brkdelay3(2, 30, 68.8, 4.4, -700, -500, 14, lane, 0.5)
+# #' brkdelay3(10, 4, 0, 30, 68.8, 4.4, -700, -500, 14,  0.25)
 #' @export
-brkdelay3 <- function(niter, tend, umn, usd, xstart, xfunnel, leff, lane, step) {
+brkdelay3 <- function(niter, nveh, tstart, tend, umn, usd, xstart, xfunnel, leff, step) {
+  type <- FALSE
   df   <- brktrials3(nveh, umn, usd, tstart, tend, xstart, step, type, leff, xfunnel)[[2]]
-
   tseq <- df[,1]
   udf  <- df[,seq(2,dim(df)[2],6)]
   u    <- rowMeans(udf)
   df.  <- cbind(t = tseq, u)
-
   for(i in 2:niter) {
-    df   <- brktrials3(tend, umn, usd, xstart, xfunnel, leff, lane, step, type = 0)[[2]]
+    df   <- brktrials3(nveh, umn, usd, tstart, tend, xstart, step, type, leff, xfunnel)[[2]]
     udf  <- df[,seq(2,dim(df)[2],6)]
     u    <- rowMeans(udf)
     df.  <- cbind(df., u)
   }
   umn <- apply(df.[,-1],1,mean)*3600/5280
   usd <- apply(df.[,-1],1,sd)*3600/5280
-  plot(tseq, umn, typ = "p", ylim = c(0,70), pch = 16,
+  plot(tseq, umn, typ = "p", pch = 16, ylim = c(0,90),
        xlab = "t, seconds", ylab = expression(u[t]*", mph"))
-  abline(h = c(0,umn[1]), col = gray(0.8))
+  abline(h = c(0,umn[1],50), col = gray(0.8))
   abline(v = 0, col = gray(0.8))
+  axis(side = 4, at = 50, labels = expression(u^"*"))
   for(i in 1:length(tseq)) {
     lines(x = c(tseq[i],tseq[i]), y = c(umn[i] - usd[i], umn[i] + usd[i]))
   }

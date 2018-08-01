@@ -90,7 +90,7 @@ merge3 <- function(i,df1, df2,leff,step,xfunnel,usd,ylim,type) {
       if(type == TRUE) points(tstart,xstart)
       if(type == TRUE) points(tend,xend)
       df2    <- df3[,c(1,4,5)]
-      print(data.frame("merge3",k, tstart, tend, step))
+      # print(data.frame("merge3",k, tstart, tend, step))
       tseq   <- seq(tstart, tend, step)
       useq   <- df3[tstart <= df3[,1] & df3[,1] <= tend,4]
       xseq   <- df3[tstart <= df3[,1] & df3[,1] <= tend,5]

@@ -4,10 +4,14 @@
 \alias{brkdelay3}
 \title{\code{brkdelay3} is a wrapper function for \code{brktrials3}.}
 \usage{
-brkdelay3(niter, tend, umn, usd, xstart, xfunnel, leff, lane, step)
+brkdelay3(niter, nveh, tstart, tend, umn, usd, xstart, xfunnel, leff, step)
 }
 \arguments{
 \item{niter}{number of iterations, a number}
+
+\item{nveh}{number of vehicles, a number}
+
+\item{tstart}{start time for simualted run, a number}
 
 \item{tend}{end time for simualted run, a number}
 
@@ -20,8 +24,6 @@ brkdelay3(niter, tend, umn, usd, xstart, xfunnel, leff, lane, step)
 \item{xfunnel}{upstream location where the lane drop starts (feet), a number}
 
 \item{leff}{effective vehicle length(feet), a number}
-
-\item{lane}{a vector of \code{nveh} numbers, a vector}
 
 \item{step}{size in seconds, a number}
 }

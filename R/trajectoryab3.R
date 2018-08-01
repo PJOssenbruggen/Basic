@@ -30,7 +30,7 @@ trajectoryab3 <- function(tstart, tend, ustart, uend, xstart, xend, step, type) 
   # Warning messages:
   #  1: In get(object, envir = currentEnv, inherits = TRUE) :
   #    restarting interrupted promise evaluation
-  print(data.frame("trajectoryab3", tstart, tend, step))
+  #  print(data.frame("trajectoryab3", tstart, tend, step))
 
   tseq <- seq(tstart, tend, by = step)
   tlen <- length(tseq)

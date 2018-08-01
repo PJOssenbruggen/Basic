@@ -47,15 +47,15 @@ brktrials3 <- function(nveh, umn, usd, tstart, tend, xstart, step, type, leff, x
     plot(dfij[,1], dfij[,3], typ = "l", xlab = "t, seconds", ylab = "x, feet", ylim, xlim = c(tstart,tend))
     abline(v = 0, col = gray(0.8))
     abline(h = c(0, xfunnel), col = gray(0.8))
-    print(data.frame("STEP 1", i = 1, dforder, nveh))
+    # print(data.frame("STEP 1", i = 1, dforder, nveh))
   }
   for(i in 2:nveh) {
     # Step 2 desire lines
 #    if(i == 4) browser()
     vehorder <- as.numeric(dforder[,1])
     dfij     <- vehid(veh[i], tuxv)
-    print(data.frame("STEP 2: desire-lines", VEHICLE = i, vehorder, nveh))
-    if(type == FALSE) lines(dfij[,1], dfij[,3])
+    # print(data.frame("STEP 2: desire-lines", VEHICLE = i, vehorder, nveh))
+#    if(type == TRUE) lines(dfij[,1], dfij[,3])
   }
   for(i in 1:(nveh-1)) {
     # STEP 3
@@ -63,11 +63,11 @@ brktrials3 <- function(nveh, umn, usd, tstart, tend, xstart, step, type, leff, x
     df1     <- vehid(vehorder[i],   tuxv.fix)
     df2     <- vehid(vehorder[i+1], tuxv.fix)
     df2.fix <- merge3(i,df1,df2,leff,step,xfunnel,usd,ylim,FALSE)
-    print(data.frame("STEP 3", VEHICLE = i, vehorder, nveh))
+    # print(data.frame("STEP 3", VEHICLE = i, vehorder, nveh))
     if(type == TRUE) {
       lines(df1[,1], df1[,3], lwd = 2, lty = 1)
       text(tend, max(df1[,3]), labels = veh[i], pos = 4)
-      print(data.frame("merge3", VEHICLE = i))
+      # print(data.frame("merge3", VEHICLE = i))
       lines(df2.fix[,1], df2.fix[,3], lwd = 2, lty = 1)
       text(tend, max(df2.fix[,3]), labels = veh[i+1], pos = 4)
     }
