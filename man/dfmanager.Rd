@@ -26,7 +26,7 @@ dfmanager(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step)
 \item{step}{size in seconds, a number}
 }
 \value{
-\code{dfmanager} returns  \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
+\code{dfmanager} returns  \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.
 }
 \description{
 \code{dfmanager} is a wrapper function for \code{brktrials2}

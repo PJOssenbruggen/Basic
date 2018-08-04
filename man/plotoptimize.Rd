@@ -14,7 +14,7 @@ plotoptimize(df,xfunnel, type)
 \item{type}{2 to create a plot, a number}
 }
 \value{
-\code{plotoptimize} returns  \code{t-x} tractories for \code{nveh} drivers,
+\code{plotoptimize} returns  \code{t-x} trajectories for \code{nveh} drivers,
 who wish to optimize their individual desires without constraint.
 }
 \description{
