@@ -15,7 +15,7 @@
 #' @param uend3 end speed (mph) for vehicle in lane 3, a number
 #' @param xstart3 start location for vehicle in lane 3 (feet), a number
 #' @param xend3 end location for vehicle in lane 3 (feet), a number
-#' @return \code{zipper} uses a deterministic model and animation to illustrate an ``idealistic'' situtaion,
+#' @return \code{zipper} uses a deterministic model and animation to illustrate an ``idealistic'' situation,
 #' a so-called a ``zipper merge.''
 #' @usage zipper(tstart, tend,
 #'     ustart1, uend1, xstart1, xend1,

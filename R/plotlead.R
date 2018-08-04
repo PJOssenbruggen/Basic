@@ -1,7 +1,7 @@
 #' Produces a time-distance \code{t-x} trajectory for the lead vehicle, \code{vehicle = 1}.
 #'
 #' @param L, a matrix
-#' @param theta gbm model parameter, a number
+#' @param theta a \code{gbm} model parameter, a number
 #' @param xlim plot range, a vector
 #' @param ylim plot range, a vector
 #' @param leff effective vehicle length (feet), a number

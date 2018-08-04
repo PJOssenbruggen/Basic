@@ -2,7 +2,7 @@
 #'
 #' @return \code{accelpass} uses a stochastic model to show the locations of vehicle accelerating to pass
 #' another vehicle traveling side-by-side at the speed.
-#' @param tend end time for simualted run, a number
+#' @param tend end time for a simulation run, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
 #' @param usd speed volatility for \code{umn}, a number
 #' @param xstart start location for vehicle in lane 1 (feet), a number

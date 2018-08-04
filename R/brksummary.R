@@ -1,7 +1,7 @@
 #' The function \code{brksummary} is a wrapper for  \code{accelpass} and \code{passplot}.
 #'
 #' @return \code{brksummary} contains a table of information used for \code{run} plot
-#' @param k traffic density (vpm), a number
+#' @param k traffic density (vehicles per mile, vpm), a number
 #' @param tend end time, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
 #' @param usd speed volatility for \code{umn}, a number

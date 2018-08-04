@@ -5,7 +5,7 @@
 #' @param ulead.sd standard deviation of \code{ulead}, a number
 #' @param ubrkdown breakdown speed (mph) of lead vehicle, a number
 #' @param ubrkdown.sd standard deviation of \code{ubrkdown}, a number
-#' @param k traffic density (vpm) of the pre-breakdown state, a number
+#' @param k traffic density (vehicles per mile, vpm) of the pre-breakdown state, a number
 #' @param k.sd standard deviation of following vehicle breakdown speed, a number
 #' @param d deceleration rate of the lead  \code{l} vehicle, a number
 #' @param leff effective vehicle length (feet), a number

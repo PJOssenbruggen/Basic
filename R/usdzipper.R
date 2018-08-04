@@ -1,8 +1,8 @@
 #' The \code{usdzipper} function is used to perform a sensitivity analysis of a single vehicles
 #' in traffic breakdown.
 #'
-#' @return \code{usdzipper} uses a deterministic model to illustrate an ``idealistic'' situtaion,
-#' a so-called a ``usdzipper merge.''
+#' @return \code{usdzipper} uses a deterministic model to illustrate an ``idealistic'' situation,
+#' a so-called a ``zipper merge.''
 #' @param tstart start time, a number
 #' @param tend end time, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number

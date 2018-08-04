@@ -5,7 +5,7 @@
 #' @param xf0 following vehicle location at time \code{t0}, a number.
 #' @param ul0 lead vehicle speed, a number.
 #' @param uf0 following vehicle speed, a number.
-#' @param theta gbm model parameter, a number.
+#' @param theta a \code{gbm} model parameter, a number.
 #' @param leff effective vehicle length, a number.
 #' @usage findt1(xl0, xf0, ul0, uf0, theta, leff)
 # #' @examples

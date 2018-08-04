@@ -1,4 +1,4 @@
-#' The function \code{lfmatrix} unlists the information \code{cflist}, the lists \code{L} and \code{Fw},
+#' The function \code{lfmatrix} displays \code{cflist}, the lists \code{L} and \code{Fw} information
 #' for lead and following vehicles, respectively.
 #'
 #' @param cflist information produced from the \code{run} and \code{trial} functions, a list.

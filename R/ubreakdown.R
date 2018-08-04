@@ -1,7 +1,7 @@
 #' The \code{ubreakdown} function generates a breakdown speed vector \code{ubk} assuming a lognormal distribution.
 #'
 #' @param nveh number of vehicles in the investigation or \code{vehicle} = {1, 2, ..., \code{nveh}}, a number
-#' @param ubk breakdown ubk, a number
+#' @param ubk average breakdown speed, a number
 #' @param ubk.sd standard deviation of \code{ubk}, a number
 #' @usage ubreakdown(nveh, ubk, ubk.sd)
 # #' @examples

@@ -8,7 +8,7 @@
 #' from The \code{rrtrials} is an output matrix called \code{LF}.
 #' @param umn lead vehicle speed (mph), a number
 #' @param usd standard deviation of lead vehicle speed (mph), a number
-#' @param k0 traffic density (vpm), a number
+#' @param k0 traffic density (vehicles per mile, vpm), a number
 #' @param N number of time-steps, a number
 #' @param T upper time range (seconds), a number
 #' @param leff effective vehicle length (feet), a number

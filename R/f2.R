@@ -3,7 +3,7 @@
 #' @param xl0 location of lead vehicle at time \code{t} = \code{t0}, a number
 #' @param ul0 pre-breakdown speed of lead vehicle, a number
 #' @param ul3 breakdown speed of lead vehicle, a number
-#' @param theta gbm model parameter, a number
+#' @param theta a \code{gbm} model parameter, a number
 #' @param t3 transition time, a number
 #' @param xf1 location of following vehicle at time \code{t} = \code{t1}, a number
 #' @param t time, a number

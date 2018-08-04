@@ -1,7 +1,7 @@
 #' Estimate distance \code{x} given a geometric Brownian motion model and time t.
 #'
 #' @param u0 initial speed, a number
-#' @param theta gbm model estimate, a number.
+#' @param theta a \code{gbm} model estimate, a number.
 #' @param t time, a number
 #' @usage  gbmx(u0, theta, t)
 # #' @examples

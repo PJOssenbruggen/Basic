@@ -1,4 +1,4 @@
-#' Produces a time-distance \code{t-x} trajectoty for \code{vehicle i = 2}.
+#' Produces a time-distance \code{t-x} trajectory for \code{vehicle i = 2}.
 #'
 #' @param L a collection of variables that describe the relationship between a lead \code{l}
 #' and a following \code{f} vehicle, a matrix.

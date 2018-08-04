@@ -4,7 +4,7 @@
 #' @param xf3 location of the following vehicle at \code{t3}, a number
 #' @param uf1 speed of the following vehicle at \code{t1}, a number
 #' @param uf3 speed of the following vehicle at \code{t3}, a number
-#' @param theta gbm model parameter of the following vehicle, a number
+#' @param theta a \code{gbm} model parameter of the following vehicle, a number
 #' @param t1 deceleration time, a number
 #' @param t2 time when the vehicle sights lead vehicle, a number
 #' @param t3 time when the vehicle obtains breakdown speed \code{u0}, a number

@@ -1,6 +1,6 @@
 #' \code{brktrials3} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
 #'
-#' @return \code{brktrials3} returns  \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
+#' @return \code{brktrials3} returns  \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.
 #' @param nveh number of vehicles entering the bottleneck, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
 #' @param usd speed volatility (mph) for \code{umn}, a number

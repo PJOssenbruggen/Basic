@@ -4,7 +4,7 @@
 #' @param usd standard deviation of \code{umn}, a number
 #' @param T upper time range in seconds, a number
 #' @param N number of time-steps, a number
-#' @param k0 traffic density (vpm), a number
+#' @param k0 traffic density (vehicles per mile, vpm), a number
 #' @param leff effective vehicle length, a number
 #' @usage plottux(umn, usd, N, T, k0, leff)
 # #' @examples

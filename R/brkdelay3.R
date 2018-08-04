@@ -4,7 +4,7 @@
 #' @param niter number of iterations, a number
 #' @param nveh number of vehicles, a number
 #' @param tstart start time for simualted run, a number
-#' @param tend end time for simualted run, a number
+#' @param tend end time for a simulation run, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
 #' @param usd speed volatility for \code{umn}, a number
 #' @param xstart start location, (feet), a number

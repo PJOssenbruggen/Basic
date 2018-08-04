@@ -3,7 +3,7 @@
 #' @param cflist contains information about the lead vehicle, a list
 #' @param vehicle a vehicle identifier, a number
 #' @param uf speed (mph) of the following vehicle at time \code{t0}, a number
-#' @param kf density (vpm) of the following vehicle at time \code{t0}, a number
+#' @param kf density (vehicles per mile, vpm) of the following vehicle at time \code{t0}, a number
 #' @param ub breakdown speed (mph) for this trajectory, a number
 #' @param leff effective vehicle length, a number.
 #' @param t4 upper range of plot, a number

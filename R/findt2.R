@@ -2,7 +2,7 @@
 #' the lead vehicle has decelerated.
 #'
 #' @param L lead vehicle information, a matrix
-#' @param theta gbm model parameter, a number
+#' @param theta a \code{gbm} model parameter, a number
 #' @param t4 time, a number
 #' @usage findt2(L, theta, t4)
 findt2 <- function(L, theta, t4) {

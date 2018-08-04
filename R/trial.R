@@ -11,9 +11,9 @@
 #' @param xlim plot range along the \code{t} axis, a vector
 #' @param ylim plot range along the \code{x} axis, a vector
 #' @return \code{LF} consists of a list of four outputs: (1) an input vector where speed is given
-#' in miles per hour (mph), where vehicle density is given in vehicles per mile (vpm),
+#' in miles per hour (mph), where vehicle density is given in vehicles per mile, vpm,
 #' where deceleration rate is given in feet per second squared (fps2), and where vehicle length in feet; (2) an
-#' input vector using feet and second scales exclusely; a car-following matrix \code{L}; and
+#' input vector using feet and second scales exclusively; a car-following matrix \code{L}; and
 #' (4) a \code{output} vector consisting various performance estimates of delay including traffic flow in
 #' the congested state and shock-wave speed for evaluating queuing.
 #' @usage trial(ul, ubk, k, uf, d, leff, xlim, ylim)

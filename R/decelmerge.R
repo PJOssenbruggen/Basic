@@ -8,7 +8,7 @@
 #' @param usd speed volatility for \code{umn}, a number
 #' @param xstart start location for vehicle in lane 1 (feet), a number
 #' @param xfunnel upstream location where the lane drop starts (feet), a number
-#' @param leff effective vehicle lingth(feet), a number
+#' @param leff effective vehicle length(feet), a number
 #' @usage decelmerge(tstart, tend, umn, usd, xstart, xfunnel, leff)
 #' @examples
 #' decelmerge(0, 10, 41, 0, -1000, -500, 14)

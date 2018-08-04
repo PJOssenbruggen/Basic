@@ -2,7 +2,7 @@
 #'
 #' @return \code{dfmanager} returns  \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
 #' @param nveh number of vehicles in the simulation, a number
-#' @param tend end time for simualted run, a number
+#' @param tend end time for a simulation run, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
 #' @param usd speed volatility for \code{umn}, a number
 #' @param xstart a vector of  \code{nveh} start locations, (feet), a vector
