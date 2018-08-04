@@ -30,3 +30,4 @@ Imports:
     usethis,
     utils
 Suggests: 
+VignetteBuilder: knitr
