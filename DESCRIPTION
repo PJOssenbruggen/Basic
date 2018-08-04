@@ -14,7 +14,6 @@ Imports:
     animation,
     devtools,
     dplyr,
-    gganimate,
     gapminder,
     ggplot2,
     graphics,
