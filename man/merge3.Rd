@@ -27,7 +27,7 @@ merge3(i,df1,df2,leff,step,xfunnel,usd,ylim,type)
 }
 \value{
 The \code{merge3}, a wrapper function for \code{bmfree2}, \code{xabparam} and
-\code{hsafe}, returns a smooth \code{hsafe} rule \code{t-x} tractory
+\code{hsafe}, returns a smooth \code{hsafe} rule \code{t-x} trajectory.
 for the following vehicle. The lead vehicle trajectory is not affected.
 }
 \description{

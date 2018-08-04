@@ -17,7 +17,7 @@ mergedemo(df1,df2,leff,step)
 }
 \value{
 The \code{mergedemo}, a wrapper function for \code{bmfree2}, \code{xabparam} and
-\code{hsafe}, returns a smooth \code{hsafe} rule \code{t-x} tractory
+\code{hsafe}, returns a smooth \code{hsafe} rule \code{t-x} trajectory.
 for the following vehicle. The lead vehicle trajectory is not affected.
 Incidentally, inputs \code{df1} and \code{df2} were created with  \code{bmfree2} and used
 for testing.

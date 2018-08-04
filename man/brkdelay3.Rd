@@ -11,7 +11,7 @@ brkdelay3(niter, nveh, tstart, tend, umn, usd, xstart, xfunnel, leff, step)
 
 \item{nveh}{number of vehicles, a number}
 
-\item{tstart}{start time for simualted run, a number}
+\item{tstart}{start time for a simulation run, a number}
 
 \item{tend}{end time for a simulation run, a number}
 
@@ -28,7 +28,7 @@ brkdelay3(niter, nveh, tstart, tend, umn, usd, xstart, xfunnel, leff, step)
 \item{step}{size in seconds, a number}
 }
 \value{
-\code{brkdelay3} returns  \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
+\code{brkdelay3} returns  \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.
 }
 \description{
 \code{brkdelay3} is a wrapper function for \code{brktrials3}.

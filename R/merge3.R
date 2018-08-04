@@ -1,7 +1,7 @@
 #' \code{merge3} produces \code{t-x} trajectories for a pair of lead and following vehicles for \code{brktrial3}.
 #'
 #' @return The \code{merge3}, a wrapper function for \code{bmfree2}, \code{xabparam} and
-#' \code{hsafe}, returns a smooth \code{hsafe} rule \code{t-x} tractory
+#' \code{hsafe}, returns a smooth \code{hsafe} rule \code{t-x} trajectory.
 #' for the following vehicle. The lead vehicle trajectory is not affected.
 #' @param i vehicle, a number
 #' @param df1 leading vehicle, a matrix

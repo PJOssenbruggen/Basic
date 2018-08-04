@@ -1,9 +1,9 @@
 #' \code{brkdelay3} is a wrapper function for \code{brktrials3}.
 #'
-#' @return \code{brkdelay3} returns  \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
+#' @return \code{brkdelay3} returns  \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.
 #' @param niter number of iterations, a number
 #' @param nveh number of vehicles, a number
-#' @param tstart start time for simualted run, a number
+#' @param tstart start time for a simulation run, a number
 #' @param tend end time for a simulation run, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
 #' @param usd speed volatility for \code{umn}, a number

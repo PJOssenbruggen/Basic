@@ -1,4 +1,4 @@
-#' Space headway \code{h} between the lead and following vehicles at time \code{t}. Lead and following vehicles use gBm and constant speed models, respectively.
+#' Space headway \code{h} between the lead and following vehicles at time \code{t}. Lead and following vehicles use \code{gbm} and constant speed models, respectively.
 #'
 #' @param xl0 location of lead vehicle at \code{t} = 0, a number
 #' @param ul0 pre-breakdown speed of lead vehicle, a number

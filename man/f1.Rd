@@ -2,7 +2,7 @@
 % Please edit documentation in R/f1.R
 \name{f1}
 \alias{f1}
-\title{Space headway \code{h} between the lead and following vehicles at time \code{t}. Lead and following vehicles use gBm and constant speed models, respectively.}
+\title{Space headway \code{h} between the lead and following vehicles at time \code{t}. Lead and following vehicles use \code{gbm} and constant speed models, respectively.}
 \usage{
 f1(xl0, ul0, theta, xf1, t, t1)
 }
@@ -20,5 +20,5 @@ f1(xl0, ul0, theta, xf1, t, t1)
 \item{t1}{deceleration time, a number}
 }
 \description{
-Space headway \code{h} between the lead and following vehicles at time \code{t}. Lead and following vehicles use gBm and constant speed models, respectively.
+Space headway \code{h} between the lead and following vehicles at time \code{t}. Lead and following vehicles use \code{gbm} and constant speed models, respectively.
 }

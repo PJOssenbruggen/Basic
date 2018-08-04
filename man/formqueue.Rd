@@ -19,7 +19,7 @@ formqueue(tstart, tend, umn, usd, xstart, xfunnel, leff)
 
 \item{xfunnel}{upstream location where the lane drop starts (feet), a number}
 
-\item{leff}{effective vehicle lingth(feet), a number}
+\item{leff}{effective vehicle length(feet), a number}
 }
 \value{
 \code{formqueue} uses a stochastic model to illustrate an ``idealistic'' situation,
