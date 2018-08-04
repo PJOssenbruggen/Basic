@@ -1,6 +1,6 @@
 #' \code{plotoptimise} produces \code{t-x} trajectories for \code{nveh} drivers
 #'
-#' @return \code{plotoptimize} returns  \code{t-x} tractories for \code{nveh} drivers,
+#' @return \code{plotoptimize} returns  \code{t-x} trajectories for \code{nveh} drivers,
 #' who wish to optimize their individual desires without constraint.
 #' @param df a data frame from \code{brktrials2}
 #' @param xfunnel upstream location where the lane drop starts (feet), a number

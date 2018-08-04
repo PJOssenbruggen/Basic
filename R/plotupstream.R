@@ -1,6 +1,6 @@
 #' \code{plotupstream} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
 #'
-#' @return \code{plotupstream} returns \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
+#' @return \code{plotupstream} returns \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.
 #' Wrapper for \code{vehdf}, \code{nopass} and \code{vehfix}
 #' @param pick a lane number
 #' @param lane, a vector

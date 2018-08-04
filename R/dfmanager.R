@@ -1,6 +1,6 @@
 #' \code{dfmanager} is a wrapper function for \code{brktrials2}
 #'
-#' @return \code{dfmanager} returns  \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
+#' @return \code{dfmanager} returns  \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.
 #' @param nveh number of vehicles in the simulation, a number
 #' @param tend end time for a simulation run, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
