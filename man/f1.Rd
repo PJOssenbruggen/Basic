@@ -11,7 +11,7 @@ f1(xl0, ul0, theta, xf1, t, t1)
 
 \item{ul0}{pre-breakdown speed of lead vehicle, a number}
 
-\item{theta}{gbm model parameter, a number}
+\item{theta}{a \code{gbm} model parameter, a number}
 
 \item{xf1}{location of following vehicle at \code{t} = \code{t1}, a number}
 

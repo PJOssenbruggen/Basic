@@ -7,7 +7,7 @@
 brksummary(k, tend, umn, usd, xstart, xfunnel, leff, lane, step)
 }
 \arguments{
-\item{k}{traffic density (vpm), a number}
+\item{k}{traffic density (vehicles per mile, vpm), a number}
 
 \item{tend}{end time, a number}
 

@@ -21,8 +21,8 @@ usdzipper(tstart, tend, umn, usd, xstart, xend)
 \item{xend}{end location for vehicle in lane 1 (feet), a number}
 }
 \value{
-\code{usdzipper} uses a deterministic model to illustrate an ``idealistic'' situtaion,
-a so-called a ``usdzipper merge.''
+\code{usdzipper} uses a deterministic model to illustrate an ``idealistic'' situation,
+a so-called a ``zipper merge.''
 }
 \description{
 The \code{usdzipper} function is used to perform a sensitivity analysis of a single vehicles

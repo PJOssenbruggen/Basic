@@ -7,7 +7,7 @@
 tuxvfix3(i, vehorder, nveh, tuxv, ufix, xfix)
 }
 \arguments{
-\item{i}{index, anumber}
+\item{i}{index, a number}
 
 \item{vehorder}{vehicle, a vector}
 

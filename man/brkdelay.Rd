@@ -9,7 +9,7 @@ brkdelay(niter, tend, umn, usd, xstart, xfunnel, leff, lane, step)
 \arguments{
 \item{niter}{number of iterations, a number}
 
-\item{tend}{end time for simualted run, a number}
+\item{tend}{end time for a simulation run, a number}
 
 \item{umn}{start speed (mph) for vehicle in lane 1, a number}
 
@@ -26,7 +26,7 @@ brkdelay(niter, tend, umn, usd, xstart, xfunnel, leff, lane, step)
 \item{step}{size in seconds, a number}
 }
 \value{
-\code{brkdelay} returns  \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
+\code{brkdelay} returns  \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.
 }
 \description{
 \code{brkdelay} is a wrapper function for \code{brktrials2}.

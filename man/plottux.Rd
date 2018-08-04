@@ -15,7 +15,7 @@ plottux(umn, usd, N, T, k0, leff)
 
 \item{T}{upper time range in seconds, a number}
 
-\item{k0}{traffic density (vpm), a number}
+\item{k0}{traffic density (vehicles per mile, vpm), a number}
 
 \item{leff}{effective vehicle length, a number}
 }

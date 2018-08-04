@@ -28,7 +28,7 @@ brktrials3(nveh, umn, usd, tstart, tend, xstart, step, type, leff, xfunnel)
 \item{xfunnel}{upstream location of bottleneck taper, a number}
 }
 \value{
-\code{brktrials3} returns  \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
+\code{brktrials3} returns  \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.
 }
 \description{
 \code{brktrials3} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck

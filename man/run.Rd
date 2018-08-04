@@ -18,7 +18,7 @@ run(nveh, ulead, ulead.sd, ubrkdown, ubrkdown.sd, k, k.sd, d, leff, xlim,
 
 \item{ubrkdown.sd}{standard deviation of \code{ubrkdown}, a number}
 
-\item{k}{traffic density (vpm) of the pre-breakdown state, a number}
+\item{k}{traffic density (vehicles per mile, vpm) of the pre-breakdown state, a number}
 
 \item{k.sd}{standard deviation of following vehicle breakdown speed, a number}
 

@@ -10,7 +10,7 @@ findt2(L, theta, t4)
 \arguments{
 \item{L}{lead vehicle information, a matrix}
 
-\item{theta}{gbm model parameter, a number}
+\item{theta}{a \code{gbm} model parameter, a number}
 
 \item{t4}{time, a number}
 }

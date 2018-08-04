@@ -15,7 +15,7 @@ findt5(xf1, xf3, uf1, uf3, theta, t, t1, t2, t3, t4)
 
 \item{uf3}{speed of the following vehicle at \code{t3}, a number}
 
-\item{theta}{gbm model parameter of the following vehicle, a number}
+\item{theta}{a \code{gbm} model parameter of the following vehicle, a number}
 
 \item{t}{unknown time \code{t5}, a number}
 

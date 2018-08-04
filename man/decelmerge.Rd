@@ -19,7 +19,7 @@ decelmerge(tstart, tend, umn, usd, xstart, xfunnel, leff)
 
 \item{xfunnel}{upstream location where the lane drop starts (feet), a number}
 
-\item{leff}{effective vehicle lingth(feet), a number}
+\item{leff}{effective vehicle length(feet), a number}
 }
 \value{
 \code{decelmerge} uses a deterministic model to show the locations of vehicle accelerating to pass

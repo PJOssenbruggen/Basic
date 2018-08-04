@@ -13,7 +13,7 @@ f2(xl0, ul0, ul3, theta, t3, xf1, t, t1)
 
 \item{ul3}{breakdown speed of lead vehicle, a number}
 
-\item{theta}{gbm model parameter, a number}
+\item{theta}{a \code{gbm} model parameter, a number}
 
 \item{t3}{transition time, a number}
 

@@ -9,7 +9,7 @@ gbmx(u0, theta, t)
 \arguments{
 \item{u0}{initial speed, a number}
 
-\item{theta}{gbm model estimate, a number.}
+\item{theta}{a \code{gbm} model estimate, a number.}
 
 \item{t}{time, a number}
 }

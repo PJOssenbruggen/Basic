@@ -23,7 +23,7 @@ formqueue(tstart, tend, umn, usd, xstart, xfunnel, leff)
 }
 \value{
 \code{formqueue} uses a stochastic model to illustrate an ``idealistic'' situation,
-a so-called a ``formqueue merge.''
+a so-called a ``form queue merge.''
 }
 \description{
 The \code{formqueue} function is used to explain queuing upstream of a bottleneck.

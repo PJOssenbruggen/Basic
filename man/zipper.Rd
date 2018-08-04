@@ -40,7 +40,7 @@ zipper(tstart, tend,
 \item{xend3}{end location for vehicle in lane 3 (feet), a number}
 }
 \value{
-\code{zipper} uses a deterministic model and animation to illustrate an ``idealistic'' situtaion,
+\code{zipper} uses a deterministic model and animation to illustrate an ``idealistic'' situation,
 a so-called a ``zipper merge.''
 }
 \description{

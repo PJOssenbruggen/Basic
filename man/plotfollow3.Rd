@@ -13,7 +13,7 @@ plotfollow3(cflist, vehicle, uf, kf, ub, leff, t4)
 
 \item{uf}{speed (mph) of the following vehicle at time \code{t0}, a number}
 
-\item{kf}{density (vpm) of the following vehicle at time \code{t0}, a number}
+\item{kf}{density (vehicles per mile, vpm) of the following vehicle at time \code{t0}, a number}
 
 \item{ub}{breakdown speed (mph) for this trajectory, a number}
 

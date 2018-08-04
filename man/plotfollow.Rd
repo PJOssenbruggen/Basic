@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotfollow.R
 \name{plotfollow}
 \alias{plotfollow}
-\title{Produces a time-distance \code{t-x} trajectoty for \code{vehicle i = 2}.}
+\title{Produces a time-distance \code{t-x} trajectory for \code{vehicle i = 2}.}
 \usage{
 plotfollow(L, Fw, t4)
 }
@@ -16,5 +16,5 @@ and a following \code{f} vehicle, a matrix.}
 \item{t4}{upper range of the plot, a number.}
 }
 \description{
-Produces a time-distance \code{t-x} trajectoty for \code{vehicle i = 2}.
+Produces a time-distance \code{t-x} trajectory for \code{vehicle i = 2}.
 }

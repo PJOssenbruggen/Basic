@@ -16,7 +16,7 @@ findt1(xl0, xf0, ul0, uf0, theta, leff)
 
 \item{uf0}{following vehicle speed, a number.}
 
-\item{theta}{gbm model parameter, a number.}
+\item{theta}{a \code{gbm} model parameter, a number.}
 
 \item{leff}{effective vehicle length, a number.}
 }

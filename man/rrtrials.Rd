@@ -11,7 +11,7 @@ rrtrials(umn, usd, k0, N, T, leff, nveh, xlim, ylim)
 
 \item{usd}{standard deviation of lead vehicle speed (mph), a number}
 
-\item{k0}{traffic density (vpm), a number}
+\item{k0}{traffic density (vehicles per mile, vpm), a number}
 
 \item{N}{number of time-steps, a number}
 

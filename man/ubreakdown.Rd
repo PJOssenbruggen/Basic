@@ -9,7 +9,7 @@ ubreakdown(nveh, ubk, ubk.sd)
 \arguments{
 \item{nveh}{number of vehicles in the investigation or \code{vehicle} = {1, 2, ..., \code{nveh}}, a number}
 
-\item{ubk}{breakdown ubk, a number}
+\item{ubk}{average breakdown speed, a number}
 
 \item{ubk.sd}{standard deviation of \code{ubk}, a number}
 }

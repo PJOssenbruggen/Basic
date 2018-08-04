@@ -9,7 +9,7 @@ dfmanager(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step)
 \arguments{
 \item{nveh}{number of vehicles in the simulation, a number}
 
-\item{tend}{end time for simualted run, a number}
+\item{tend}{end time for a simulation run, a number}
 
 \item{umn}{start speed (mph) for vehicle in lane 1, a number}
 

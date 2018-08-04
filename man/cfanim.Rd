@@ -18,7 +18,7 @@ cfanim(umn, usd, tup, dt)
 \value{
 The \code{cfanim} function returns information for a single vehicle
 used to analyze the effects of traffic noise on car-following.
-The function uses a stochastic traffic noise model, a brownian motion or Weiner \code{W} model.
+The function uses a stochastic traffic noise model, a Brownian motion or Wiener \code{W} model.
 }
 \description{
 \code{cfanim} uses a stochastic model of speed to describe driver's ability to maintain a speed \code{u}.

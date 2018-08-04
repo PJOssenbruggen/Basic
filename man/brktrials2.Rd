@@ -7,7 +7,7 @@
 brktrials2(tend, umn, usd, xstart, xfunnel, leff, lane, step, type)
 }
 \arguments{
-\item{tend}{end time for simualted run, a number}
+\item{tend}{end time for a simulation run, a number}
 
 \item{umn}{start speed (mph) for vehicle in lane 1, a number}
 
@@ -26,7 +26,7 @@ brktrials2(tend, umn, usd, xstart, xfunnel, leff, lane, step, type)
 \item{type}{0 no plots, 1 prediction plot, 2 all plots, a number}
 }
 \value{
-\code{brktrials2} returns  \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
+\code{brktrials2} returns  \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.
 }
 \description{
 \code{brktrials2} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck

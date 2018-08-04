@@ -9,7 +9,7 @@ plotlead(L, theta, leff, xlim, ylim)
 \arguments{
 \item{L, }{a matrix}
 
-\item{theta}{gbm model parameter, a number}
+\item{theta}{a \code{gbm} model parameter, a number}
 
 \item{leff}{effective vehicle length (feet), a number}
 

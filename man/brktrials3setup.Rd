@@ -26,7 +26,7 @@ brktrials3setup(nveh, umn, usd, tstart, tend, xstart, step, type, leff)
 \item{leff}{vehicle length in feet, a number}
 }
 \value{
-\code{brktrials3setup} returns  \code{t-x} tractories of \code{nveh} vehicles at a bottleneck.
+\code{brktrials3setup} returns  \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.
 }
 \description{
 \code{brktrials3setup} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
