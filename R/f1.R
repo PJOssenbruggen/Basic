@@ -2,7 +2,7 @@
 #'
 #' @param xl0 location of lead vehicle at \code{t} = 0, a number
 #' @param ul0 pre-breakdown speed of lead vehicle, a number
-#' @param theta gbm model parameter, a number
+#' @param theta a \code{gbm} model parameter, a number
 #' @param xf1 location of following vehicle at \code{t} = \code{t1}, a number
 #' @param t1 deceleration time, a number
 #' @param t time, a number

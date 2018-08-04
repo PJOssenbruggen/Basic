@@ -2,7 +2,7 @@
 #'
 #' @return The \code{cfanim} function returns information for a single vehicle
 #' used to analyze the effects of traffic noise on car-following.
-#' The function uses a stochastic traffic noise model, a brownian motion or Weiner \code{W} model.
+#' The function uses a stochastic traffic noise model, a Brownian motion or Wiener \code{W} model.
 #' @param umn mean speed (mph), a number
 #' @param usd standard deviation of \code{umn}, a number
 #' @param tup upper time range, a number

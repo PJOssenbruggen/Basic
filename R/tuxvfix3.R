@@ -1,6 +1,6 @@
 #' \code{tuxvfix3} fixes \code{hsafe} violations for vehicle \code{veh} in matrix \code{tuxv}.
 #'
-#' @param i index, anumber
+#' @param i index, a number
 #' @param vehorder vehicle, a vector
 #' @param nveh number of vehicle in \code{df}, a number
 #' @param tuxv a data frame created in\code{bk2trials}, a matrix
