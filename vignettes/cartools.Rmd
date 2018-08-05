@@ -9,12 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+
 
 This __cartools__ package is created and designed to be used by transportation engineers, operators and managers. 
 
@@ -23,7 +18,7 @@ Basic principles of traffic flow theory are used.  Emphasis is placed on:
 * _Traffic noise or volatility._
 
 * _Driver behavior and safety._
-
+""
 * _Stochastic modeling, models that explain breakdown and performance._
 
 
@@ -42,10 +37,11 @@ The list of factors that explains a traffic breakdown event is long. Consider on
 
 Obviously, solving the traffic breakdown puzzle requires a comprehensive knowledge of the individual elements of the driver behavior mix and those factors that influence driver behavior and traffic demand:  traffic management, law enforcement,  roadway design,  monetary (out-of-pocket) and human costs (crash risk), transport mode competition and technology.  
 
-In __cartools__, the strategy is to break this puzzle into more manageable parts, explore each part, and then reassemble the parts in a meaningful way. Fundamental principles of transportation, probability, statistics  and visual imagery, graphics, are the principle means of exploring this problem with __cartools__. Real-world problems are explored. 
+In __cartools__, the strategy is to break this puzzle into more manageable parts, explore each part, and then reassemble the parts in a meaningful way. Fundamental principles of transportation, probability, statistics  and visual imagery, graphics, are the principle means of exploring a part or an assembly of parts with __cartools__. Real-world problems are used to demonstrate the strategy. 
+
 ## The cartools Website 
 
-The primary aim of __cartools__ is to enhance learning and to come closer to solving the _traffic breakdown puzzle._ The __cartools__ website, https://pjossenbruggen.github.io/cartools/index.html, has been prepared to aid the learning process. Its principle function is to show how  __cartools__ strategy works. Topics are introduced  in a step-by-step manner. The following is a list of currently available website menu items:
+The primary aim of __cartools__ is to enhance learning and to come closer to solving the _traffic breakdown puzzle._ The __cartools__ website, https://pjossenbruggen.github.io/cartools/index.html, has been prepared to aid the learning process. Its principle function is to show how the  __cartools__ strategy works. Topics are introduced  in a step-by-step manner. The following is a list of currently available website menu items:
 
 1. Drivers: Self Optimizers. Meeting the challenges.
 
