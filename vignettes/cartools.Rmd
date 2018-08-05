@@ -66,7 +66,7 @@ Users are encouraged to freely use any of the material used to create this packa
 
 1. https://github.com/PJOssenbruggen/Basic A repository containing all the __cartools__ functions and data used for analysis.
 
-2. https://github.com/PJOssenbruggen/cartools: A repository containing the R code for creating  the __cartools__website with GitHub Pages.
+2. https://github.com/PJOssenbruggen/cartools: A repository containing the R code for creating  the __cartools__ website with GitHub Pages.
 
 People familiar with R and RStudio may download, use and share this material as they see fit. Feedback is welcomed.
 
