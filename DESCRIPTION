@@ -1,6 +1,6 @@
 Package: Basic
 Type: Package
-Title: CARTOOLS1 Package
+Title: CARTOOLS Package
 Version: 0.1.0
 Author: person("Paul", "Ossenbruggen", email = "pjo@unh.edu", role = c("aut", "cre"))
 Maintainer: "Paul J. Ossenbruggen" <pjo@unh.edu>
