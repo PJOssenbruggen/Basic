@@ -1,5 +1,0 @@
----
-title: "cartools package"
----
-
-This package contains over 50 functions of analysis.
