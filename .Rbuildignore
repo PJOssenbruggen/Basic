@@ -1,2 +1,17 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.DS_Store$
+^\.RData$
+^\.Rhistory$
+^\._*$
+^\.gitignore$
+^data/\.DS_Store$
+^R/\.DS_Store$
+^R/\._*$
+^data/Rapp\.history$
+^man/Rapp\.history$
+^vignettes/\._*$
+^vignettes/\.gitignore$
+^Rproj\.user$
+^\.git$
+^\.got$
