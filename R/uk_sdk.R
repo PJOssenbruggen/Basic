@@ -5,7 +5,7 @@
 #' @return If \code{type} is TRUE, plot a density-speed plot is created and a data frame is returned.
 #' If If \code{type} is FALSE,  a data frame is returned.
 #' @examples
-#' uk_sdk(QUKtdayX, TRUE)
+#' \dontrun{uk_sdk(QUKtdayX, TRUE)}
 #' @export
 uk_sdk <- function(QUKtdayX, type) {
   quk1 <- QUKtdayX[,c(1,2,3)]
