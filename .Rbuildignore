@@ -16,3 +16,4 @@
 ^\.git$
 ^\.got$
 ^cran-comments\.md$
+^NEWS\.md$
