@@ -1,0 +1,89 @@
+#' The function \code{safecrossover} a graph showing driver conflict of two vehicles changing lanes.
+#'
+#' @param umn average speed in mph, a number
+#' @param leff effective vehicle length in feet, a number
+#' @usage safecrossover(umn, leff)
+#' @examples
+#' safecrossover(67, 14)
+#' @export
+safecrossover <- function(umn, leff) {
+  x <- y <- 0
+  plot(x, y, type = "l", xlim = c(-20,20), ylim = c(-800,200), xlab = "",
+       ylab = "", axes = FALSE)
+  polygon(c(-12,-12,12,12,-12),c(-850,250,250,-850,-850),col = gray(0.9))
+  abline(v = 0, col = gray(0.8))
+  abline(h = c(0,-500), col = gray(0.8))
+  lines(c(12,12), c(-850,250))
+  lines(c(-12,-12), c(-850,250))
+  lines(c(0,0), c(-850,250), lty = 2)
+  axis(side = 1, at = 6, labels = "Lane 2", cex = 0.75)
+  axis(side = 1, at = -6, labels = "Lane 1", cex = 0.75)
+  axis(side = 2, at = -500, labels = "x = -500")
+  axis(side = 2, at = 0, labels = "x = 0")
+  text(6,-250, label = "Vehicle 2 yields", pos = 3)
+  title(main = "Safe Crossover")
+  axis(side = 1, at = 0, labels = "Upstream", line = 1, cex = 2)
+  xstart <- -850
+  xend   <- 250
+  u0     <- umn * 5280/3600
+  tend   <- (xend-xstart)/u0
+  tseq   <- seq(0,tend,0.1)
+  xseq   <- xab(xstart,u0,0,0,tseq,0)
+  tlen   <- length(tseq)
+  y      <- rep(NA, tlen)
+  df     <- data.frame(t = tseq, x = xseq, y)
+  for(i in 1: tlen) {
+    if(df[i,2] >= 0) df[i,3] <- -6
+    if(df[i,2] <= -500) df[i,3] <- 6
+    if(-500 < df[i,2] & df[i,2] < 0) df[i,3] <- -12/500 * df[i,2] - 6
+  }
+  lines(-df[,3],df[,2], lwd = 3, col = "blue")
+  points(0, max(df[df[,2] <= -250,2]), pch = 16)
+  Vehicle <- rep(1, dim(df)[1])
+  u       <- rep(umn, dim(df)[1])
+  df <- cbind(df, Vehicle, u)
+  # Vehicle 2 decelerate
+  tstart <- max(df[df[,2] <= -500,1])
+  ustart <- u0
+  xstart <- max(df[df[,2] <= -500,2])
+  tend   <- max(df[df[,2] <= -250,1])
+  uend   <- u0
+  xend   <- max(df[df[,2] <= -250,2]) - 2*leff
+  ab     <- xabparam(tstart, tend, ustart, uend, xstart, xend)
+  tseq2  <- seq(tstart,tend,0.1)
+  tlen2  <- length(tseq2)
+  u2     <- uab(u0, a = ab[1], b = ab[2], t = tseq2, t0 = tstart)
+  x2     <- xab(x0 = xstart, u0, a = ab[1], b = ab[2], t = tseq2, t0 = tstart)
+  df2a   <- data.frame(t = tseq2, u = u2, x = x2)
+  # Vehicle 2 accelerate
+  tstart <- tend
+  ustart <- u0
+  xstart <- xend
+  tend   <- max(df[df[,2] <= 0,1])
+  uend   <- u0
+  xend   <- max(df[df[,2] <= 0,2])
+  ab     <- xabparam(tstart, tend, ustart, uend, xstart, xend)
+  tseq3  <- seq(tstart,tend,0.1)
+  tlen3  <- length(tseq3)
+  u3     <- uab(u0, a = ab[1], b = ab[2], t = tseq3, t0 = tstart)
+  x3     <- xab(x0 = xstart, u0, a = ab[1], b = ab[2], t = tseq3, t0 = tstart)
+  df2b   <- data.frame(t = tseq3, u = u3, x = x3)
+  df2ab  <- rbind(df2a,df2b[-1,])
+  df2    <- df
+  points(0, df2a[dim(df2a)[1],3])
+  tstart <- df2a[1,1]
+  tend   <- df2b[dim(df2b)[1],1]
+  df2[df2[,1] >= tstart & df2[,1] <= tend,2] <- df2ab[,3]
+  lines(df2[,3],df2[,2], lwd = 3, col = "green")
+  Vehicle <- rep(2, dim(df2)[1])
+  tbegin  <- tseq[tseq < tstart]
+  ubegin  <- rep(umn,length(tbegin))
+  tup     <- tseq[tseq > tend]
+  uup     <- rep(umn,length(tup))
+  u       <- c(ubegin, df2ab[,2], uup)
+  df2[,4] <- Vehicle
+  df2[,5] <- u
+  df      <- rbind(df,df2)
+  df      <- df[df[,1] >= 3 & df[,1] <= 9,]
+  return(df)
+}

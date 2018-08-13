@@ -1,6 +1,6 @@
 Package: cartools
 Type: Package
-Title: 'cartools' Tools for Understanding Highway Performance
+Title: Tools for Understanding Highway Performance
 Version: 0.1.0
 Author: person("Paul", "Ossenbruggen", email = "pjo@unh.edu", role = c("aut", "cre"))
 Maintainer: "Paul J. Ossenbruggen" <pjo@unh.edu>
