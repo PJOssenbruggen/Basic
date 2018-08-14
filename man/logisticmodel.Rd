@@ -21,5 +21,5 @@ The function \code{logisticmodel} estimates the parameters of logistic regressio
 using a binomial formula and logit link function for data \code{QUKtdayX}.
 }
 \examples{
-\donttest{logisticmodel(QUKtdayX, TRUE)}
+\dontrun{logisticmodel(QUKtdayX, TRUE)}
 }

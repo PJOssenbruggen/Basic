@@ -4,7 +4,7 @@
 #' @param QUKtdayX a matrix
 #' @param type logical
 #' @examples
-#' \donttest{logisticmodel(QUKtdayX, TRUE)}
+#' \dontrun{logisticmodel(QUKtdayX, TRUE)}
 #' @return If \code{type} is TRUE, plot a density-failure probability plot is created and a data frame is returned.
 #' If If \code{type} is FALSE, a data frame is returned.
 #' @export
