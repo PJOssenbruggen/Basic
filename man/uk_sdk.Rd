@@ -19,5 +19,5 @@ If If \code{type} is FALSE,  a data frame is returned.
 A speed volatility model.
 }
 \examples{
-\dontrun{uk_sdk(QUKtdayX, TRUE)}
+\donttest{uk_sdk(QUKtdayX, TRUE)}
 }

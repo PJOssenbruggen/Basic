@@ -3,7 +3,7 @@
 #' @param QUKtdayX a data frame
 #' @usage capacityplot(QUKtdayX)
 #' @examples
-#' \dontrun{capacityplot(QUKtdayX)}
+#' \donttest{capacityplot(QUKtdayX)}
 #' @export
 capacityplot <- function(QUKtdayX) {
   df <- cbind(uk_sdk(QUKtdayX, FALSE), logisticmodel(QUKtdayX, FALSE))

@@ -40,7 +40,7 @@ safecrossover <- function(umn, leff) {
   lines(-df[,3],df[,2], lwd = 3, col = "blue")
   points(0, max(df[df[,2] <= -250,2]), pch = 16)
   Vehicle <- rep(1, dim(df)[1])
-  u       <- rep(umn, dim(df)[1])
+  u       <- rep(u0, dim(df)[1])
   df <- cbind(df, Vehicle, u)
   # Vehicle 2 decelerate
   tstart <- max(df[df[,2] <= -500,1])
@@ -77,9 +77,9 @@ safecrossover <- function(umn, leff) {
   lines(df2[,3],df2[,2], lwd = 3, col = "green")
   Vehicle <- rep(2, dim(df2)[1])
   tbegin  <- tseq[tseq < tstart]
-  ubegin  <- rep(umn,length(tbegin))
+  ubegin  <- rep(u0,length(tbegin))
   tup     <- tseq[tseq > tend]
-  uup     <- rep(umn,length(tup))
+  uup     <- rep(u0,length(tup))
   u       <- c(ubegin, df2ab[,2], uup)
   df2[,4] <- Vehicle
   df2[,5] <- u

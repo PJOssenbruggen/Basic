@@ -4,7 +4,7 @@
         "filePatterns" : [
         ],
         "path" : "~/Desktop/Basic",
-        "query" : "gganimate",
+        "query" : " \\dontrun",
         "regex" : false
     }
 }

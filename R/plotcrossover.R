@@ -4,7 +4,7 @@
 #' @param leff effective vehicle length in feet, a number
 #' @usage plotcrossover(umn, leff)
 #' @examples
-#' \dontrun{plotcrossover(67, 14)}
+#' \donttest{plotcrossover(67, 14)}
 #' @export
 plotcrossover <- function(umn, leff) {
   x <- y <- 0
@@ -23,7 +23,7 @@ plotcrossover <- function(umn, leff) {
     if(-500 < df[i,2] & df[i,2] < 0) df[i,3] <- -12/500 * df[i,2] - 6
   }
   Vehicle <- rep(1, dim(df)[1])
-  u       <- rep(umn, dim(df)[1])
+  u       <- rep(u0, dim(df)[1])
   df <- cbind(df, Vehicle, u)
   # Vehicle 2 decelerate
   tstart <- max(df[df[,2] <= -500,1])
@@ -58,9 +58,9 @@ plotcrossover <- function(umn, leff) {
   df2[df2[,1] >= tstart & df2[,1] <= tend,2] <- df2ab[,3]
   Vehicle <- rep(2, dim(df2)[1])
   tbegin  <- tseq[tseq < tstart]
-  ubegin  <- rep(umn,length(tbegin))
+  ubegin  <- rep(u0,length(tbegin))
   tup     <- tseq[tseq > tend]
-  uup     <- rep(umn,length(tup))
+  uup     <- rep(u0,length(tup))
   u       <- c(ubegin, df2ab[,2], uup)
   df2[,4] <- Vehicle
   df2[,5] <- u
