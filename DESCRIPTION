@@ -3,7 +3,6 @@ Type: Package
 Title: Tools for Understanding Highway Performance
 Version: 0.1.0
 Authors@R: person("Paul", "Ossenbruggen", email = "pjo@unh.edu", role = c("aut", "cre"))
-Maintainer: "Paul J. Ossenbruggen" <pjo@unh.edu>
 Description: Analytical tools are designed to help people understand the complex relationships associated with freeway performance and traffic breakdown. Emphasis is placed on: (1) Traffic noise or volatility; (2) Driver behavior and safety; and (3) Stochastic modeling, models that explain breakdown and performance.
 License: MIT + file LICENSE
 Encoding: UTF-8
