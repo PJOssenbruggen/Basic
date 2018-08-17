@@ -15,5 +15,5 @@ plotcrossover(umn, leff)
 A \code{ggplot2} plot of crossover traffic data.
 }
 \examples{
-\dontrun{plotcrossover(67, 14)}
+\donttest{plotcrossover(67, 14)}
 }
