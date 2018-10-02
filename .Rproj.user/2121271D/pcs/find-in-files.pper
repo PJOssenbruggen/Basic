@@ -2,9 +2,11 @@
     "dialog-state" : {
         "caseSensitive" : false,
         "filePatterns" : [
+            "*.r",
+            "*.R"
         ],
         "path" : "~/Desktop/Basic",
-        "query" : " \\dontrun",
+        "query" : "u_sd",
         "regex" : false
     }
 }

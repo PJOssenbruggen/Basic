@@ -16,18 +16,18 @@
 #' @export
 #'
 brktrials3setup <- function(nveh, umn, usd, tstart, tend, xstart, step, type, leff) {
-  tseq <- seq(tstart, tend, step)
-  tlen <- length(tseq)
-  y    <- rep(NA, tlen)
-  tux  <- bmfree2(umn, usd, tstart, tend, xstart, step, type)
-  tuxy <- cbind(tux, y)
+  tseq     <- seq(tstart, tend, step)
+  tlen     <- length(tseq)
+  y        <- rep(0, tlen)
+  tux      <- bmfree2(umn, usd, tstart, tend, xstart, step, type)
+  tuxy     <- cbind(tux, y)
   for(i in 2:nveh) {
-    tux  <- bmfree2(umn, usd, tstart, tend, xstart, step, type)
-    tux  <- cbind(tux, y)
-    u    <- as.numeric(tux[1,2])
+    tux     <- bmfree2(umn, usd, tstart, tend, xstart, step, type)
+    tux     <- cbind(tux, y)
+    u       <- as.numeric(tux[1,2])
     safe.hdwy <- rep(hsafe(u, leff), tlen)
     tux[,3] <- tux[,3] - (i - 1) * safe.hdwy
-    tuxy <- cbind(tuxy, tux[,c(2:4)])
+    tuxy    <- cbind(tuxy, tux[,c(2:4)])
   }
   return(tuxy)
 }

@@ -3,7 +3,7 @@
 \name{bmfree2}
 \alias{bmfree2}
 \title{The \code{bmfree2} function returns a \code{tux} matrix of time \code{t}, speed \code{u} (fps)
- and location \code{x} (feet).}
+ and location \code{x} (feet) using a Brownian Motion Bridge model.}
 \usage{
 bmfree2(umn, usd, tstart, tend, xstart, step, type)
 }
@@ -24,5 +24,5 @@ bmfree2(umn, usd, tstart, tend, xstart, step, type)
 }
 \description{
 The \code{bmfree2} function returns a \code{tux} matrix of time \code{t}, speed \code{u} (fps)
- and location \code{x} (feet).
+ and location \code{x} (feet) using a Brownian Motion Bridge model.
 }

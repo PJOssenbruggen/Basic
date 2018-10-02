@@ -1,5 +1,5 @@
 #' The \code{bmfree2} function returns a \code{tux} matrix of time \code{t}, speed \code{u} (fps)
-#'  and location \code{x} (feet).
+#'  and location \code{x} (feet) using a Brownian Motion Bridge model.
 #'
 #' @param umn mean speed (mph), a number
 #' @param usd standard deviation of \code{usd} (mph), a number
@@ -11,6 +11,7 @@
 #' @usage bmfree2(umn, usd, tstart, tend, xstart, step, type)
 # #' @examples
 # #' bmfree2(41, 11, 16.5, 30, 10, 0.25, TRUE)
+#' @export
 bmfree2  <- function(umn, usd, tstart, tend, xstart, step, type) {
   t     <- seq(tstart, tend, step)
   N     <- length(t)
@@ -22,8 +23,9 @@ bmfree2  <- function(umn, usd, tstart, tend, xstart, step, type) {
   u     <- x + (W - (t - tstart)/(tend - tstart) * (W[N] - y + x))
   for(i in 1:N) if(u[i] <= 0) u[i] = 0
   if(type == TRUE) {
-    plot(t, u, typ = "l")
+    plot(t, u, typ = "l", ylab = "u, feet per second", xlab = "t, seconds")
     abline(h = x, col = gray(0.8))
+    title(main = "Traffic Volatity")
   }
   x     <- rep(0, length(t))
   x[1]  <- xstart

@@ -4,20 +4,22 @@
 \alias{brktrials3}
 \title{\code{brktrials3} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck}
 \usage{
-brktrials3(nveh, umn, usd, tstart, tend, xstart, step, type, leff, xfunnel)
+brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel,usd)
 }
 \arguments{
-\item{nveh}{number of vehicles entering the bottleneck, a number}
+\item{nveh1}{number of vehicles entering the bottleneck from lane 1, a number}
+
+\item{nveh2}{number of vehicles entering the bottleneck from lane 2, a number}
 
 \item{umn}{start speed (mph) for vehicle in lane 1, a number}
-
-\item{usd}{speed volatility (mph) for \code{umn}, a number}
 
 \item{tstart}{start time, (seconds), a number}
 
 \item{tend}{end time, (seconds), a number}
 
-\item{xstart}{start location, (feet), a number}
+\item{xstart1}{start location of the first vehicle in lane 1, (feet), a number}
+
+\item{xstart2}{start location of the first vehicle in lane 2, (feet), a number}
 
 \item{step}{size in seconds, a number}
 
@@ -26,13 +28,15 @@ brktrials3(nveh, umn, usd, tstart, tend, xstart, step, type, leff, xfunnel)
 \item{leff}{vehicle length in feet, a number}
 
 \item{xfunnel}{upstream location of bottleneck taper, a number}
+
+\item{usd}{speed standard deviation, a number}
 }
 \value{
-\code{brktrials3} returns  \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.
+\code{brktrials3} returns a list of two matrices with 3 times \code{nveh} columns.
 }
 \description{
 \code{brktrials3} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
 }
 \examples{
-brktrials3(4, 68.4, 4.4, 0, 30, -700, 0.25, FALSE, 14, -500)
+brktrials3(3, 3, 50.4,  0, 30, -700, -700, 0.25, TRUE,  14, -500, usd)
 }

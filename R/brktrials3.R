@@ -1,80 +1,114 @@
 #' \code{brktrials3} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
 #'
-#' @return \code{brktrials3} returns  \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.
-#' @param nveh number of vehicles entering the bottleneck, a number
+#' @return \code{brktrials3} returns a list of two matrices with 3 times \code{nveh} columns.
+#' @param nveh1 number of vehicles entering the bottleneck from lane 1, a number
+#' @param nveh2 number of vehicles entering the bottleneck from lane 2, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
-#' @param usd speed volatility (mph) for \code{umn}, a number
 #' @param tstart start time, (seconds), a number
 #' @param tend end time, (seconds), a number
-#' @param xstart start location, (feet), a number
+#' @param xstart1 start location of the first vehicle in lane 1, (feet), a number
+#' @param xstart2 start location of the first vehicle in lane 2, (feet), a number
 #' @param step size in seconds, a number
 #' @param type TRUE to create plots or FALSE otherwise, a logical
 #' @param leff vehicle length in feet, a number
 #' @param xfunnel upstream location of bottleneck taper, a number
-#' @usage brktrials3(nveh, umn, usd, tstart, tend, xstart, step, type, leff, xfunnel)
+#' @param usd speed standard deviation, a number
+#' @usage brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel,usd)
 #' @examples
-#' brktrials3(4, 68.4, 4.4, 0, 30, -700, 0.25, FALSE, 14, -500)
+#' brktrials3(3, 3, 50.4,  0, 30, -700, -700, 0.25, TRUE,  14, -500, usd)
 #' @export
-brktrials3 <- function(nveh, umn, usd, tstart, tend, xstart, step, type, leff, xfunnel) {
+brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, type, leff, xfunnel, usd) {
   tseq  <- seq(tstart, tend, step)
   tlen  <- length(tseq)
-  y     <- rep(NA, tlen)
-  nveh  <- round(0.5*nveh,0)
-  lane1 <- brktrials3setup(nveh, umn, usd, tstart, tend, xstart, step, type, leff)
-  lane2 <- brktrials3setup(nveh, umn, usd, tstart, tend, xstart, step, type, leff)
-  tuxv  <- tuxv.fix <- cbind(lane1,lane2[,-1])
-  # select a vehicle for the vehicle location and aggressiveness
-  dforder <- {}
-  nveh    <- 2*nveh
-  for(veh in 1:nveh) {
-    dfij    <- round(vehid(veh, tuxv),2)
-    dffun   <- dfij[dfij[,3] <= xfunnel,]
-    dffun   <- dffun[dim(dffun)[1],]
-    dffun   <- c(veh, dffun)
-    dforder <- rbind(dforder, dffun)
+  y     <- rep(0, tlen)
+  nveh  <- nveh1 + nveh2
+  umn   <- as.numeric(umn)
+  usd   <- as.numeric(usd)
+  print(data.frame("brktrials3", umn, usd))
+  if(nveh1 > 0) lane1 <- brktrials3setup(nveh1, umn, usd, tstart, tend, xstart1, step, type, leff) else lane1 <- {}
+  if(nveh2 > 0) lane2 <- brktrials3setup(nveh2, umn, usd, tstart, tend, xstart2, step, type, leff) else lane2 <- {}
+  if(nveh1 == 0 & nveh2 > 0) {
+    stop("Let nveh1 be non-zero and nveh2 = 0")
   }
-  colnames(dforder) <- c("vehicle","t","u", "x", "y")
-  rownames(dforder) <- rep("given",nveh)
-  o       <- order(dforder[,2])
-  dforder <- dforder[o,]
-  veh     <- dforder[,1]
-  dfij    <- round(vehid(veh[1], tuxv),2)
-  min.    <- min(as.numeric(unlist(tuxv)), na.rm = TRUE)
-  max.    <- max(as.numeric(unlist(tuxv)), na.rm = TRUE)
+  # Step 1. No vehicle may pass upstream of x < xfunnel for lane 1
+  u            <- as.numeric(lane1[1,2])
+  safe.hdwy    <- rep(hsafe(u, leff), tlen)
+  lane1.dup    <- lane1
+  pnts         <- {}
+  # Plot range
+  min.    <- min(as.numeric(unlist(lane1)), na.rm = TRUE)
+  max.    <- max(as.numeric(unlist(lane1)), na.rm = TRUE)
   ylim    <- c(min., max.)
+
+  # STEP 2. Form a tuxv matrix for lane 1
+  # tuxv  <- tuxv.fix <- cbind(lane1,lane2[,-1])
+  # select a vehicle for the vehicle location and aggressiveness
+  if(nveh1 > 0) {
+    index1   <- seq(3,1+3*nveh1,3)
+    times1   <- rep(NA,length(index1))
+    for(i in 1:nveh1) {
+      tm         <- as.numeric(lane1[lane1[,index1[i]] <= xfunnel,1])
+      times1[i]  <- max(tm)
+    }
+  }
+  if(nveh2 > 0) {
+    index2   <- seq(3,1+3*nveh2,3)
+    times2   <- rep(NA,length(index2))
+    for(i in 1:nveh2) {
+      tm         <- as.numeric(lane2[lane2[,index2[i]] <= xfunnel,1])
+      times2[i]  <- max(tm)
+    }
+  }
+
+### Lane 1 ###########################################################################
+  # Vehicle arrival order
+  lane    <- lane1
+  nveh    <- nveh1
+  times   <- times1
+  dft     <- data.frame(t = times, ln = rep(1,length(times)))
+  o       <- order(dft[,1])
+  dft     <- dft[o,]
+  nclm    <- seq(2, nveh*3, 3)
+  tseq    <- lane[,1]
+  lane    <- lane[,-1]
   if(type == TRUE) {
-    # STEP 1
-    plot(dfij[,1], dfij[,3], typ = "l", xlab = "t, seconds", ylab = "x, feet", ylim, xlim = c(tstart,tend))
+    # Plot range ylim
+    min.    <- min(as.numeric(unlist(lane[,nclm])), na.rm = TRUE)
+    max.    <- max(as.numeric(unlist(lane[,nclm])), na.rm = TRUE)
+    ylim    <- c(min., max.)
+    #    pdf(file = "/Users/PJO/Desktop/bottleneck.pdf")
+    plot(tseq, lane[,2], type = "l", xlab = "t, seconds", ylab = "x, feet", ylim, xlim = c(tstart,tend),col="orange")
     abline(v = 0, col = gray(0.8))
     abline(h = c(0, xfunnel), col = gray(0.8))
-    # print(data.frame("STEP 1", i = 1, dforder, nveh))
+    index   <- seq(3,1+3*nveh,3)
+    for(i in 2:nveh) lines(tseq, lane[,nclm[i]], col = gray(0.5))
+    title(main = "Desire-Line Trajectories", sub = "Lane 1")
   }
-  for(i in 2:nveh) {
-    # Step 2 desire lines
-#    if(i == 4) browser()
-    vehorder <- as.numeric(dforder[,1])
-    dfij     <- vehid(veh[i], tuxv)
-    # print(data.frame("STEP 2: desire-lines", VEHICLE = i, vehorder, nveh))
-#    if(type == TRUE) lines(dfij[,1], dfij[,3])
+  lane1 <- lane
+### Lane 2 ###########################################################################
+  # Vehicle arrival order
+  lane    <- lane2
+  nveh    <- nveh2
+  times   <- times2
+  dft     <- data.frame(t = times, ln = rep(1,length(times)))
+  o       <- order(dft[,1])
+  dft     <- dft[o,]
+  nclm    <- seq(2, nveh*3, 3)
+  tseq    <- lane[,1]
+  lane    <- lane[,-1]
+  if(type == TRUE) {
+    # Plot range ylim
+    min.    <- min(as.numeric(unlist(lane[,nclm])), na.rm = TRUE)
+    max.    <- max(as.numeric(unlist(lane[,nclm])), na.rm = TRUE)
+    ylim    <- c(min., max.)
+    plot(tseq, lane[,2], type = "l", xlab = "t, seconds", ylab = "x, feet", ylim, xlim = c(tstart,tend),col="orange")
+    abline(v = 0, col = gray(0.8))
+    abline(h = c(0, xfunnel), col = gray(0.8))
+    index   <- seq(3,1+3*nveh,3)
+    for(i in 2:nveh) lines(tseq, lane[,nclm[i]], col = gray(0.5))
+    title(main = "Desire-Line Trajectories", sub = "Lane 2")
   }
-  for(i in 1:(nveh-1)) {
-    # STEP 3
-#    if(i == 4) browser()
-    df1     <- vehid(vehorder[i],   tuxv.fix)
-    df2     <- vehid(vehorder[i+1], tuxv.fix)
-    df2.fix <- merge3(i,df1,df2,leff,step,xfunnel,usd,ylim,FALSE)
-    # print(data.frame("STEP 3", VEHICLE = i, vehorder, nveh))
-    if(type == TRUE) {
-      lines(df1[,1], df1[,3], lwd = 2, lty = 1)
-      text(tend, max(df1[,3]), labels = veh[i], pos = 4)
-      # print(data.frame("merge3", VEHICLE = i))
-      lines(df2.fix[,1], df2.fix[,3], lwd = 2, lty = 1)
-      text(tend, max(df2.fix[,3]), labels = veh[i+1], pos = 4)
-    }
-    df       <- vehid(vehorder[i], tuxv)
-    ufix     <- df2.fix[,2]
-    xfix     <- df2.fix[,3]
-    tuxv.fix <- tuxvfix3(i+1, vehorder, nveh, tuxv.fix, ufix, xfix)
-  }
-  return(list(tuxv, tuxv.fix, vehorder))
+  lane2 <- lane
+  return(list(lane1,lane2))
 }
+
