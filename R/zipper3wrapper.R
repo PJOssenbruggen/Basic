@@ -1,6 +1,6 @@
-#' \code{brktrials4wrapper} produces \code{t-x} trajectory for vehicles traveling on parallel lanes that merge at a bottleneck.
+#' \code{zipper3wrapper} produces \code{t-x} trajectory for vehicles traveling on parallel lanes that merge at a bottleneck.
 #'
-#' @return The \code{brktrials4wrapper}, a wrapper function for \code{bmfree3}, \code{xabparam} and
+#' @return The \code{zipper3wrapper}, a wrapper function for \code{bmfree3}, \code{xabparam} and
 #' \code{hsafe}, returns a smooth \code{hsafe} rule \code{t-x} trajectory
 #' for the following vehicle, and critical information. The lead vehicle trajectory is not affected. Passing is not permitted.
 #' The input matrix \code{lane} contains desire lines for a leading and following vehicle.
@@ -17,12 +17,11 @@
 #' @param leff vehicle length in feet, a number
 #' @param type TRUE to create plots or FALSE otherwise, a logical
 #' @param browse to inspect \code{fixviolation} to inspect plot or FALSE otherwise
-#' @usage brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,browse)
-# #' @examples
-# #' brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,browse)
+#' @usage zipper3wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,browse)
+# #'
 #' @export
-brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,browse) {
-#### STEP 1. Create lane 1 and 2 datasets ################################################################
+zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,browse) {
+  #### STEP 1. Create lane 1 and 2 datasets ################################################################
   #set.seed(123)
   # set.seed(403)
   #set.seed(333)
@@ -30,7 +29,7 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
   print(data.frame(nveh1,nveh2,xstart1,xstart2,step,tstart,tend,xfunnel,leff))
   zippermerge(nveh, tstart, tend, xstart, umn, leff, xfunnel, step, type)
 #  browser()
-  lst   <- brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,type=TRUE,leff,xfunnel)
+  lst   <- zipper3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel,usd)
   lane1 <- lst[[1]]
   lane2 <- lst[[2]]
   if(type == TRUE) {
@@ -64,17 +63,17 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
       text(tend, max(lane1[,xcol]), labels = veh,pos = 4, offset = 0.2, cex = 0.5)
       text(0, min(lane1[,xcol]), labels = veh,pos = 2, offset = 0.2, cex = 0.5)
     }
-    title(main = "Lane 1", sub = "Downstream car-following effects.")
+    title(main = "Lane 1", sub = "Desire trajectories.")
     density <- as.numeric(5280/hsafe(umn*5280/3600,leff))
     density <- round(density,0)
     legend("topleft",
-      title = "",
-      legend = c(
-        expression("Predictions:"),
-        bquote(bar(u)[A] == .(speeda)),
-        bquote(bar(u)[D] == .(speedd))
-     ),
-      cex = c(0.75,0.75,0.75))
+           title = "",
+           legend = c(
+             expression("Predictions:"),
+             bquote(bar(u)[A] == .(speeda)),
+             bquote(bar(u)[D] == .(speedd))
+           ),
+           cex = c(0.75,0.75,0.75))
     # Lane 2
     nclm    <- seq(2, nveh2*3, 3)
     min.    <- min(as.numeric(unlist(lane2[,nclm])), na.rm = TRUE)
@@ -112,12 +111,11 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
            ),
            cex = c(0.75,0.75,0.75))
   }
- # browser()
-#### STEP 2. Order vehicles by the times that they reach x = 0 ####################
+  #### STEP 2. Order vehicles by the times that they reach x = 0 ####################
   lst    <- enterbottleneck(lane1,lane2,xfunnel,tend,step)
   dfcrit <- lst[[1]]
   nveh   <- lst[[2]]
-#### STEP 3. Merge lane 1 and 2 data sets ##########################################
+  #### STEP 3. Merge lane 1 and 2 data sets ##########################################
   tend.0 <- tend
   tseq   <- seq(0, tend, step)
   tlen   <- length(tseq)
@@ -129,7 +127,7 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
     }
   }
   print(dfcrit)
-### Zipper Merge ################################################################
+  ### Zipper Merge ################################################################
   if(usd == 0) {
     # Fix violation for Lane Drop #################################################
     zone <- 2
@@ -152,7 +150,7 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
       ylim <- c(min(xval), max(xval))
       plot(tseq, df1df2[,2], type = "n", xlab = "t, seconds",ylab = "x, feet",
            ylim=ylim, xlim=xlim)
-      subtitle <- "Side-by-side merge."
+      subtitle <- "Zipper merge."
       title(main = "Bottleneck", sub = subtitle)
       abline(h = c(0,xfunnel), col = gray(0.8))
       abline(v = c(0), col = gray(0.8))
@@ -188,7 +186,7 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
     }
     browser()
 
-#### STEP 6. Flow Estimation
+    #### STEP 6. Flow Estimation
     lst <- flow(df1df2 = df1df2, tstart, tend, step, xfunnel,TRUE)
     df1 <- lst[[1]]
     df2 <- lst[[2]]
@@ -199,13 +197,13 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
       lines(df1[,3], df1[,1], typ = "s", col = "orange", lwd = 2)
       abline(v = 0, col = gray(0.8))
       abline(h = 1, col = gray(0.8))
-      title(main = "Bottleneck", sub = "Side-by-side merge.")
+      title(main = "Bottleneck", sub = "Zipper merge.")
       if(usd == 0) sub <- "Stochastic Model" else sub <- "Stochastic Model"
       axis(side = 3, at = max(df1[,3])/2, sub, tick = FALSE, line = -1)
       legend("topleft", legend = c("A = arrival","D = departure"), lty = c(1,1), col = c("red","orange"), bty = "n")
     }
     browser()
-#### STEP 7. Capacity Estimation
+    #### STEP 7. Capacity Estimation
     df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel,TRUE)
     print(df1)
     tservice = abs(round(xfunnel/(5280/3600*umn),1))
@@ -215,7 +213,7 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
       plot(df1[,7], df1[,8], typ = "p", xlim, ylim, ylab = "q, vph",
            xlab = "k, vpm", pch = 16, col = "red")
       points(df1[,10],df1[,11],pch = 16, col = "orange")
-      title(main = "Bottleneck" , sub = "Side-by-side merge.")
+      title(main = "Bottleneck" , sub = "Zipper merge.")
       k.d.mn <- round(mean(df1[,7], na.rm = TRUE),0)
       q.d.mn <- round(mean(df1[,8], na.rm = TRUE),0)
       k.a.mn <- round(mean(df1[,10], na.rm = TRUE),0)
@@ -271,7 +269,7 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
       ylim <- c(min(xval), max(xval))
       plot(tseq, df1df2[,2], type = "n", xlab = "t, seconds",ylab = "x, feet",
            ylim=ylim, xlim=xlim)
-      subtitle <- "Side-by-side merge spillback."
+      subtitle <- "Zipper merge spillback."
       title(main = "Bottleneck", sub = subtitle)
       abline(h = c(0,xfunnel), col = gray(0.8))
       abline(v = c(0), col = gray(0.8))
@@ -337,10 +335,10 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
     if(is.infinite(q.a.mn)) q.a.mn <- NA
     if(is.infinite(q.d.mn)) q.d.mn <- NA
     run <- data.frame(
-               u.a = u.a.mean.mph, u.d = u.d.mean.mph,
-               k.a = k.a.mn, k.d = k.d.mn,
-               q.a = q.a.mn, q.d =  q.d.mn,
-               w = w.mn, tservice)
+      u.a = u.a.mean.mph, u.d = u.d.mean.mph,
+      k.a = k.a.mn, k.d = k.d.mn,
+      q.a = q.a.mn, q.d =  q.d.mn,
+      w = w.mn, tservice)
     print(data.frame("Run"))
     print(run)
     if(type == TRUE & !is.na(q.a.mn)) {
@@ -380,7 +378,7 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
                bquote(t[server] == .(tservice))
              ),
              cex = c(0.75,0.75,0.75,0.75)
-             )
+      )
     }
     return(run)
   }

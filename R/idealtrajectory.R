@@ -16,6 +16,7 @@ idealtrajectory <- function(df1df2, nveh, u, k) {
        ylim = c(-850,200), ylab = "x, feet", xlab = "t, seconds")
   abline(h = c(0,-500), col = gray(0.8))
   abline(v = c(0), col = gray(0.8))
+  browser()
   u      <- u * 5280/3600
   h      <- 5280/k
   tau    <- h/u

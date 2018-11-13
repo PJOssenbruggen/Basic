@@ -1,6 +1,6 @@
-#' \code{brktrials3setup} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
+#' \code{zipper3setup} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
 #'
-#' @return \code{brktrials3setup} returns  \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.
+#' @return \code{zipper3setup} returns  \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.
 #' @param nveh number of vehicles entering the bottleneck, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
 #' @param usd speed volatility for \code{umn}, a number
@@ -10,12 +10,12 @@
 #' @param step size in seconds, a number
 #' @param type TRUE or FALSE, a logical
 #' @param leff vehicle length in feet, a number
-#' @usage brktrials3setup(nveh, umn, usd, tstart, tend, xstart, step, type, leff)
+#' @usage zipper3setup(nveh, umn, usd, tstart, tend, xstart, step, type, leff)
 #' @examples
-#' brktrials3setup(5, 68.4, 4.4, 0, 30, -700, 0.25, FALSE, 14)
+#' zipper3setup(5, 68.4, 4.4, 0, 30, -700, 0.25, FALSE, 14)
 #' @export
 #'
-brktrials3setup <- function(nveh, umn, usd, tstart, tend, xstart, step, type, leff) {
+zipper3setup <- function(nveh, umn, usd, tstart, tend, xstart, step, type, leff) {
   tseq     <- seq(tstart, tend, step)
   tlen     <- length(tseq)
   y        <- rep(0, tlen)
@@ -25,7 +25,7 @@ brktrials3setup <- function(nveh, umn, usd, tstart, tend, xstart, step, type, le
     tux     <- bmfree2(umn, usd, tstart, tend, xstart, step, type = FALSE)
     tux     <- cbind(tux, y)
     u       <- as.numeric(tux[1,2])
-    safe.hdwy <- rep(hsafe(u, leff), tlen)
+    safe.hdwy <- 2*rep(hsafe(u, leff), tlen)
     tux[,3] <- tux[,3] - (i - 1) * safe.hdwy
     tuxy    <- cbind(tuxy, tux[,c(2:4)])
   }

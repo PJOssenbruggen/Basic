@@ -8,16 +8,14 @@
 #' @param step time step, a number
 #' @param tend.0 end time for over the long time range, a number
 #' @param leff effective vehicle lenght, a number
+#' @param xfunnel location where the lane drop is located, a number
 #' @param browse to inspect \code{fixviolation} plot or FALSE otherwise
-#' @usage fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, browse)
+#' @usage fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, browse)
 # #' @examples
-# #' fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, browse)
+# #' fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, browse)
 #' @export
-fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, browse) {
+fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, browse) {
   # create df1 and df2
-  print(dfcrit)
-  print(data.frame(vehicle = veh))
-  df.01  <- df.12 <- df.23 <- {}
   ucol   <- 3*(veh-1) - 2
   xcol   <- 3*(veh-1) - 1
   ycol   <- 3*(veh-1)
@@ -29,57 +27,104 @@ fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, browse) 
   t      <- seq(0,tend.0,step)
   df1    <- cbind(t,df1)
   df2    <- cbind(t,df2)
+  tcrit.  <- as.numeric(dfcrit[veh,4])
+  xcrit1. <- df1[df1[,1]== tcrit.,3]
+  xcrit2. <- df2[df2[,1]== tcrit.,3]
+  # if(TRUE) forces a graph to be drawn
   if(browse == TRUE) {
     par(mfrow = c(1,1), pty = "s")
-    plot(df1[,1], df1[,3], typ = "l", ylim = c(-1200,2500), ylab = "x", xlab = "t")
-    abline(h = c(0,-500), col = gray(0.8))
+    plot(df1[,1], df1[,3], typ = "l", ylim = c(-1000,2000), ylab = "x", xlab = "t")
+    abline(h = c(0,xfunnel), col = gray(0.8))
     abline(v = c(0), col = gray(0.8))
     lines(df1[,1],df1[,3],lty=1,col="yellow",lwd=2.5)
-    lines(df1[,1],df1[,3],lty=2,col="red",lwd=.5)
-    lines(df2[,1],df2[,3],lty=1,col="black",lwd=0.5)
+    lines(df1[,1],df1[,3],lty=2,col="red",  lwd=0.5)
+    lines(df2[,1],df2[,3],lty=1,col="blue",lwd=0.5)
     text(tend, df1[df1[,1] == tend,3], labels = veh-1, pos = 4, cex = 0.5)
     text(tend, df2[df2[,1] == tend,3], labels = veh, pos = 4, cex = 0.5)
     title(main = "Fix violation")
     axis(side = 3, labels = veh, at = 0)
   }
-  # Zone 2
+  leadveh <- veh - 1
+  if(browse == TRUE) {
+    for(v in 1:leadveh) {
+      if(v == 1) {
+        ucol   <- 1
+        xcol   <- 2
+        ycol   <- 3
+        df1.    <- cbind(df1df2[,ucol], df1df2[,xcol], df1df2[,ycol])
+        df1.    <- cbind(t,df1.)
+        lines(df1.[,1],df1.[,3], lty = 1, col= gray(0.5))
+        text(tend, df1.[df1.[,1] == tend,3], labels = v, pos = 4, cex = 0.5)
+      } else {
+        ucol   <- 3*v - 2
+        xcol   <- 3*v - 1
+        ycol   <- 3*v
+        df1.    <- cbind(df1df2[,ucol], df1df2[,xcol], df1df2[,ycol])
+        df1.    <- cbind(t,df1.)
+        lines(df1.[,1],df1.[,3], lty = 1, col= gray(0.5))
+        text(tend, df1.[df1.[,1] == tend,3], labels = v, pos = 4, cex = 0.5)
+      }
+    }
+  }
+  # Zone 2 #############################################################################
+  df2.fix  <- df2
+  zone.df  <- NA
+  tstart   <- as.numeric(dfcrit[veh,4])
+  tend     <- as.numeric(dfcrit[veh,5])
+  X3       <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
+  tcrit3   <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
   tstart   <- as.numeric(dfcrit[veh,3])
   tend     <- as.numeric(dfcrit[veh,4])
-  df2.fix  <- df2
-  X        <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
-  tcrit    <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
-
-  if(dfcrit[veh,9] == 0) return(df2[,-1])
-  if(sum(X) == 0) return(df2[,-1])
-  if(sum(X) > 0 & tcrit == tstart) return(df2[,-1])
+  X2       <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
+  tcrit2   <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
+  crittable <- data.frame(t1 = as.numeric(dfcrit[veh,3]), tcrit2, sum.X2 = sum(X2), tcrit3, sum.X3 = sum(X3))
+  print(crittable)
   if(browse == TRUE) {
     lines(df1[,1],df1[,3], lty = 1, col="yellow")
     lines(df1[,1],df1[,3], lty = 2, col="red")
-    lines(df2.fix[,1],df2.fix[,3], lty = 3, col = "blue")
-    text(tend, df1[df1[,1] == tend,3], labels = veh-1, pos = 4, cex = 0.5)
-    text(tend, df2[df2[,1] == tend,3], labels = veh, pos = 4, cex = 0.5)
+    lines(df2.fix[,1],df2.fix[,3], lty = 3, col = "tan")
+    text(tend, df1[df1[,1] == tend,3], labels = veh-1, pos = 3, cex = 0.75)
+    text(tend, df2[df2[,1] == tend,3], labels = veh, pos = 1, cex = 0.75)
+    abline(v = as.numeric(crittable[c(1,2,4)]), lty = 3)
   }
-    # Zone 2
+  if(sum(X2) == 0 & sum(X3) == 0) return(df2.fix[,-1])
+  print(data.frame("Zone 2 91", sumX2 = sum(X2), sumX3 = sum(X3)))
+  # Zone 2 df2.fix
+  if(sum(X2) > 0) {
     fraction      <- seq(1,0,-0.001)
     tseq          <- seq(tstart,tend,step)
-    # Zone 2
     for(j in 1:length(fraction)) {
       X        <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
       tcrit    <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
-      ustart  <- as.numeric(df2.fix[df2.fix[,1] == tstart,2])
-      xstart  <- as.numeric(df2.fix[df2.fix[,1] == tstart,3])
-      if(X[1] == 1) {
-        xstart  <- xstart - hsafe(ustart, leff)
+      if(j == 1) {
+        ustart   <- as.numeric(df2.fix[df2.fix[,1] == tstart,2])
+        xstart   <- as.numeric(df2.fix[df2.fix[,1] == tstart,3])
+        if(X[1] == 1) xstart  <- xstart - hsafe(ustart, leff)
+        uend     <- as.numeric(df2.fix[df2.fix[,1] == tend,2])
+        xend     <- as.numeric(df2.fix[df2.fix[,1] == tend,3])
+        xlen     <- length(X)
+        if(X[xlen] == 1) {
+          uend <- as.numeric(df1[df1[,1] == tend,2])
+          xend <- as.numeric(df1[df1[,1] == tend,3]) - hsafe(uend, leff)
+        }
+        if(X[1] == 1) {
+          ustart <- as.numeric(df1[df1[,1] == tstart,2])
+          xstart <- as.numeric(df1[df1[,1] == tstart,3]) - hsafe(ustart, leff)
+        }
+        if(browse == TRUE) {
+          points(tstart,xstart, cex = 0.75)
+          points(tend,xend, cex = 0.75)
+        }
+      } else {
+        if(j == 400) browser()
+        ustart <- ustart * fraction[j]
+        xend   <- xend - hsafe(ustart, leff)
+        if(browse == TRUE) {
+          points(tstart,xstart, cex = 0.75, col = "green")
+          points(tend,xend, cex = 0.75, col = "red")
+        }
       }
-      uend    <- as.numeric(df2.fix[df2.fix[,1] == tend,2])
-      xlen    <- length(X)
-      tend    <- tcrit
-      if(X[xlen] == 1) xend <- as.numeric(df2.fix[df2.fix[,1] == tend,3]) - hsafe(uend, leff) else
-        xend <- as.numeric(df2.fix[df2.fix[,1] == tend,3])
-      if(browse == TRUE) {
-        points(tstart,xstart, cex = 0.75)
-        points(tend,xend, cex = 0.75)
-      }
+      print(data.frame("Zone 2 128", tstart, tend, ustart, uend, xstart, xend))
       ab      <- xabparam(tstart, tend, ustart, uend, xstart, xend)
       a       <- ab[1]
       b       <- ab[2]
@@ -87,131 +132,75 @@ fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, browse) 
       t0      <- tstart
       x.fix   <- xab(xstart,ustart,a,b,t = tseq,t0)
       u.fix   <- uab(ustart,a,b,t = tseq,t0)
-      # linear function
       # Zone 2
-      if(min(u.fix) < 0) for(m in 1:length(tseq)) {
-        u.lin    <- (xend - xstart)/(tend - tstart)
-        if(u.lin <= 0) u.lin <- 0
-        x.fix[m] <- xstart + u.lin * (tseq[m] - tstart)
-        u.fix[m] <- u.lin
-      }
       df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= tend,2] <- u.fix
       df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= tend,3] <- x.fix
+      lines(tseq,x.fix, col = gray(0.8))
       X       <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
       tcrit   <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
+
       ustart  <- u.fix[1]
       xstart  <- x.fix[1]
       uend    <- u.fix[length(tseq)]
       xend    <- x.fix[length(tseq)]
-      if(browse == TRUE) {
-        points(tstart,xstart, cex = 1, pch = 16)
-        points(tend,xend, cex = 1, pch = 16)
-        lines(tseq,x.fix, col = "tan", lwd = 1)
-        lines(df2.fix[,1],df2.fix[,3], col = "tan", lwd = 2)
-        text(tend, df2.fix[df2.fix[,1] == tend,3], labels = veh, pos = 4, cex = 0.5)
-      }
-      df.12  <- data.frame("Zone 2",tstart, tend, ustart, uend, xstart, xend, u.min = min(u.fix),tcrit)
-#      print(df.12)
-      if(sum(X) == 0) break
-    }
-    # Zone 3
-    tstart       <- as.numeric(dfcrit[veh,4])
-    tend         <- as.numeric(dfcrit[veh,5])
-    X            <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
-    tcrit        <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
-    if(sum(X) == 0) {
-      # linear x trajectory
-      t4seq    <- seq(tstart,tend.0,step)
-      x.fix.3  <- rep(NA, length(t4seq))
-      for(k in 1:length(t4seq)) x.fix.3[k] <- xend + uend * (t4seq[k] - tstart)
-      u.fix.3  <- rep(uend, length(t4seq))
-      lines(t4seq,x.fix.3, col = "tan", lwd = 2)
-      df.3    <- data.frame(x.fix.3,df2.fix = df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= tend.0,3])
-      hdwy.3  <- df.3[,1] - df.3[,2]
-      df.3    <- cbind(t = t4seq, df.3, hdwy.3)[-1,]
-      t4seq   <- t4seq[-1]
-      t4      <- rep(NA, length(t4seq))
-      for(i in 1:length(t4seq)) if(df.3[i,4] >= 0) t4[i] <-df.3[i,1]
-      t4     <- c(t4,tend.0)
-      t4     <- min(t4, na.rm = TRUE)
-      t4seq    <- seq(tstart,t4,step)
-      u.fix.3  <- rep(uend, length(t4seq))
-      x.fix.3  <- rep(NA, length(t4seq))
-      for(k in 1:length(t4seq)) x.fix.3[k] <- xend + uend * (t4seq[k] - tstart)
-      df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= t4,2] <- u.fix.3
-      df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= t4,3] <- x.fix.3
-      lines(df2.fix[,1],df2.fix[,3])
-      text(tend.0, df2.fix[df2.fix[,1] == tend.0,3], labels = veh, pos = 3)
-    } else {
-      # Zone 3
-
-      for(j in 1:length(fraction))  {
-        ustart  <- as.numeric(df2.fix[df2.fix[,1] == tstart,2]) * fraction[j]
-        xstart  <- as.numeric(df2.fix[df2.fix[,1] == tstart,3])
-        uend    <- as.numeric(df2.fix[df2.fix[,1] == tend,2])
-        xend    <- as.numeric(df2.fix[df2.fix[,1] == tend,3]) - hsafe(uend, leff)
-        if(as.numeric(df1[df1[,1] == tend,2]) >= xend) xend <- as.numeric(df1[df1[,1] == tend,2]) - hsafe(uend, leff)
-        ab      <- xabparam(tstart, tend, ustart, uend, xstart, xend)
-        a       <- ab[1]
-        b       <- ab[2]
-        tseq    <- seq(tstart,tend,step)
-        t0      <- tstart
-        x.fix   <- xab(xstart,ustart,a,b,t = tseq,t0)
-        u.fix   <- uab(ustart,a,b,t = tseq,t0)
-        # Zone 3
-        if(min(u.fix) < 0) for(m in 1:length(tseq)) {
-          u.lin    <- (xend - xstart)/(tend - tstart)
-          if(u.lin <= 0) u.lin <- 0
-          x.fix[m] <- xstart + u.lin * (tseq[m] - tstart)
-          u.fix[m] <- u.lin
-        }
-        df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= tend,2] <- u.fix
-        df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= tend,3] <- x.fix
-        X       <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
-        tcrit   <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
-        df.23   <- data.frame("Zone 3", tstart, tend, ustart, uend, xstart, xend, u.min = min(u.fix), tcrit)
-#        print(df.23)
-        if(browse == TRUE) {
-          points(tstart,xstart, cex = 1, pch = 16)
-          points(tend,xend, cex = 1, pch = 16)
-          lines(df2.fix[,1],df2.fix[,3], col = "tan", lwd = 2)
-          text(tend, df2.fix[df2.fix[,1] == tend,3], labels = veh, pos = 4, cex = 0.5)
-        }
-        if(sum(X) <= 1) break
+      df.12   <- data.frame("Zone 2",j,tstart, tend, ustart, uend, xstart, xend)
+      if(sum(X) == 0) {
+        zone.df <- rbind(zone.df, data.frame(Zone = 2, tstart, tend, ustart, uend, xstart, xend))
+        break
       }
     }
-    # Zone 1
-    tstart <- 0
-    tend   <- as.numeric(dfcrit[veh,3])
-    ustart <- as.numeric(df2.fix[1,2])
-    xstart <- as.numeric(df2.fix[1,3])
-    uend   <- as.numeric(df2.fix[df2.fix[,1] == tend,2])
-    xend   <- as.numeric(df2.fix[df2.fix[,1] == tend,3])
-    X      <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
-    tcrit  <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
-#    print(X)
     if(browse == TRUE) {
-      points(tstart,xstart, cex = 0.5, pch = 16)
-      points(tend,xend, cex = 0.5, pch = 16)
+      tseq  <- seq(tstart,tend,step)
+      lines(tseq,x.fix, col = "pink", lwd = 4)
+      lines(df2.fix[,1],df2.fix[,3], col = "yellow", lwd = 2)
+      text(tend, df2.fix[df2.fix[,1] == tend,3], labels = veh, pos = 1, cex = 0.5)
+      points(tstart,xstart, cex = 1, pch = 16)
+      points(tend,xend, cex = 1, pch = 16)
     }
-    for(j in 1:length(fraction)) {
-      X        <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
-      tcrit    <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
-#      print(X)
-      if(sum(X) == 0) break
+  }
+  # Zone 3 #################################################################################
+  if(sum(X3) >= 0) {
+    test    <- NA
+    tstart  <- tend
+    if(sum(X2) == 0) {
+      tstart <- max(df2.fix[df2.fix[,3] <= 0,1])
+      ustart <- as.numeric(df2.fix[df2.fix[,1] == tstart,2])
+      xstart <- as.numeric(df2.fix[df2.fix[,1] == tstart,3])
+    } else {
+      ustart  <- uend
+      xstart  <- xend
+    }
+    if(type == TRUE) points(tstart,xstart, cex = 1.5)
+    tseq    <- seq(0,tend.0,step)
+    tlen    <- length(tseq)
+    x2sight <- rep(NA,tlen)
+    for(i in 1:tlen) x2sight[i] <- xstart + ustart * (tseq[i] - tstart)
+    if(type == TRUE) lines(tseq,x2sight,lty = 3)
+    viol    <- findviolation(tstart, tend.0, tend.0, df1[,-1], df2.fix[,-1], step, leff)
+    df12    <- cbind(df1[,c(1:3)],df2.fix[,c(2,3)],x2sight)
+    colnames(df12) <- c("t", "u1", "x1", "u2", "x2","x2sight")
+    tseq    <- seq(tstart,tend.0,step)
+    dx2x1   <- df12[,3] - df12[,6]
+    df12    <- cbind(df12,dx2x1)
+    df12.   <- df12[df12[,1] > tstart,]
+    test    <- min(df12.[df12.[,7] <= 0,1])
+    if(is.infinite(test)) test <- tend.0
+    xtest   <- as.numeric(df12[df12[,1] == test,6])
+    if(type == TRUE) points(test, xtest, cex = 1, pch = 16)
+    if(!is.infinite(test)) {
       ustart  <- as.numeric(df2.fix[df2.fix[,1] == tstart,2])
       xstart  <- as.numeric(df2.fix[df2.fix[,1] == tstart,3])
-      if(X[1] == 1) xstart  <- xstart - hsafe(ustart, leff)
-      xstart  <- xstart/fraction[j]
-      uend    <- as.numeric(df2.fix[df2.fix[,1] == tcrit,2])
-      xlen    <- length(X)
-      if(X[xlen] == 1) xend <- as.numeric(df2.fix[df2.fix[,1] == tend,3]) - hsafe(uend, leff)
-      if(j > 10) ustart  <- fraction[j] * ustart
-#      print(data.frame("Zone 1", veh, tstart, tend, ustart, uend, xstart, xend, j))
-      if(browse == TRUE) {
-        points(tstart,xstart, cex = 0.75)
-        points(tend,xend, cex = 0.75)
-      }
+      points(tstart,xstart, cex = 1.5)
+      tend    <- test
+      uend    <- min(as.numeric(df1[df1[,1] == tend,2]))
+      xend    <- xtest - hsafe(uend,leff)
+      uend2   <- as.numeric(df2.fix[df2.fix[,1] == tend,2])
+      xend2   <- as.numeric(df2.fix[df2.fix[,1] == tend,3])
+      if(tend == tend.0 & xend2 < xend) uend <- uend2
+      if(tend == tend.0 & xend2 < xend) xend <- xend2
+    }
+    print(data.frame("Zone 3 203", tstart, tend, ustart, uend, xstart, xend))
+    if(tstart < tend) {
       ab      <- xabparam(tstart, tend, ustart, uend, xstart, xend)
       a       <- ab[1]
       b       <- ab[2]
@@ -219,27 +208,142 @@ fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, browse) 
       t0      <- tstart
       x.fix   <- xab(xstart,ustart,a,b,t = tseq,t0)
       u.fix   <- uab(ustart,a,b,t = tseq,t0)
-      # linear function
-      if(min(u.fix) < 0) for(m in 1:length(tseq)) {
-        u.lin    <- (xend - xstart)/(tend - tstart)
-        if(u.lin <= 0) u.lin <- 0
-        x.fix[m] <- xstart + u.lin * (tseq[m] - tstart)
-        u.fix[m] <- u.lin
+      tlen    <- length(tseq)
+      if(x.fix[tlen] < xstart | min(u.fix) < 0) {
+        for(i in 1:tlen) {
+          u.fix[i]   <- ustart
+          x.fix[i]   <- xstart + ustart * (tseq[i] - tstart)
+        }
       }
+      if(type == TRUE) lines(tseq, x.fix, col = "yellow", lwd = 3)
       df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= tend,2] <- u.fix
       df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= tend,3] <- x.fix
-      if(browse == TRUE) {
-        points(tstart,xstart, cex = 1, pch = 16)
-        points(tend,xend, cex = 1, pch = 16)
-        lines(tseq,x.fix, col = "tan", lwd = 1)
-        lines(df2.fix[,1],df2.fix[,3], col = "tan", lwd = 2)
-        text(tend, df2.fix[df2.fix[,1] == tend,3], labels = veh, pos = 4, cex = 0.5)
-      }
-      df.01  <- data.frame("Zone 1",tstart, tend, ustart, uend, xstart, xend, u.min = min(u.fix),tcrit)
-#      print(df.01)
     }
+    print(data.frame("223", test))
+    tseq.   <- seq(test,tend.0,step)
+    tlen.   <- length(tseq.)
+    if(test < tend.0) {
+      u.fix   <- x.fix <- rep(NA,tlen.)
+      for(i in 1:tlen.) {
+        u.fix[i]   <- as.numeric(df1[df1[,1] == tseq.[i],2])
+        x.fix[i]   <- as.numeric(df1[df1[,1] == tseq.[i],3]) - hsafe(u.fix[i],leff)
+      }
+      for(i in 2:tlen.) {
+        if(x.fix[i] < x.fix[i-1]) x.fix[i] <- x.fix[i-1]
+      }
+      if(type == TRUE) lines(tseq., x.fix, col = "orange", lwd = 3)
+      if(min(u.fix) < 0) {
+        browser()
+        for(i in 1:tlen.) {
+          u.fix[i]   <- ustart
+          x.fix[i]   <- xstart + ustart * (tseq.[i] - tstart)
+        }
+        lines(tseq., x.fix, col = "blue", lwd = 3)
+      }
+      df2.fix[df2.fix[,1] >= test,2] <- u.fix
+      df2.fix[df2.fix[,1] >= test,3] <- x.fix
+      if(type == TRUE) lines(df2.fix[,1], df2.fix[,3], lty = 1, lwd = 1, col = "black")
+    }
+
+    zone.df <- rbind(zone.df, data.frame(Zone = 3, tstart, tend, ustart, uend, xstart, xend))[-1,]
+  }
+  # Zone 1 ################################################################################
+  if(dim(dfcrit)[1] > 5)  {
+    tend     <- tstart
+    uend     <- ustart
+    xend     <- xstart
+    tstart   <- 0
+    ustart   <- as.numeric(df2.fix[1,2])
+    xstart   <- as.numeric(df2.fix[1,3])
+    tseq     <- seq(tstart,tend,step)
+    print(data.frame("Zone 1 241", tstart, tend, ustart, uend, xstart, xend))
+    ab       <- xabparam(tstart, tend, ustart, uend, xstart, xend)
+    a        <- ab[1]
+    b        <- ab[2]
+    t0       <- tstart
+    x.fix    <- xab(xstart,ustart,a,b,t = tseq,t0)
+    u.fix    <- uab(ustart,a,b,t = tseq,t0)
+    df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= tend,2] <- u.fix
+    df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= tend,3] <- x.fix
+    if(browse == TRUE) {
+      points(tstart, xstart, cex = 1, pch = 16)
+      points(tend, xend, cex = 1, pch = 16)
+      lines(df2.fix[,1],df2.fix[,3],lty=1,col="blue",lwd=2)
+    }
+  } else {
+    print(zone.df)
+    print(dfcrit)
+    df.01 <- data.frame("Zone 1", NA, tstart, tend, ustart, uend, xstart, xend)
+    print(df.01)
+    fraction <- seq(1,0,-0.001)
+    tend     <- tstart
+    uend     <- ustart
+    xend     <- xstart
+    tstart   <- 0
+    ustart   <- as.numeric(df2.fix[1,2])
+    xstart   <- as.numeric(df2.fix[1,3])
+    tseq     <- seq(tstart,tend,step)
+    tlen     <- length(tseq)
+    print(data.frame("Zone 1 269", tstart, tend, ustart, uend, xstart, xend))
+    X        <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
+    tcrit    <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
+
+    ucrit    <- as.numeric(df1[df1[,1] == tcrit,2])
+    xcrit    <- as.numeric(df1[df1[,1] == tcrit,3]) - hsafe(ucrit,leff)
+    print(data.frame("Zone 1 275", tcrit, ucrit, xcrit))
+    if(sum(X) > 0) {
+      for(j in 1:length(fraction)) {
+        tseq     <- seq(tstart,tcrit,step)
+        print(data.frame("Zone 1 279", j,tstart, tcrit, tend, ustart, ucrit, xstart, xcrit))
+        if(tcrit > tstart) {
+          ab       <- xabparam(tstart, tcrit, ustart, ucrit, xstart, xcrit)
+          a        <- ab[1]
+          b        <- ab[2]
+          print(data.frame("284",a,b))
+          t0       <- tstart
+          x.fix    <- xab(xstart,ustart,a,b,t = tseq,t0)
+          u.fix    <- uab(ustart,a,b,t = tseq,t0)
+          df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= tcrit,2] <- u.fix
+          df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= tcrit,3] <- x.fix
+        }
+        tseq     <- seq(tcrit,tend,step)
+        print(data.frame("Zone 1 304", j,tstart, tcrit, tend, ustart, ucrit, xstart, xcrit))
+        if(tcrit < tend) {
+          ab       <- xabparam(tcrit, tend, ucrit, uend, xcrit, xend)
+          a        <- ab[1]
+          b        <- ab[2]
+          t0       <- tcrit
+          x.fix    <- xab(xcrit,ucrit,a,b,t = tseq,t0)
+          u.fix    <- uab(ucrit,a,b,t = tseq,t0)
+          df2.fix[df2.fix[,1] >= tcrit & df2.fix[,1] <= tend,2] <- u.fix
+          df2.fix[df2.fix[,1] >= tcrit & df2.fix[,1] <= tend,3] <- x.fix
+        }
+        X        <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
+        print(data.frame("308",a,b))
+        print(X)
+        tcrit    <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
+        ucrit    <- as.numeric(df1[df1[,1] == tcrit,2])
+        xcrit    <- as.numeric(df1[df1[,1] == tcrit,3]) - 1.05 * hsafe(ucrit,leff)
+        ustart   <- fraction[j] * ustart
+        if(browse == TRUE) {
+          points(tstart, xstart, cex = 1, pch = 16)
+          points(tend, xend, cex = 1, pch = 16)
+          points(tcrit,xcrit, cex = 1)
+          lines(df2.fix[,1],df2.fix[,3],lty=1,col="blue",lwd=2)
+        }
+        if(sum(X) == 0) break
+      }
+    }
+  }
+
+  df.01 <- data.frame("Zone 1", tstart, tend, ustart, uend, xstart, xend)
   print(df.01)
-  print(df.12)
-  print(df.23)
+  zone.df <- rbind(data.frame(Zone = 1, tstart, tend, ustart, uend, xstart, xend), zone.df)
+  if(browse == TRUE) {
+    lines(df2.fix[,1],df2.fix[,3],lty=1,col="black",lwd=2)
+    text(tend, df1[df1[,1] == tend,3], labels = veh-1, pos = 3, cex = 0.75)
+    text(tend, df2.fix[df2.fix[,1] == tend,3], labels = veh, pos = 1, cex = 0.75)
+  }
+  print(zone.df)
   return(df2.fix[,-1])
 }

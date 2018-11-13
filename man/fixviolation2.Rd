@@ -4,7 +4,7 @@
 \alias{fixviolation2}
 \title{\code{fixviolation2} produces of a safe headways for a following vehicle}
 \usage{
-fixviolation2(veh, zone, df1df2, dfcrit, step, tend.0, leff, browse)
+fixviolation2(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, browse)
 }
 \arguments{
 \item{veh}{vehicle, a number}
@@ -20,6 +20,8 @@ fixviolation2(veh, zone, df1df2, dfcrit, step, tend.0, leff, browse)
 \item{tend.0}{end time for over the long time range, a number}
 
 \item{leff}{effective vehicle length in feet, a number}
+
+\item{xfunnel}{location where the lane drop is located, a number}
 
 \item{browse}{to inspect \code{fixviolation2} plot or FALSE otherwise}
 }

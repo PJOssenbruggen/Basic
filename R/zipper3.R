@@ -1,6 +1,6 @@
-#' \code{brktrials3} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
+#' \code{zipper3} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
 #'
-#' @return \code{brktrials3} returns a list of two matrices with 3 times \code{nveh} columns.
+#' @return \code{zipper3} returns a list of two matrices with 3 times \code{nveh} columns.
 #' @param nveh1 number of vehicles entering the bottleneck from lane 1, a number
 #' @param nveh2 number of vehicles entering the bottleneck from lane 2, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
@@ -13,21 +13,22 @@
 #' @param leff vehicle length in feet, a number
 #' @param xfunnel upstream location of bottleneck taper, a number
 #' @param usd speed standard deviation, a number
-#' @usage brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel,usd)
+#' @usage zipper3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel,usd)
 #' @examples
-#' brktrials3(3, 3, 50.4,  0, 30, -700, -700, 0.25, TRUE,  14, -500, 0)
+#' zipper3(3, 3, 50.4,  0, 30, -700, -700, 0.25, TRUE,  14, -500, 0)
 #' @export
-brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, type, leff, xfunnel, usd) {
+zipper3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, type, leff, xfunnel, usd) {
+  print(data.frame(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, type, leff, xfunnel, usd))
   tseq  <- seq(tstart, tend, step)
   tlen  <- length(tseq)
   y     <- rep(0, tlen)
   nveh  <- nveh1 + nveh2
   umn   <- as.numeric(umn)
   usd   <- as.numeric(usd)
-  print(data.frame("brktrials3", umn, usd))
-  if(nveh1 > 0) lane1 <- brktrials3setup(nveh1, umn, usd, tstart, tend, xstart1, step, type, leff) else
+  print(data.frame("zipper3", umn, usd))
+  if(nveh1 > 0) lane1 <- zipper3setup(nveh1, umn, usd, tstart, tend, xstart1, step, type, leff) else
     lane1 <- {}
-  if(nveh2 > 0) lane2 <- brktrials3setup(nveh2, umn, usd, tstart, tend, xstart2, step, type, leff) else
+  if(nveh2 > 0) lane2 <- zipper3setup(nveh2, umn, usd, tstart, tend, xstart2, step, type, leff) else
     lane2 <- {}
   if(nveh1 == 0 & nveh2 > 0) {
     stop("Let nveh1 be non-zero and nveh2 = 0")
@@ -60,7 +61,7 @@ brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, 
       times2[i]  <- max(tm)
     }
   }
-### Lane 1 ###########################################################################
+  ### Lane 1 ###########################################################################
   # Vehicle arrival order
   lane    <- lane1
   nveh    <- nveh1
@@ -71,7 +72,6 @@ brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, 
   nclm    <- seq(2, nveh*3, 3)
   tseq    <- lane[,1]
   lane    <- lane[,-1]
-  browser()
   if(FALSE) {
     # Plot range ylim
     par(mfrow = c(1,2), pty = "s")
@@ -98,7 +98,7 @@ brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, 
     legend("topleft", legend = "", bty = "n")
   }
   lane1 <- lane
-### Lane 2 ###########################################################################
+  ### Lane 2 ###########################################################################
   # Vehicle arrival order
   lane    <- lane2
   nveh    <- nveh2
@@ -134,6 +134,6 @@ brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, 
   }
   lane2 <- lane
   return(list(lane1,lane2))
-### brktrials3 ########################################################################
+  ### zipper3 ########################################################################
 }
 

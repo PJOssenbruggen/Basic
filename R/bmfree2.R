@@ -22,14 +22,44 @@ bmfree2  <- function(umn, usd, tstart, tend, xstart, step, type) {
   y     <- 5280/3600*umn
   u     <- x + (W - (t - tstart)/(tend - tstart) * (W[N] - y + x))
   for(i in 1:N) if(u[i] <= 0) u[i] = 0
-  if(type == TRUE) {
-    plot(t, u, typ = "l", ylab = "u, feet per second", xlab = "t, seconds")
-    abline(h = x, col = gray(0.8))
-    title(main = "Traffic Volatity")
-  }
-  x     <- rep(0, length(t))
   x[1]  <- xstart
   for(i in 2:N) x[i] <- x[i-1] + step * u[i-1]
   tux   <- as.matrix(data.frame(t, u, x))
+  if(type == TRUE) {
+    par(mfrow = c(1,2), pty = "s")
+    plot(tux[,1], tux[,2], typ = "l", ylab = "u, feet per second", xlab = "t, seconds",lwd = 2,ylim=c(0,120))
+    abline(h = 0, col = gray(0.8))
+    abline(v = c(0,tend), col = gray(0.8))
+    axis(side = 4, at = 5280/3600*umn, labels = "u", lty = 2, line = -1,tick=FALSE)
+    abline(h = 5280/3600*umn, lty = 2)
+    title(main = "Brownian Bridge Model", sub = "Lead vehicle.")
+    plot(tux[,1], tux[,3], typ = "l", ylab = "x, feet", xlab = "t, seconds", lwd = 2, col = "blue", ylim=c(-1000,max(tux[,3])))
+    abline(h = c(0,-500), col = gray(0.8))
+    abline(v = c(0,tend), col = gray(0.8))
+    lines(c(0,tend),c(xstart,xstart+5280/3600*umn*tend),lty=2)
+    axis(side = 4, at = -500, labels = expression(x[e]), lty = 2, line = -1,tick=FALSE)
+    axis(side = 4, at = 0, labels = expression(x[0]), lty = 2, line = -1,tick=FALSE)
+    t1    <- max(tux[tux[,3]<=0,1])
+    t2    <- max(tux[tux[,3]<=-500,1])
+    abline(v = c(t1,t2),lty = 3)
+    axis(side = 3, at = t1, labels = expression(T[1]), lty = 3, line = -1,tick=TRUE)
+    axis(side = 3, at = t2, labels = expression(T[2]), lty = 3, line = -1,tick=FALSE)
+    title(main = "Desire-Line Trajectory")
+    t     <- seq(tstart, tend, step)
+    N     <- length(t)
+    W     <- numeric(N)
+    usd   <- 5280/3600*usd
+    for(i in 2:(N)) W[i] <- W[i-1] + usd * sqrt(step) * rnorm(1)
+    x     <- 5280/3600*umn
+    y     <- 5280/3600*umn
+    u     <- x + (W - (t - tstart)/(tend - tstart) * (W[N] - y + x))
+    for(i in 1:N) if(u[i] <= 0) u[i] = 0
+    x     <- rep(NA,N)
+    x[1]  <- -800
+    for(i in 2:N) x[i] <- x[i-1] + step * u[i-1]
+    lines(tux[,1], x, col = "red", lwd = 2)
+    legend("topleft", legend = c("Lead vehicle","Following vehicle"),
+           lwd = c(2,2), col = c("blue","red"), bty = "n")
+  }
   return(tux)
 }

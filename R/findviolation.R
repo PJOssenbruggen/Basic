@@ -22,7 +22,7 @@ findviolation <- function(tstart, tend, tend.0, df1, df2, step, leff) {
   tlen     <- length(tseq)
   X        <- safe <- rep(NA, tlen)
   if(is.matrix(df1) == TRUE)  {
-    hdwy <- round(df1[,3] - df2[,3],0)
+    hdwy   <- df1[,3] - df2[,3]
     for(i in 1:tlen) safe[i] <- hsafe(df2[i,2], leff)
     for(i in 1:tlen) if(hdwy[i] >= safe[i]) X[i] <- 0 else X[i] <- 1
   } else {

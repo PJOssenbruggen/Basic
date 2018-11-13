@@ -18,23 +18,26 @@ enterbottleneck <- function(lane1, lane2, xfunnel, tend, step) {
   id2       <- rep(2,nveh2)
   tcrit1    <- tcrit3 <- rep(0, nveh1)
   tcrit2    <- tcrit4 <- rep(0, nveh2)
-  tseq      <- seq(0, tend, step)
+  tseq      <- t  <- seq(0, tend, step)
+  lane1     <- cbind(t,lane1)
+  lane2     <- cbind(t,lane2)
   tlen      <- length(tseq)
   for(veh in 1:nveh1) {
-    xcol        <- 3*(veh-1) + 2
-    tcrit1[veh] <- max(tseq[lane1[,xcol] <= 0])
-    tcrit3[veh] <- max(tseq[lane1[,xcol] <= xfunnel])
+    xcol        <- 3*(veh-1) + 3
+    tcrit1[veh] <- max(lane1[lane1[,xcol] <= 0,1])
+    tcrit3[veh] <- max(lane1[lane1[,xcol] <= xfunnel,1])
   }
   # Establish tcrit2 range
   for(veh in 1:nveh2) {
-    xcol        <- 3*(veh-1) + 2
-    tcrit2[veh] <- max(tseq[lane2[,xcol] <= 0])
-    tcrit4[veh] <- max(tseq[lane2[,xcol] <= xfunnel])
+    xcol        <- 3*(veh-1) + 3
+    tcrit2[veh] <- max(lane2[lane2[,xcol] <= 0,1])
+    tcrit4[veh] <- max(lane2[lane2[,xcol] <= xfunnel,1])
   }
+  data.frame(veh = seq(1,5), tcrit1, tcrit2, diff=tcrit2-tcrit1)
   dfcrit1   <- data.frame(veh = veh1, tcrit = tcrit1, lane = id1)
   dfcrit2   <- data.frame(veh = veh2, tcrit = tcrit2, lane = id2)
   dfcrit3   <- data.frame(veh = veh1, tcrit = tcrit3, lane = id1)
-  dfcrit4   <- data.frame(veh = veh2, tcrit = tcrit3, lane = id2)
+  dfcrit4   <- data.frame(veh = veh2, tcrit = tcrit4, lane = id2)
   dfcrit    <- as.matrix(rbind(dfcrit1, dfcrit2))
   dfcrit5   <- as.matrix(rbind(dfcrit3, dfcrit4))
   dfcrit    <- cbind(dfcrit, dfcrit5)
