@@ -14,9 +14,10 @@
 #' @param leff vehicle length in feet, a number
 #' @param type TRUE to create plots or FALSE otherwise, a logical
 #' @param size sample size, a number
-#' @usage simulate(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,size)
+#' @param browse to inspect \code{fixviolation} to inspect plot or FALSE otherwise
+#' @usage simulate(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,size,browse)
 #' @export
-simulate <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,size) {
+simulate <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,size,browse) {
   input <- data.frame(nveh1,nveh2,umn,usd,xstart1,xstart2,
                       step,tstart,tend,xfunnel,leff,type,browse)
   print(input)

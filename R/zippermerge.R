@@ -29,7 +29,7 @@ zippermerge <- function(nveh, tstart, tend, xstart, u, leff, xfunnel, step, type
   }
   u <- rep(u,tlen)
   y <- rep(0,tlen)
-  df1df2 <- as.matrix(data.frame(t = tseq, u, x = x[,1], y))
+  df1df2    <- as.matrix(data.frame(t = tseq, u, x = x[,1], y))
   for(veh in 2:nveh) {
     df1df2. <- as.matrix(data.frame(u, x = x[,veh], y))
     df1df2  <- cbind(df1df2, df1df2.)

@@ -1,7 +1,6 @@
 #' \code{flow} is an algorithm for estimating the flow and density
 #'
 #' @return \code{flow} returns data.frame of density and flow estimates at two bottleneck locations.
-#' @param dfcrit times when vehicles arrive at bottleneck by lane, a matrix
 #' @param df1df2 vehicle information from \code{brktrials4wrapper}, a matrix
 #' @param tstart start time, (seconds), a number
 #' @param tend end time, (seconds), a number

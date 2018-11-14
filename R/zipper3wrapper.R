@@ -133,7 +133,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
     zone <- 2
     df1df2.fix    <- df1df2
     for(veh in 2:nveh) {
-      df1df2.fix  <- fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, browse = TRUE)
+      df1df2.fix  <- fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, type, browse = TRUE)
       df1df2.fix  <- fixdf1df2(veh, df1df2.fix, df1df2)
       df1df2      <- df1df2.fix
     }
@@ -219,16 +219,16 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
       k.a.mn <- round(mean(df1[,10], na.rm = TRUE),0)
       q.a.mn <- round(mean(df1[,11], na.rm = TRUE),0)
       w.mn   <- round(mean(df1[,6], na.rm = TRUE),1)
-      axis(side = 3, at = k.a.mn+5, label = expression(bar(k)[A]), tick = FALSE, line = -1)
-      axis(side = 3, at = k.d.mn-5, label = expression(bar(k)[D]), tick = FALSE, line = -1)
+      axis(side = 3, at = k.a.mn+5, labels = expression(bar(k)[A]), tick = FALSE, line = -1)
+      axis(side = 3, at = k.d.mn-5, labels = expression(bar(k)[D]), tick = FALSE, line = -1)
       abline(h = 0, col = gray(0.8))
       abline(v = 0, col = gray(0.8))
       abline(h = q.a.mn, lty = 2, col = "orange")
       abline(h = q.d.mn, lty = 2, col = "red")
       abline(v = k.a.mn, lty = 2,col= "orange")
       abline(v = k.d.mn, lty = 2,col= "red")
-      axis(side = 4, at = q.d.mn+5, label = expression(bar(q)[D]), tick = FALSE, line = -0.75)
-      axis(side = 4, at = q.a.mn-5, label = expression(bar(q)[A]), tick = FALSE, line = -0.75)
+      axis(side = 4, at = q.d.mn+5, labels = expression(bar(q)[D]), tick = FALSE, line = -0.75)
+      axis(side = 4, at = q.a.mn-5, labels = expression(bar(q)[A]), tick = FALSE, line = -0.75)
       u.a.mean.mph <- round(mean(as.numeric(df1[,9])),1)
       u.d.mean.mph <- round(mean(as.numeric(df1[,12])),1)
       legend("topright", legend = c("A = arrival","D = departure"),
@@ -253,7 +253,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
     zone <- 2
     df1df2.fix    <- df1df2
     for(veh in 2:nveh) {
-      df1df2.fix  <- fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, browse = TRUE)
+      df1df2.fix  <- fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, type, browse = TRUE)
       df1df2.fix  <- fixdf1df2(veh, df1df2.fix, df1df2)
       df1df2      <- df1df2.fix
     }
@@ -354,16 +354,16 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
       k.a.mn <- round(mean(df1[,10], na.rm = TRUE),0)
       q.a.mn <- round(mean(df1[,11], na.rm = TRUE),0)
       w.mn   <- round(mean(df1[,6], na.rm = TRUE),1)
-      axis(side = 3, at = k.a.mn+15, label = expression(bar(k)[A]), tick = FALSE, line = -1)
-      axis(side = 3, at = k.d.mn-15, label = expression(bar(k)[D]), tick = FALSE, line = -1)
+      axis(side = 3, at = k.a.mn+15, labels = expression(bar(k)[A]), tick = FALSE, line = -1)
+      axis(side = 3, at = k.d.mn-15, labels = expression(bar(k)[D]), tick = FALSE, line = -1)
       abline(h = 0, col = gray(0.8))
       abline(v = 0, col = gray(0.8))
       abline(h = q.a.mn, lty = 2, col = "red")
       abline(h = q.d.mn, lty = 2, col = "orange")
       abline(v = k.a.mn, lty = 2,col= "red")
       abline(v = k.d.mn, lty = 2,col= "orange")
-      axis(side = 4, at = q.d.mn, label = expression(bar(q)[D]), tick = FALSE, line = -0.75)
-      axis(side = 4, at = q.a.mn, label = expression(bar(q)[A]), tick = FALSE, line = -0.75)
+      axis(side = 4, at = q.d.mn, labels = expression(bar(q)[D]), tick = FALSE, line = -0.75)
+      axis(side = 4, at = q.a.mn, labels = expression(bar(q)[A]), tick = FALSE, line = -0.75)
       u.a.mean.mph <- round(mean(as.numeric(df1[,9])),1)
       u.d.mean.mph <- round(mean(as.numeric(df1[,12])),1)
       legend("topright", legend = c("A = arrival","D = departure"),

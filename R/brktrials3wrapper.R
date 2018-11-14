@@ -13,11 +13,12 @@
 #' @param type TRUE to create plots or FALSE otherwise, a logical
 #' @param leff vehicle length in feet, a number
 #' @param xfunnel upstream location of bottleneck taper, a number
-#' @usage brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel)
+#' @param browse to inspect \code{fixviolation} to inspect plot or FALSE otherwise
+#' @usage brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel,browse)
 #' @examples
-#' brktrials3(3, 3, 50.4, 0, 0, 30, -700, -700, 0.25, TRUE,  14, -500)
+#' brktrials3(3, 3, 50.4, 0, 0, 30, -700, -700, 0.25, TRUE,  14, -500,TRUE)
 #' @export
-brktrials3wrapper <- function(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel) {
+brktrials3wrapper <- function(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel,browse) {
   tend.0  <- tend
   tseq    <- seq(tstart,tend,step)
   tlen    <- length(tseq)

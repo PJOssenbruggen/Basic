@@ -9,12 +9,13 @@
 #' @param tend.0 end time for over the long time range, a number
 #' @param leff effective vehicle lenght, a number
 #' @param xfunnel location where the lane drop is located, a number
+#' @param type TRUE to create plots or FALSE otherwise, a logical
 #' @param browse to inspect \code{fixviolation} plot or FALSE otherwise
-#' @usage fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, browse)
+#' @usage fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, type, browse)
 # #' @examples
-# #' fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, browse)
+# #' fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, type, browse)
 #' @export
-fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, browse) {
+fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, type, browse) {
   # create df1 and df2
   ucol   <- 3*(veh-1) - 2
   xcol   <- 3*(veh-1) - 1
@@ -183,8 +184,7 @@ fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel,
     dx2x1   <- df12[,3] - df12[,6]
     df12    <- cbind(df12,dx2x1)
     df12.   <- df12[df12[,1] > tstart,]
-    test    <- min(df12.[df12.[,7] <= 0,1])
-    if(is.infinite(test)) test <- tend.0
+    if(length(df12.[df12.[,7] <= 0,1]) == 0) test <- tend.0 else test <- min(df12.[df12.[,7] <= 0,1], na.rm = TRUE)
     xtest   <- as.numeric(df12[df12[,1] == test,6])
     if(type == TRUE) points(test, xtest, cex = 1, pch = 16)
     if(!is.infinite(test)) {

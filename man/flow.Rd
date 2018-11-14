@@ -18,8 +18,6 @@ flow(df1df2, tstart, tend, step, xfunnel, type)
 \item{xfunnel}{upstream location of bottleneck taper, a number}
 
 \item{type}{TRUE to create plots or FALSE otherwise, a logical}
-
-\item{dfcrit}{times when vehicles arrive at bottleneck by lane, a matrix}
 }
 \value{
 \code{flow} returns data.frame of density and flow estimates at two bottleneck locations.

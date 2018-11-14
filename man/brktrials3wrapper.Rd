@@ -4,7 +4,7 @@
 \alias{brktrials3wrapper}
 \title{\code{brktrials3wrapper} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck}
 \usage{
-brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel)
+brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel,browse)
 }
 \arguments{
 \item{nveh1}{number of vehicles entering the bottleneck from lane 1, a number}
@@ -30,6 +30,8 @@ brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,type,leff
 \item{leff}{vehicle length in feet, a number}
 
 \item{xfunnel}{upstream location of bottleneck taper, a number}
+
+\item{browse}{to inspect \code{fixviolation} to inspect plot or FALSE otherwise}
 }
 \value{
 \code{brktrials3} returns a list of two matrices with 3 times \code{nveh} columns.
@@ -38,5 +40,5 @@ brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,type,leff
 \code{brktrials3wrapper} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
 }
 \examples{
-brktrials3(3, 3, 50.4, 0, 0, 30, -700, -700, 0.25, TRUE,  14, -500)
+brktrials3(3, 3, 50.4, 0, 0, 30, -700, -700, 0.25, TRUE,  14, -500,TRUE)
 }
