@@ -6,7 +6,7 @@
             "*.R"
         ],
         "path" : "~/Desktop/Basic",
-        "query" : "df12.[df12.[,7",
+        "query" : "text.width",
         "regex" : false
     }
 }

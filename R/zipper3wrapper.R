@@ -184,7 +184,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
         text(tend, max(as.numeric(df1df2[,xcol])), labels = lab, pos = 4, offset = 0.2, cex = 0.75)
       }
     }
-    browser()
+    if(browse == TRUE) browser()
 
     #### STEP 6. Flow Estimation
     lst <- flow(df1df2 = df1df2, tstart, tend, step, xfunnel,TRUE)
@@ -202,7 +202,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
       axis(side = 3, at = max(df1[,3])/2, sub, tick = FALSE, line = -1)
       legend("topleft", legend = c("A = arrival","D = departure"), lty = c(1,1), col = c("red","orange"), bty = "n")
     }
-    browser()
+    if(browse == TRUE) browser()
     #### STEP 7. Capacity Estimation
     df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel,TRUE)
     print(df1)
@@ -245,7 +245,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
              cex = c(0.75,0.75,0.75,0.75)
       )
     }
-    browser()
+    if(browse == TRUE) browser()
     return(df1df2)
   }
   if(usd != 0) {
@@ -302,7 +302,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
         text(tend, max(as.numeric(df1df2[,xcol])), labels = lab, pos = 4, offset = 0.2, cex = 0.75)
       }
     }
-    browser()
+    if(browse == TRUE) browser()
     #### STEP 6. Flow Estimation ######################################################
     lst <- flow(df1df2, tstart, tend, step, xfunnel,TRUE)
     df1 <- lst[[1]]
@@ -382,7 +382,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
     }
     return(run)
   }
-  browser()
+  if(browse == TRUE) browser()
 }
 ##############################################################################################
 

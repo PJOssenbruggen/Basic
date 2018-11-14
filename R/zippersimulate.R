@@ -30,13 +30,13 @@ zippersimulate <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,
                           }
   }
   print(output)
-  browser()
+  if(browse == TRUE) browser()
   outputruns <- rbind(outputruns, output)
   sum.out1   <- data.frame(colMeans(outputruns,na.rm=TRUE))
   sum.out2   <- data.frame(apply(outputruns,2,sd,na.rm=TRUE))
   sum.out    <- cbind(sum.out1,sum.out2)
   colnames(sum.out) <- c("mean","SD")
   print(sum.out)
-  browser()
+  if(browse == TRUE) browser()
   return(output)
 }

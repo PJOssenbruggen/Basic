@@ -40,5 +40,5 @@ brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,type,leff
 \code{brktrials3wrapper} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
 }
 \examples{
-brktrials3(3, 3, 50.4, 0, 0, 30, -700, -700, 0.25, TRUE,  14, -500,TRUE)
+brktrials3wrapper(3, 3, 50.4, 0, 0, 30, -700, -700, 0.25, TRUE,  14, -500,TRUE)
 }

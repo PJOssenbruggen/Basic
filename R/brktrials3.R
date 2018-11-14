@@ -71,8 +71,7 @@ brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, 
   nclm    <- seq(2, nveh*3, 3)
   tseq    <- lane[,1]
   lane    <- lane[,-1]
-  browser()
-  if(FALSE) {
+  if(browse == TRUE) {
     # Plot range ylim
     par(mfrow = c(1,2), pty = "s")
     xlim    <- c(tstart,tend)
@@ -109,7 +108,7 @@ brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, 
   nclm    <- seq(2, nveh*3, 3)
   tseq    <- lane[,1]
   lane    <- lane[,-1]
-  if(FALSE) {
+  if(browse == TRUE) {
     # Plot range ylim
     min.    <- min(as.numeric(unlist(lane[,nclm])), na.rm = TRUE)
     max.    <- max(as.numeric(unlist(lane[,nclm])), na.rm = TRUE)

@@ -16,7 +16,7 @@
 #' @param browse to inspect \code{fixviolation} to inspect plot or FALSE otherwise
 #' @usage brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel,browse)
 #' @examples
-#' brktrials3(3, 3, 50.4, 0, 0, 30, -700, -700, 0.25, TRUE,  14, -500,TRUE)
+#' brktrials3wrapper(3, 3, 50.4, 0, 0, 30, -700, -700, 0.25, TRUE,  14, -500,TRUE)
 #' @export
 brktrials3wrapper <- function(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel,browse) {
   tend.0  <- tend
@@ -33,6 +33,7 @@ brktrials3wrapper <- function(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,st
   par(mfrow = c(1,2), pty = "s")
   density <- as.numeric(5280/hsafe(umn*5280/3600,leff))
   density <- round(density,0)
+
   if(browse == TRUE) {
     # Lane 1
     tend <- tseq[tlen]
@@ -44,7 +45,7 @@ brktrials3wrapper <- function(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,st
          ylab = "x, feet", ylim, xlim = c(0,tend + 2),col = "orange")
     abline(v = 0, col = gray(0.8))
     abline(h = c(0, xfunnel), col = gray(0.8))
-    axis(side = 3, at = tend/2, labels = "Stochastic Model", line = -1, tick = FALSE)
+    axis(side = 3, at = tend/2, labels = "Desire-Lines", line = -1, tick = FALSE)
     axis(side = 4, at = 0, labels = expression(x[0]))
     axis(side = 4, at = xfunnel, labels = expression(x[e]))
     text(tend, max(lane1[,2]), labels = 1,pos=4,cex=0.5)
@@ -79,7 +80,7 @@ brktrials3wrapper <- function(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,st
          ylab = "x, feet", ylim, xlim = c(0,tend + 2),col = "orange")
     abline(v = 0, col = gray(0.8))
     abline(h = c(0, xfunnel), col = gray(0.8))
-    axis(side = 3, at = tend/2, labels = "Stochastic Model", line = -1, tick = FALSE)
+    axis(side = 3, at = tend/2, labels = "Desire-Lines", line = -1, tick = FALSE)
     axis(side = 4, at = 0, labels = expression(x[0]))
     axis(side = 4, at = xfunnel, labels = expression(x[e]))
     text(tend, max(lane2[,2]), labels = 1,pos=4,cex=0.5)
@@ -105,18 +106,18 @@ brktrials3wrapper <- function(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,st
            ),
            cex = c(0.75,0.75,0.75,0.75))
   }
-#  browser()
+  if(browse == TRUE) browser()
   ### Lane 1  and 2 #######################################################################################
   zone <- 2
   dfcrit1 <- dfcrit[as.numeric(dfcrit[,1]) == 1,]
   for(veh in 2:nveh1) {
-    lane1.fix  <- fixviolation(veh, zone, lane1, dfcrit1, step, tend.0, leff, xfunnel, browse = TRUE)
+    lane1.fix  <- fixviolation(veh, zone, lane1, dfcrit1, step, tend.0, leff, xfunnel, type, browse = TRUE)
     lane1.fix  <- fixdf1df2(veh, lane1.fix, lane1)
     lane1      <- lane1.fix
   }
   dfcrit2 <- dfcrit[as.numeric(dfcrit[,1]) == 2,]
   for(veh in 2:nveh2) {
-    lane2.fix  <- fixviolation(veh, zone, lane2, dfcrit2, step, tend.0, leff, xfunnel, browse = TRUE)
+    lane2.fix  <- fixviolation(veh, zone, lane2, dfcrit2, step, tend.0, leff, xfunnel, type, browse = TRUE)
     lane2.fix  <- fixdf1df2(veh, lane2.fix, lane2)
     lane2      <- lane2.fix
   }
