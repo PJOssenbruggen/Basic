@@ -4,7 +4,7 @@
 \alias{brktrials4wrapper}
 \title{\code{brktrials4wrapper} produces \code{t-x} trajectory for vehicles traveling on parallel lanes that merge at a bottleneck.}
 \usage{
-brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,browse)
+brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,run,kfactor,browse)
 }
 \arguments{
 \item{nveh1}{number of vehicles entering the bottleneck from lane 1, a number}
@@ -29,7 +29,9 @@ brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,l
 
 \item{leff}{vehicle length in feet, a number}
 
-\item{type}{TRUE to create plots or FALSE otherwise, a logical}
+\item{run, }{a number}
+
+\item{kfactor}{density at time \code{t} = 0, a number}
 
 \item{browse}{to inspect \code{fixviolation} to inspect plot or FALSE otherwise}
 }

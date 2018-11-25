@@ -110,7 +110,7 @@ fixviolation2 <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel
     as.numeric(df1[df1[,1] == tend,3]) - hsafe(uend,leff)
   }
 
-  print(data.frame("Zone 2", veh, tstart, tend, ustart, uend, xstart, xend))
+  #print(data.frame("Zone 2", veh, tstart, tend, ustart, uend, xstart, xend))
   if(browse == TRUE) {
     points(tstart,xstart, cex = 1.75)
     points(tend,xend, cex = 1.75)
@@ -137,7 +137,7 @@ fixviolation2 <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel
   xstart  <- x.fix[1]
   uend    <- u.fix[length(tseq)]
   xend    <- x.fix[length(tseq)]
-  if(browse == TRUE) {
+  if(FALSE) {
     tseq  <- seq(tstart,tend,step)
     points(tstart,xstart, cex = 1, pch = 16)
     points(tend,xend, cex = 2, pch = 1, col = "red")
@@ -199,8 +199,8 @@ fixviolation2 <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel
       # part 1
       X       <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
       tcrit   <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
-      print(data.frame("Zone 3. Part 1",browse,j, sumX = sum(X[-2])))
-      print(data.frame(j, tstart, tend, xstart, xend))
+      #print(data.frame("Zone 3. Part 1",browse,j, sumX = sum(X[-2])))
+      #print(data.frame(j, tstart, tend, xstart, xend))
       if(sum(X) <= 1) {
         if(browse == TRUE) {
           tseq <- seq(tstart,tend,step)
@@ -281,7 +281,7 @@ fixviolation2 <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel
   u1    <- as.numeric(df2.fix[df2.fix[,1] == t1,2])
   u2    <- as.numeric(df2.fix[df2.fix[,1] == t2,2])
   u3    <- as.numeric(df2.fix[df2.fix[,1] == t3,2])
-  print(data.frame("Fix Spill Back", t1, t2, t3, u1, u2, u3))
+  #print(data.frame("Fix Spill Back", t1, t2, t3, u1, u2, u3))
   tstart  <- t1
   tend    <- t2
   ustart  <- u1

@@ -162,7 +162,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
       flow  <- as.numeric(df[3])
       speed <- round(as.numeric(df[4]),1)
       legend("topleft",
-             title = "",
+      #       title = "",
              legend = c(
                expression("Initial conditions:"),
                bquote(u[0] == .(umn)),

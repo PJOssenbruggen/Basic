@@ -4,7 +4,7 @@
 \alias{zippermerge}
 \title{\code{zippermerge} produces \code{t-x} trajectory for vehicles traveling on parallel lanes that merge at a bottleneck.}
 \usage{
-zippermerge(nveh, tstart, tend, xstart, u, leff, xfunnel, step, type)
+zippermerge(nveh, tstart, tend, xstart, u, leff, xfunnel, step, type, kfactor)
 }
 \arguments{
 \item{nveh}{number of vehicles, a number}
@@ -24,6 +24,8 @@ zippermerge(nveh, tstart, tend, xstart, u, leff, xfunnel, step, type)
 \item{step}{size in seconds, a number}
 
 \item{type}{TRUE to create plots or FALSE otherwise, a logical}
+
+\item{kfactor}{density at time \code{t} = 0, a number}
 }
 \value{
 The analyses the zone for a safe headway violation. \code{X} = 0 if safe, else non-zero.

@@ -10,14 +10,16 @@
 #' @param leff vehicle length in feet, a number
 #' @param step size in seconds, a number
 #' @param type TRUE to create plots or FALSE otherwise, a logical
-#' @usage zippermerge(nveh, tstart, tend, xstart, u, leff, xfunnel, step, type)
+#' @param kfactor density at time \code{t} = 0, a number
+#' @usage zippermerge(nveh, tstart, tend, xstart, u, leff, xfunnel, step, type, kfactor)
 # #' @examples
-# #' zippermerge(nveh, 0, 1.5, -700,53.1, leff, xfunnel, step, TRUE)
+# #' zippermerge(nveh, 0, 1.5, -700,53.1, leff, xfunnel, step, TRUE, kfactor)
 #' @export
-zippermerge <- function(nveh, tstart, tend, xstart, u, leff, xfunnel, step, type) {
+zippermerge <- function(nveh, tstart, tend, xstart, u, leff, xfunnel, step, type, kfactor) {
   tseq <- seq(tstart, tend, step)
   tlen <- length(tseq)
-  k    <- round(as.numeric(5280/hsafe(u*5280/3600,leff)))
+  k    <- as.numeric(5280/hsafe(u*5280/3600,leff))/kfactor
+  density <- round(k,0)
   x    <- matrix(rep(NA,tlen*nveh), ncol = nveh)
   colnames(x) <- paste("x",sep="",1:nveh)
   s    <- c(0,cumsum(rep(5280/k,nveh-1)))
@@ -65,15 +67,15 @@ zippermerge <- function(nveh, tstart, tend, xstart, u, leff, xfunnel, step, type
     }
     flow    <- round(3600/mean(h),0)
     u.mph   <- 3600/5280 * u
-    browser()
+#    browser()
     axis(side = 4, at = 0, labels = expression(x[0]))
     axis(side = 4, at = xfunnel, labels = expression(x[e]))
     legend("topleft", legend = c(
       title = "",
       expression("Initial conditions:"),
       bquote(u[0] == .(umn)),
-      bquote(sigma[U] == .(usd)),
-      bquote(k[0] == .(k))),
+   #   bquote(sigma[U] == .(usd)),
+      bquote(k[0] == .(density))),
       cex = c(0.75,0.75,0.75))
   }
   return(df1df2)

@@ -1,6 +1,6 @@
-#' \code{brktrials3} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
+#' \code{brktrials3} produces \code{T1} and \code{T2} matrices for lead and following vehicles, respectively
 #'
-#' @return \code{brktrials3} returns a list of two matrices with 3 times \code{nveh} columns.
+#' @return \code{T1} and \code{T2} are returned as a list of two matrices.
 #' @param nveh1 number of vehicles entering the bottleneck from lane 1, a number
 #' @param nveh2 number of vehicles entering the bottleneck from lane 2, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
@@ -9,25 +9,28 @@
 #' @param xstart1 start location of the first vehicle in lane 1, (feet), a number
 #' @param xstart2 start location of the first vehicle in lane 2, (feet), a number
 #' @param step size in seconds, a number
-#' @param type TRUE to create plots or FALSE otherwise, a logical
+#' @param browse TRUE to create plots or FALSE otherwise, a logical
 #' @param leff vehicle length in feet, a number
 #' @param xfunnel upstream location of bottleneck taper, a number
 #' @param usd speed standard deviation, a number
-#' @usage brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel,usd)
+#' @param kfactor density at time \code{t} = 0, a number
+#' @usage brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,browse,leff,xfunnel,usd,kfactor)
 #' @examples
-#' brktrials3(3, 3, 50.4,  0, 30, -700, -700, 0.25, TRUE,  14, -500, 0)
+#' brktrials3(5, 5, umn,  0, 40, -700, -700, 0.25, TRUE,  14, -500, 0)
 #' @export
-brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, type, leff, xfunnel, usd) {
+brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, browse, leff, xfunnel, usd, kfactor) {
   tseq  <- seq(tstart, tend, step)
   tlen  <- length(tseq)
   y     <- rep(0, tlen)
   nveh  <- nveh1 + nveh2
   umn   <- as.numeric(umn)
   usd   <- as.numeric(usd)
-  print(data.frame("brktrials3", umn, usd))
-  if(nveh1 > 0) lane1 <- brktrials3setup(nveh1, umn, usd, tstart, tend, xstart1, step, type, leff) else
+#  print(data.frame("brktrials3", umn, usd))
+  if(nveh1 > 0) lane1 <- zipper2setup(nveh1, umn, usd, tstart, tend, xstart1, step, browse, leff, kfactor) else
     lane1 <- {}
-  if(nveh2 > 0) lane2 <- brktrials3setup(nveh2, umn, usd, tstart, tend, xstart2, step, type, leff) else
+  if(nveh2 > 0)  {
+    lane2 <- zipper2setup(nveh2, umn, usd, tstart, tend, xstart2, step, browse, leff, kfactor)
+  } else
     lane2 <- {}
   if(nveh1 == 0 & nveh2 > 0) {
     stop("Let nveh1 be non-zero and nveh2 = 0")
@@ -108,7 +111,7 @@ brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, 
   nclm    <- seq(2, nveh*3, 3)
   tseq    <- lane[,1]
   lane    <- lane[,-1]
-  if(browse == TRUE) {
+  if(FALSE) {
     # Plot range ylim
     min.    <- min(as.numeric(unlist(lane[,nclm])), na.rm = TRUE)
     max.    <- max(as.numeric(unlist(lane[,nclm])), na.rm = TRUE)
@@ -132,6 +135,7 @@ brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, 
     legend("topleft", legend = "", bty = "n")
   }
   lane2 <- lane
+#  if(browse == TRUE) browser()
   return(list(lane1,lane2))
 ### brktrials3 ########################################################################
 }

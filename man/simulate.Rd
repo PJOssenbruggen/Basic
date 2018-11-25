@@ -4,7 +4,7 @@
 \alias{simulate}
 \title{\code{simulate} uses the law of large numbers to establish confidence intervals traffic performance measures.}
 \usage{
-simulate(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,size,browse)
+simulate(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,size,kfactor,browse)
 }
 \arguments{
 \item{nveh1}{number of vehicles entering the bottleneck from lane 1, a number}
@@ -33,7 +33,9 @@ simulate(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,
 
 \item{size}{sample size, a number}
 
-\item{browse}{to inspect \code{fixviolation} to inspect plot or FALSE otherwise}
+\item{kfactor}{density at time \code{t} = 0, a number}
+
+\item{browse}{TRUE to create plot or FALSE otherwise, a logical}
 }
 \value{
 The \code{simulate} runs \code{brktrials4wrapper} \code{size} times.

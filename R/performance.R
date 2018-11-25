@@ -1,44 +1,43 @@
 #' \code{performance} looks at waiting time and performance measures.
 #'
 #' @return The \code{performance} returns scatter plots, histograms and statistical summaries for two data sets.
-#' @param run1, a data frame
-#' @param run2, a data frame
-#' @usage performance(run1,run2)
+#' @param run1, a matrix
+#' @param run2, a matrix
+#' @param p1 proportion free flow, a number
+#' @param p2 proportion free flow, a number
+#' @usage performance(run1,run2,p1,p2)
 #' @export
-performance <- function(run1,run2) {
-  mn1        <- colMeans(run1,na.rm=TRUE)
-  sd1        <- apply(run1,2,sd,na.rm=TRUE)
-  out1       <- cbind(mn1,sd1)
-  colnames(out1) <- c("mean.sbs","SD.sbs")
-  mn2        <- colMeans(run2,na.rm=TRUE)
-  sd2        <- apply(run2,2,sd,na.rm=TRUE)
-  out2       <- cbind(mn2,sd2)
-  colnames(out2) <- c("mean.zipper","SD.zipper")
-  z          <- p.value   <- rep(0,8)
-  output     <- cbind(out1,out2,z,p.value)
-
-  n1         <- dim(run1)[1]
-  n2         <- dim(run2)[1]
+performance <- function(run1,run2,p1,p2) {
+  p.sd1  <- sqrt(p1*(1-p1))
+  p.sd2  <- sqrt(p2*(1-p2))
+  colnames(run1) <- c("mean1", "SD1")
+  colnames(run2) <- c("mean2", "SD2")
+  n1 <- n2 <- 100
+  se1 <- se2 <- se <- z <- P <- rep(NA,8)
   for(i in 1:7) {
-    se1           <- output[i,2] * sqrt(n1)/n1
-    se2           <- output[i,4] * sqrt(n2)/n2
-    se            <- sqrt(se1^2 + se2^2)
-    output[i,5]   <- (output[i,1] - output[i,3])/se
+    se1[i]  <- run1[i,2] / sqrt(n1)
+    se2[i]  <- run2[i,2] / sqrt(n2)
   }
-  output      <- round(output,1)
-  for(i in 1:7)  output[i,6] <- round(pnorm(abs(output[i,5])),3)
-  print(output)
-  par(mfrow = c(2,2), pty = "s")
-  plot(run1[,4], run1[,6], pch = 16, col = "green",
-       xlab = expression(k[d]), ylab = expression(q[d]), xlim = c(0,200), ylim = c(0, 3000))
-  title(main="Side-by-Side Merge")
-  plot(run2[,4], run2[,6], pch = 16, col = "green",
-       xlab = expression(k[d]), ylab = expression(q[d]), xlim = c(0,200), ylim = c(0, 3000))
-  title(main = "Zipper Merge")
-  hist(run1[,7], col = "wheat", xlim = 1.2*c(0, max(c(run1[,7],run2[,7]))),
-       main = "Side-by-Side Merge", xlab = expression(bar(w)))
-  box()
-  hist(run2[,7], col = "wheat", xlim = 1.2*c(0,max(c(run1[,7],run2[,7]))),
-       main = "Zipper Merge", xlab = expression(bar(w)))
-  box()
+  for(i in 1:7) se[i] <- sqrt(se1[i]^2 + se2[i]^2)
+  run1 <- cbind(run1,se1)
+  run2 <- cbind(run2,se2)
+  run  <- cbind(run1,run2,diff = run1[,1] - run2[,1], se, z, P)
+  for(i in 1:7) run[i,9]  <- run[i,7]/run[i,8]
+  for(i in 1:7) run[i,10] <- pnorm(run[i,9])
+  names(run) <- c("zipper.mean","zipper.SD","zipper.se","sbs.mean","sbs.SD","sb.se","diff","se","z","P")
+  diff  <- p1-p2
+  p.se1 <- p.sd1/sqrt(n1)
+  p.se2 <- p.sd2/sqrt(n2)
+  p.se  <- sqrt(p.se1^2 + p.se2^2)
+  z     <- diff/p.se
+  p     <- pnorm(z)
+  p.free <- as.matrix(data.frame(p1,p.sd1,p.se1,
+                                 p2,p.sd2,p.se2,
+                                 p.se, diff, z, p))
+  colnames(p.free) <- c("zipper.mean","zipper.SD","zipper.se","sbs.mean","sbs.SD","sb.se","diff","se","z","P")
+  row.names(p.free) <- "proportion.free"
+  print(p.free)
+  run   <- rbind(run, p.free)
+  run   <-round(run,2)
+  return(run)
 }

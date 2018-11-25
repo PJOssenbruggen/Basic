@@ -10,31 +10,34 @@
 #' @param xstart1 start location of the first vehicle in lane 1, (feet), a number
 #' @param xstart2 start location of the first vehicle in lane 2, (feet), a number
 #' @param step size in seconds, a number
-#' @param type TRUE to create plots or FALSE otherwise, a logical
+#' @param run number, a number
 #' @param leff vehicle length in feet, a number
 #' @param xfunnel upstream location of bottleneck taper, a number
-#' @param browse to inspect \code{fixviolation} to inspect plot or FALSE otherwise
-#' @usage brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel,browse)
+#' @param kfactor density at time \code{t} = 0, a number
+#' @param browse is TRUE to inspect plot and FALSE otherwise
+#' @usage brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel,kfactor,browse)
 #' @examples
 #' brktrials3wrapper(3, 3, 50.4, 0, 0, 30, -700, -700, 0.25, TRUE,  14, -500,TRUE)
 #' @export
-brktrials3wrapper <- function(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel,browse) {
+brktrials3wrapper <- function(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,run,leff,xfunnel,kfactor,browse) {
   tend.0  <- tend
   tseq    <- seq(tstart,tend,step)
   tlen    <- length(tseq)
-  type    <- FALSE
-  lst     <- brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel,usd)
-
+#  browse    <- FALSE
+  ### Arrival Analyzer: brktrials3 ######################################################################################
+  lst     <- brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,browse,leff,xfunnel,usd,kfactor)
   lane1   <- lst[[1]]
   lane2   <- lst[[2]]
+#  if(browse == TRUE) browser()
   lst     <- enterbottleneck(lane1,lane2, xfunnel, tend, step)
   dfcrit  <- lst[[1]]
   # Lane 1 and 2 Desire-Line Trajectories ################################################################################
   par(mfrow = c(1,2), pty = "s")
-  density <- as.numeric(5280/hsafe(umn*5280/3600,leff))
+  density <- as.numeric(5280/hsafe(umn*5280/3600,leff)/kfactor)
   density <- round(density,0)
-
-  if(browse == TRUE) {
+  if(run == 1) {
+    pdf(file = "/Users/PJO/Desktop/DesireLines.pdf")
+    par(mfrow = c(1,2), pty = "s")
     # Lane 1
     tend <- tseq[tlen]
     xcol <- {}
@@ -49,7 +52,7 @@ brktrials3wrapper <- function(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,st
     axis(side = 4, at = 0, labels = expression(x[0]))
     axis(side = 4, at = xfunnel, labels = expression(x[e]))
     text(tend, max(lane1[,2]), labels = 1,pos=4,cex=0.5)
-    subtitle <- "Side-by-side merge."
+    if(xstart1 == xstart2) subtitle <- "Side-by-side merge." else subtitle = "Zipper merge."
     title(main = "Lane 1", sub = subtitle)
     for(veh in 2:nveh1) {
       df2 <- follower(veh, lane1)
@@ -62,9 +65,9 @@ brktrials3wrapper <- function(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,st
       text(tend, max(lane1[,xcol]), labels = veh, pos=4, cex=0.5)
     }
     legend("topleft",
-           title = "",
+     #      title = "",
            legend = c(
-             expression("Initial conditions:"),
+             expression(""),
              bquote(u[0] == .(umn)),
              bquote(sigma[U] == .(usd)),
              bquote(k[0] == .(density))
@@ -83,8 +86,8 @@ brktrials3wrapper <- function(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,st
     axis(side = 3, at = tend/2, labels = "Desire-Lines", line = -1, tick = FALSE)
     axis(side = 4, at = 0, labels = expression(x[0]))
     axis(side = 4, at = xfunnel, labels = expression(x[e]))
-    text(tend, max(lane2[,2]), labels = 1,pos=4,cex=0.5)
-    subtitle <- "Side-by-side merge."
+    text(tend, max(lane2[,2]), labels = 1,pos=4, cex=0.5)
+    if(xstart1 == xstart2) subtitle <- "Side-by-side merge." else subtitle <- "Zipper merge."
     title(main = "Lane 2", sub = subtitle)
     for(veh in 2:nveh1) {
       df2 <- follower(veh, lane2)
@@ -97,27 +100,28 @@ brktrials3wrapper <- function(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,st
       text(tend, max(lane2[,xcol]), labels = veh, pos=4, cex=0.5)
     }
     legend("topleft",
-           title = "",
+           #      title = "",
            legend = c(
-             expression("Initial conditions:"),
+             expression(""),
              bquote(u[0] == .(umn)),
              bquote(sigma[U] == .(usd)),
              bquote(k[0] == .(density))
            ),
            cex = c(0.75,0.75,0.75,0.75))
+    dev.off()
   }
-  if(browse == TRUE) browser()
+  #browser()
   ### Lane 1  and 2 #######################################################################################
   zone <- 2
   dfcrit1 <- dfcrit[as.numeric(dfcrit[,1]) == 1,]
   for(veh in 2:nveh1) {
-    lane1.fix  <- fixviolation(veh, zone, lane1, dfcrit1, step, tend.0, leff, xfunnel, type, browse = TRUE)
+    lane1.fix  <- fixviolation(veh, zone, lane1, dfcrit1, step, tend.0, leff, xfunnel, type = FALSE, browse = FALSE)
     lane1.fix  <- fixdf1df2(veh, lane1.fix, lane1)
     lane1      <- lane1.fix
   }
   dfcrit2 <- dfcrit[as.numeric(dfcrit[,1]) == 2,]
   for(veh in 2:nveh2) {
-    lane2.fix  <- fixviolation(veh, zone, lane2, dfcrit2, step, tend.0, leff, xfunnel, type, browse = TRUE)
+    lane2.fix  <- fixviolation(veh, zone, lane2, dfcrit2, step, tend.0, leff, xfunnel, type = FALSE, browse = FALSE)
     lane2.fix  <- fixdf1df2(veh, lane2.fix, lane2)
     lane2      <- lane2.fix
   }

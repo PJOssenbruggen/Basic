@@ -2,9 +2,9 @@
 % Please edit documentation in R/brktrials3setup.R
 \name{brktrials3setup}
 \alias{brktrials3setup}
-\title{\code{brktrials3setup} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck}
+\title{\code{brktrials3setup} produces a \code{T.} matrix for \code{nveh} vehicles.}
 \usage{
-brktrials3setup(nveh, umn, usd, tstart, tend, xstart, step, type, leff)
+brktrials3setup(nveh, umn, usd, tstart, tend, xstart, step, browse, leff)
 }
 \arguments{
 \item{nveh}{number of vehicles entering the bottleneck, a number}
@@ -21,16 +21,16 @@ brktrials3setup(nveh, umn, usd, tstart, tend, xstart, step, type, leff)
 
 \item{step}{size in seconds, a number}
 
-\item{type}{TRUE or FALSE, a logical}
+\item{browse}{is TRUE to inspect plot and FALSE otherwise}
 
 \item{leff}{vehicle length in feet, a number}
 }
 \value{
-\code{brktrials3setup} returns  \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.
+\code{T.} returns information to plot desire-line trajectories.
 }
 \description{
-\code{brktrials3setup} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
+\code{brktrials3setup} produces a \code{T.} matrix for \code{nveh} vehicles.
 }
 \examples{
-brktrials3setup(5, 68.4, 4.4, 0, 30, -700, 0.25, FALSE, 14)
+brktrials3setup(nveh1, umn, 0, 0, 40, -700, step, TRUE, leff)
 }
