@@ -32,5 +32,5 @@ brktrials3setup(nveh, umn, usd, tstart, tend, xstart, step, browse, leff)
 \code{brktrials3setup} produces a \code{T.} matrix for \code{nveh} vehicles.
 }
 \examples{
-brktrials3setup(nveh1, umn, 0, 0, 40, -700, step, TRUE, leff)
+brktrials3setup(5, 53.1, 0, 0, 40, -700, 0.125, FALSE, 14)
 }

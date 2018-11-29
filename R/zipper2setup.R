@@ -4,6 +4,7 @@
 #' @param nveh number of vehicles entering the bottleneck, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
 #' @param usd speed volatility for \code{umn}, a number#' @param tstart start time, (seconds), a number
+#' @param tstart start time, (seconds), a number
 #' @param tend end time, (seconds), a number
 #' @param xstart start location, (feet), a number
 #' @param step size in seconds, a number
@@ -12,7 +13,7 @@
 #' @param kfactor density at time \code{t} = 0, a number
 #' @usage zipper2setup(nveh, umn, usd, tstart, tend, xstart, step, browse, leff, kfactor)
 #' @examples
-#' zipper2setup(nveh1, umn, 0, 0, 40, -700, step, TRUE, leff, kfactor)
+#' zipper2setup(5, 53.1, 0, 0, 40, -700, 0.125, TRUE, 14, 1.333)
 #' @export
 #'
 zipper2setup <- function(nveh, umn, usd, tstart, tend, xstart, step, browse, leff, kfactor) {

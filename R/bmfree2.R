@@ -8,7 +8,7 @@
 #' @param xstart location (feet), a number
 #' @param browse logical for plotting where TRUE creates a plot
 #' @param step time-step size, a number
-#' @usage bmfree2(umn, usd, tstart, tend, xstart, step, type)
+#' @usage bmfree2(umn, usd, tstart, tend, xstart, step, browse)
 # #' @examples
 # #' bmfree2(41, 11, 16.5, 30, 10, 0.25, TRUE)
 #' @export
@@ -76,8 +76,8 @@ bmfree2  <- function(umn, usd, tstart, tend, xstart, step, browse) {
     lines(T.[,1], x, col = "red", lwd = 2)
     legend("topleft", legend = c("Lead vehicle","Following vehicle"),
            lwd = c(2,2), col = c("blue","red"), bty = "n")
+    dev.off()
   }
-  dev.off()
   # if(browse == TRUE) browser()
   # return T. for the lead vehicle.
   return(T.)

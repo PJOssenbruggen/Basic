@@ -15,7 +15,7 @@
 #' @param xfunnel upstream location of bottleneck taper, a number
 #' @param kfactor density at time \code{t} = 0, a number
 #' @param browse is TRUE to inspect plot and FALSE otherwise
-#' @usage brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel,kfactor,browse)
+#' @usage brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,run,leff,xfunnel,kfactor,browse)
 #' @examples
 #' brktrials3wrapper(3, 3, 50.4, 0, 0, 30, -700, -700, 0.25, TRUE,  14, -500,TRUE)
 #' @export

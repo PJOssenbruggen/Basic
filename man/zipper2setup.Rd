@@ -13,6 +13,8 @@ zipper2setup(nveh, umn, usd, tstart, tend, xstart, step, browse, leff, kfactor)
 
 \item{usd}{speed volatility for \code{umn}, a number#' @param tstart start time, (seconds), a number}
 
+\item{tstart}{start time, (seconds), a number}
+
 \item{tend}{end time, (seconds), a number}
 
 \item{xstart}{start location, (feet), a number}
@@ -32,5 +34,5 @@ zipper2setup(nveh, umn, usd, tstart, tend, xstart, step, browse, leff, kfactor)
 \code{zipper2setup} produces a \code{T.} matrix for \code{nveh} vehicles.
 }
 \examples{
-zipper2setup(nveh1, umn, 0, 0, 40, -700, step, TRUE, leff, kfactor)
+zipper2setup(5, 53.1, 0, 0, 40, -700, 0.125, TRUE, 14, 1.333)
 }

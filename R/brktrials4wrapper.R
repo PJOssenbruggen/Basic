@@ -29,7 +29,7 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
   #set.seed(333)
   xlim  <- c(tstart,tend)
 #  print(data.frame(nveh1,nveh2,xstart1,xstart2,step,tstart,tend,xfunnel,leff))
-  zippermerge(nveh, tstart, tend, xstart, umn, leff, xfunnel, step, type = TRUE, kfactor)
+  zippermerge(nveh, tstart, tend, xstart, umn, leff, xfunnel, step, TRUE, kfactor)
   lst   <- brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,run,leff,xfunnel,kfactor,browse=FALSE)
   lane1 <- lst[[1]]
   lane2 <- lst[[2]]
@@ -146,13 +146,13 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
     zone <- 2
     df1df2.fix    <- df1df2
     for(veh in 2:nveh) {
-      df1df2.fix  <- fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, type, browse = FALSE)
+      df1df2.fix  <- fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, FALSE, browse = FALSE)
       df1df2.fix  <- fixdf1df2(veh, df1df2.fix, df1df2)
       df1df2      <- df1df2.fix
     }
     # Bottleneck plot
     xstart <- xstart1
-    df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel, type)
+    df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel, FALSE)
     if(run == 1) {
       pdf(file = "/Users/PJO/Desktop/Merge.pdf")
       par(mfrow = c(1,1), pty = "s")

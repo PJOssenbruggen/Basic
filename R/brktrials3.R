@@ -16,7 +16,7 @@
 #' @param kfactor density at time \code{t} = 0, a number
 #' @usage brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,browse,leff,xfunnel,usd,kfactor)
 #' @examples
-#' brktrials3(5, 5, umn,  0, 40, -700, -700, 0.25, TRUE,  14, -500, 0)
+#' brktrials3(5, 5, 53.1,  0, 40, -700, -700, 0.25, TRUE,  14, -500, 0, 1.333)
 #' @export
 brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, browse, leff, xfunnel, usd, kfactor) {
   tseq  <- seq(tstart, tend, step)

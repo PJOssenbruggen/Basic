@@ -12,7 +12,7 @@
 #' @param leff vehicle length in feet, a number
 #' @usage brktrials3setup(nveh, umn, usd, tstart, tend, xstart, step, browse, leff)
 #' @examples
-#' brktrials3setup(nveh1, umn, 0, 0, 40, -700, step, TRUE, leff)
+#' brktrials3setup(5, 53.1, 0, 0, 40, -700, 0.125, FALSE, 14)
 #' @export
 #'
 brktrials3setup <- function(nveh, umn, usd, tstart, tend, xstart, step, browse, leff) {
@@ -23,7 +23,7 @@ brktrials3setup <- function(nveh, umn, usd, tstart, tend, xstart, step, browse, 
   tux      <- bmfree2(umn, usd, tstart, tend, xstart, step, browse)
   T.       <- cbind(tux, y)
   for(i in 2:nveh) {
-    tux     <- bmfree2(umn, usd, tstart, tend, xstart, step, browse = FALSE)
+    tux     <- bmfree2(umn, usd, tstart, tend, xstart, step, browse)
     tux     <- cbind(tux, y)
     u       <- as.numeric(tux[1,2])
     safe.hdwy <- rep(hsafe(u, leff), tlen)

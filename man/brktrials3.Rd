@@ -40,5 +40,5 @@ brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,browse,leff,xfunnel,
 \code{brktrials3} produces \code{T1} and \code{T2} matrices for lead and following vehicles, respectively
 }
 \examples{
-brktrials3(5, 5, umn,  0, 40, -700, -700, 0.25, TRUE,  14, -500, 0)
+brktrials3(5, 5, 53.1,  0, 40, -700, -700, 0.25, TRUE,  14, -500, 0, 1.333)
 }
