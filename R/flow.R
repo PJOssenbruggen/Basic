@@ -5,13 +5,12 @@
 #' @param tstart start time, (seconds), a number
 #' @param tend end time, (seconds), a number
 #' @param step size in seconds, a number
-#' @param type TRUE to create plots or FALSE otherwise, a logical
 #' @param xfunnel upstream location of bottleneck taper, a number
-#' @usage flow(df1df2, tstart, tend, step, xfunnel, type)
+#' @usage flow(df1df2, tstart, tend, step, xfunnel)
 # #' @examples
-# #' flow(df1df2, tstart, tend, step, xfunnel, type)
+# #' flow(df1df2, tstart, tend, step, xfunnel)
 #' @export
-flow <- function(df1df2, tstart, tend, step, xfunnel, type) {
+flow <- function(df1df2, tstart, tend, step, xfunnel) {
   nveh     <- dim(df1df2)[2]/3
   t        <- seq(tstart,tend,step)
   df1df2   <- cbind(t, df1df2)

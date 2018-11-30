@@ -4,7 +4,7 @@
 \alias{brktrials3}
 \title{\code{brktrials3} produces \code{T1} and \code{T2} matrices for lead and following vehicles, respectively}
 \usage{
-brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,browse,leff,xfunnel,usd,kfactor)
+brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,leff,xfunnel,usd,kfactor)
 }
 \arguments{
 \item{nveh1}{number of vehicles entering the bottleneck from lane 1, a number}
@@ -23,8 +23,6 @@ brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,browse,leff,xfunnel,
 
 \item{step}{size in seconds, a number}
 
-\item{browse}{TRUE to create plots or FALSE otherwise, a logical}
-
 \item{leff}{vehicle length in feet, a number}
 
 \item{xfunnel}{upstream location of bottleneck taper, a number}
@@ -40,5 +38,5 @@ brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,browse,leff,xfunnel,
 \code{brktrials3} produces \code{T1} and \code{T2} matrices for lead and following vehicles, respectively
 }
 \examples{
-brktrials3(5, 5, 53.1,  0, 40, -700, -700, 0.25, TRUE,  14, -500, 0, 1.333)
+brktrials3(5, 5, 53.1,  0, 40, -700, -700, 0.25, 14, -500, 0, 1.333)
 }

@@ -9,16 +9,15 @@
 #' @param xstart1 start location of the first vehicle in lane 1, (feet), a number
 #' @param xstart2 start location of the first vehicle in lane 2, (feet), a number
 #' @param step size in seconds, a number
-#' @param browse TRUE to create plots or FALSE otherwise, a logical
 #' @param leff vehicle length in feet, a number
 #' @param xfunnel upstream location of bottleneck taper, a number
 #' @param usd speed standard deviation, a number
 #' @param kfactor density at time \code{t} = 0, a number
-#' @usage brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,browse,leff,xfunnel,usd,kfactor)
+#' @usage brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,leff,xfunnel,usd,kfactor)
 #' @examples
-#' brktrials3(5, 5, 53.1,  0, 40, -700, -700, 0.25, TRUE,  14, -500, 0, 1.333)
+#' brktrials3(5, 5, 53.1,  0, 40, -700, -700, 0.25, 14, -500, 0, 1.333)
 #' @export
-brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, browse, leff, xfunnel, usd, kfactor) {
+brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, leff, xfunnel, usd, kfactor) {
   tseq  <- seq(tstart, tend, step)
   tlen  <- length(tseq)
   y     <- rep(0, tlen)
@@ -74,7 +73,7 @@ brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, 
   nclm    <- seq(2, nveh*3, 3)
   tseq    <- lane[,1]
   lane    <- lane[,-1]
-  if(browse == TRUE) {
+  if(FALSE) {
     # Plot range ylim
     par(mfrow = c(1,2), pty = "s")
     xlim    <- c(tstart,tend)
@@ -135,7 +134,6 @@ brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, 
     legend("topleft", legend = "", bty = "n")
   }
   lane2 <- lane
-#  if(browse == TRUE) browser()
   return(list(lane1,lane2))
 ### brktrials3 ########################################################################
 }

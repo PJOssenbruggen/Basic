@@ -23,9 +23,9 @@
 #' @export
 zipperwrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,browse) {
   #### STEP 1. Create lane 1 and 2 datasets ################################################################
-  #set.seed(123)
-  set.seed(403)
-  #set.seed(333)
+  # set.seed(123)
+  # set.seed(403)
+  # set.seed(333)
   xlim  <- c(tstart,tend)
   print(data.frame(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,browse))
   df1df2 <- zippermerge(nveh, tstart, tend, xstart1, umn, leff, xfunnel, step, type)

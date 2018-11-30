@@ -22,8 +22,7 @@ dfmanager <- function(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step) {
   lane.<- lane
   tstart <- 0
   for(veh in 1:nveh) {
-    # bmfree2(umn, usd, tstart, tend, xstart, step, type)
-    df.     <- bmfree2(umn, usd, tstart, tend, xstart[veh], step, browse = TRUE)
+    df.     <- bmfree2(umn, usd, tstart, tend, xstart[veh], step)
     vehicle <- rep(veh, tlen)
     y       <- rep(0, tlen)
     lane    <- rep(lane.[veh], tlen)

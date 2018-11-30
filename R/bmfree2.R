@@ -8,12 +8,11 @@
 #' @param xstart location (feet), a number
 #' @param browse logical for plotting where TRUE creates a plot
 #' @param step time-step size, a number
-#' @usage bmfree2(umn, usd, tstart, tend, xstart, step, browse)
+#' @usage bmfree2(umn, usd, tstart, tend, xstart, step)
 # #' @examples
-# #' bmfree2(41, 11, 16.5, 30, 10, 0.25, TRUE)
+# #' bmfree2(41, 11, 16.5, 30, 10, 0.25)
 #' @export
-bmfree2  <- function(umn, usd, tstart, tend, xstart, step, browse) {
-  set.seed(333)
+bmfree2  <- function(umn, usd, tstart, tend, xstart, step) {
   t     <- seq(tstart, tend, step)
   N     <- length(t)
   W     <- numeric(N)
@@ -27,7 +26,6 @@ bmfree2  <- function(umn, usd, tstart, tend, xstart, step, browse) {
   x[1]  <- xstart
   for(i in 2:N) x[i] <- x[i-1] + step * u[i-1]
   T.    <- as.matrix(data.frame(t, u, x))
-  if(browse == TRUE) {
     pdf(file = "/Users/PJO/Desktop/SVM.pdf")
     par(mfrow = c(1,2), pty = "s")
     plot(T.[,1], T.[,2], typ = "l", ylab = "u, feet per second", xlab = "t, seconds",lwd = 2,
@@ -77,8 +75,5 @@ bmfree2  <- function(umn, usd, tstart, tend, xstart, step, browse) {
     legend("topleft", legend = c("Lead vehicle","Following vehicle"),
            lwd = c(2,2), col = c("blue","red"), bty = "n")
     dev.off()
-  }
-  # if(browse == TRUE) browser()
-  # return T. for the lead vehicle.
   return(T.)
 }

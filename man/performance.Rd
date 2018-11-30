@@ -4,19 +4,19 @@
 \alias{performance}
 \title{\code{performance} looks at waiting time and performance measures.}
 \usage{
-performance(run1,run2,p1,p2)
+performance(sbs.summary,zipper.summary,sbs.prop.free,zipper.prop.free,size)
 }
 \arguments{
-\item{run1, }{a matrix}
+\item{sbs.summary, }{a matrix}
 
-\item{run2, }{a matrix}
+\item{zipper.summary, }{a matrix}
 
-\item{p1}{proportion free flow, a number}
+\item{sbs.prop.free}{proportion free flow, a number}
 
-\item{p2}{proportion free flow, a number}
+\item{zipper.prop.free}{proportion free flow, a number}
 }
 \value{
-The \code{performance} returns scatter plots, histograms and statistical summaries for two data sets.
+The \code{performance} returns statistical summaries for two data sets.
 }
 \description{
 \code{performance} looks at waiting time and performance measures.

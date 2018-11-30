@@ -9,20 +9,20 @@
 #' @param xfunnel location where the lane drop is located, a number
 #' @param leff vehicle length in feet, a number
 #' @param step size in seconds, a number
-#' @param type TRUE to create plots or FALSE otherwise, a logical
+#' @param browse TRUE to create plots or FALSE otherwise, a logical
 #' @param kfactor density at time \code{t} = 0, a number
-#' @usage zippermerge(nveh, tstart, tend, xstart, u, leff, xfunnel, step, type, kfactor)
+#' @usage zippermerge(nveh, tstart, tend, xstart, u, leff, xfunnel, step, browse, kfactor)
 # #' @examples
-# #' zippermerge(nveh, 0, 1.5, -700,53.1, leff, xfunnel, step, TRUE, kfactor)
+# #' zippermerge(nveh, 0, 1.5, -700, 53.1, leff, xfunnel, step, TRUE, kfactor)
 #' @export
-zippermerge <- function(nveh, tstart, tend, xstart, u, leff, xfunnel, step, type, kfactor) {
+zippermerge <- function(nveh, tstart, tend, xstart, u, leff, xfunnel, step, browse, kfactor) {
   tseq <- seq(tstart, tend, step)
   tlen <- length(tseq)
   k    <- as.numeric(5280/hsafe(u*5280/3600,leff))/kfactor
   density <- round(k,0)
   x    <- matrix(rep(NA,tlen*nveh), ncol = nveh)
   colnames(x) <- paste("x",sep="",1:nveh)
-  s    <- c(0,cumsum(rep(5280/k,nveh-1)))
+  s    <- c(0, cumsum(rep(5280/k,nveh-1)))
   u    <- 5280/3600*u
   for(veh in 1:nveh) {
     for(i in 1:tlen) {
@@ -36,7 +36,8 @@ zippermerge <- function(nveh, tstart, tend, xstart, u, leff, xfunnel, step, type
     df1df2. <- as.matrix(data.frame(u, x = x[,veh], y))
     df1df2  <- cbind(df1df2, df1df2.)
   }
-  if(type == TRUE) {
+  if(browse == TRUE) {
+    pdf(file = "/Users/PJO/Desktop/ZipperMerge.pdf")
     ylim <- c(min(x),max(x))
     par(mfrow = c(1,1), pty = "s")
     plot(tseq, x[,1], type = "l", xlab = "t, seconds", lwd = 2,
@@ -67,16 +68,15 @@ zippermerge <- function(nveh, tstart, tend, xstart, u, leff, xfunnel, step, type
     }
     flow    <- round(3600/mean(h),0)
     u.mph   <- 3600/5280 * u
-#    browser()
     axis(side = 4, at = 0, labels = expression(x[0]))
     axis(side = 4, at = xfunnel, labels = expression(x[e]))
     legend("topleft", legend = c(
-      title = "",
       expression("Initial conditions:"),
       bquote(u[0] == .(umn)),
-   #   bquote(sigma[U] == .(usd)),
       bquote(k[0] == .(density))),
-      cex = c(0.75,0.75,0.75))
+      cex = c(0.75,0.75,0.75)
+      )
+    dev.off()
   }
   return(df1df2)
 }

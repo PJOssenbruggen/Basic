@@ -6,7 +6,7 @@
             "*.R"
         ],
         "path" : "~/Desktop/Basic",
-        "query" : "sub = \"Lead Vehicle",
+        "query" : "browse",
         "regex" : false
     }
 }

@@ -17,20 +17,20 @@
 #' @param leff vehicle length in feet, a number
 #' @param run, a number
 #' @param kfactor density at time \code{t} = 0, a number
-#' @param browse to inspect \code{fixviolation} to inspect plot or FALSE otherwise
-#' @usage brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,run,kfactor,browse)
+#' @usage brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,run,kfactor)
 # #' @examples
-# #' brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,run,kfactor,browse)
+# #' brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,run,kfactor)
 #' @export
-brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,run,kfactor,browse) {
+brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,run,kfactor) {
 #### STEP 1. Create lane 1 and 2 datasets ################################################################
-  set.seed(123)
+  # set.seed(123)
   # set.seed(403)
-  #set.seed(333)
+  # set.seed(333)
   xlim  <- c(tstart,tend)
 #  print(data.frame(nveh1,nveh2,xstart1,xstart2,step,tstart,tend,xfunnel,leff))
-  zippermerge(nveh, tstart, tend, xstart, umn, leff, xfunnel, step, TRUE, kfactor)
-  lst   <- brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,run,leff,xfunnel,kfactor,browse=FALSE)
+  nveh <- nveh1 + nveh2
+  zippermerge(nveh, tstart, tend, xstart1, umn, leff, xfunnel, step, TRUE, kfactor)
+  lst   <- brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,run,leff,xfunnel,kfactor)
   lane1 <- lst[[1]]
   lane2 <- lst[[2]]
   if(run == 1) {
@@ -47,7 +47,7 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
     tend.0 <- tend
     plot(tseq, lane1[,2], type = "l", xlab = "t, seconds", ylab = "x, feet",
          ylim=ylim, xlim=xlim, col = "blue", lwd = 2)
-    df       <- flow(lane1, tstart, tend, step, xfunnel, FALSE)[[2]]
+    df       <- flow(lane1, tstart, tend, step, xfunnel)[[2]]
     speeda   <- as.numeric(df[1])
     speedd   <- as.numeric(df[2])
     abline(v = 0, col = gray(0.8))
@@ -86,7 +86,7 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
     ylim    <- c(min., max.)
     plot(tseq, lane2[,2], type = "l", xlab = "t, seconds", ylab = "x, feet",
          ylim=ylim, xlim=xlim,col = "red", lwd = 2)
-    df      <- flow(lane2, tstart, tend, step, xfunnel, FALSE)[[2]]
+    df      <- flow(lane2, tstart, tend, step, xfunnel)[[2]]
     speeda   <- as.numeric(df[1])
     speedd   <- as.numeric(df[2])
     density <- as.numeric(5280/hsafe(umn*5280/3600,leff))/kfactor
@@ -120,7 +120,6 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
            cex = c(0.75,0.75,0.75))
     dev.off()
   }
-#  if(browse == TRUE) browser()
 #### STEP 2. Order vehicles by the times that they reach x = 0 ####################
   lst    <- enterbottleneck(lane1,lane2,xfunnel,tend,step)
   dfcrit <- lst[[1]]
@@ -136,23 +135,20 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
       dfcrit <- zoneviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff)
     }
   }
-#  print(data.frame("brktrials4wrapper / dfcrit"))
-#  print(dfcrit)
 ### Zipper Merge ################################################################
   if(usd != 0) {
-    print(data.frame("brktrials4wrapper / dfcrit"))
-#    print(dfcrit)
+  #  print(data.frame("brktrials4wrapper / dfcrit"))
     # Fix violation for Lane Drop #################################################
     zone <- 2
     df1df2.fix    <- df1df2
     for(veh in 2:nveh) {
-      df1df2.fix  <- fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, FALSE, browse = FALSE)
+      df1df2.fix  <- fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel)
       df1df2.fix  <- fixdf1df2(veh, df1df2.fix, df1df2)
       df1df2      <- df1df2.fix
     }
     # Bottleneck plot
     xstart <- xstart1
-    df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel, FALSE)
+    df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel)
     if(run == 1) {
       pdf(file = "/Users/PJO/Desktop/Merge.pdf")
       par(mfrow = c(1,1), pty = "s")
@@ -201,13 +197,12 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
       }
       dev.off()
     }
-#    if(browse == TRUE) browser()
 #### STEP 6. Flow Estimation ######################################################
-    lst <- flow(df1df2, tstart, tend, step, xfunnel,TRUE)
+    lst <- flow(df1df2, tstart, tend, step, xfunnel)
     df1 <- lst[[1]]
     df2 <- lst[[2]]
 #### STEP 7. Capacity Estimation
-    kq    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel,TRUE)
+    kq     <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel)
     tservice = abs(round(xfunnel/(5280/3600*umn),1))
     k.d.mn <- round(mean(kq[,7], na.rm = TRUE),0)
     q.d.mn <- round(mean(kq[,8], na.rm = TRUE),0)
@@ -231,9 +226,8 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
         legend("topleft", legend = c("A = arrival","D = departure"), lty = c(1,1), col = c("red","orange"), bty = "n")
         u.a.mean.mph <- as.numeric(df2[1])
         u.d.mean.mph <- as.numeric(df2[2])
-        #      dev.off()
-      xlim <- c(0, 200)
-      ylim <- c(0, 4000)
+        xlim <- c(0, 200)
+        ylim <- c(0, 4000)
       plot(kq[,10], kq[,11], typ = "p", xlim, ylim, ylab = "q, vph",
            xlab = "k, vpm", pch = 16, col = "red")
       points(kq[,7],kq[,8],pch = 16, col = "orange")
@@ -259,7 +253,6 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
       legend("topright", legend = c("A = arrival","D = departure"),
              pch = c(16,16), col = c("red","orange"), bty = "n")
       legend("bottomright",
-       #      title = "",
              legend = c(
                expression(""),
                bquote(u[0] == .(umn)),
@@ -283,7 +276,6 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
       w = w.mn, tservice)
     return(run.df)
   }
-  if(browse == TRUE) browser()
 }
-##############################################################################################
+# END ##############################################################################################
 

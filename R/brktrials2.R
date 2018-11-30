@@ -32,8 +32,7 @@ brktrials2 <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step, type) 
   # 1. store bmfree2 output in a data frame "df = nveh * tux matrices".
   # df. = tux: tlen by  6 matrix. colnames(tux) = t, u, x, y, lane, vehicle
   for(veh in 1:nveh) {
-    # bmfree2(umn, usd, tstart, tend, xstart, step, type)
-    df.     <- bmfree2(umn, usd, tstart, tend, xstart[veh], step, browse = FALSE)
+    df.     <- bmfree2(umn, usd, tstart, tend, xstart[veh], step)
     vehicle <- rep(veh, tlen)
     y       <- rep(NA, tlen)
     lane    <- rep(lane.[veh], tlen)
@@ -64,7 +63,6 @@ brktrials2 <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step, type) 
     df   <- vehfix(veh, nveh, ufix, xfix, yfix, df)
   }
   # 3. plot "driver desire lines."
-
   if(type == 2) {
     plotoptimize(df, xfunnel, type)
   }
@@ -89,9 +87,6 @@ brktrials2 <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step, type) 
   df   <- plotupstream(pick, lane., nveh, df, xfunnel, leff, type = type.)
   pick <- 2
   df   <- plotupstream(pick, lane., nveh, df, xfunnel, leff, type = type.)
-
-#  browser()
-
   # 5. Model forecast plot
   df   <- plotoptimize(df, xfunnel, type)
   for(veh in 1:nveh) {
@@ -237,7 +232,7 @@ brktrials2 <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step, type) 
         xstart  <- xmab[length(xmab)]
         umn     <- 3600/5280*uab[length(uab)]
         if(tstart < tend) {
-          tux     <- bmfree2(umn, usd, tstart, tend, xstart, step, browse = FALSE)
+          tux     <- bmfree2(umn, usd, tstart, tend, xstart, step)
           if(type != 0) lines(tux[,1],tux[,3])
           tuxlead <- vehdf(veh = vehorder[i - 1], nveh, df)
           tuxlead <- tuxlead[tuxlead[,1] >= tstart,]
