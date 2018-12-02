@@ -7,52 +7,39 @@
 
 <!-- badges: end -->
 
-The goal of cartools is to …
+**cartools:** Tools for understanding highway performance.
 
 ## Installation
 
-You can install the released version of cartools from
+You can install the released version of **cartools** from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 install.packages("cartools")
 ```
 
-## Example
+## Recommendation
 
-This is a basic example which shows you how to solve a common problem:
+Download the latest version of **cartools** from GitHub using RStudio:
 
-``` r
-library(cartools)
-#> 
-#> Attaching package: 'cartools'
-#> The following object is masked from 'package:base':
-#> 
-#>     merge
-## basic example code
-```
+1.  install.packages(“devtools”)
+2.  devtools::install\_github(“pjossenbuggen/Basic”)
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+## State of development
 
-``` r
-#>            mean         SD
-#>u.a        41.18   7.231666
-#>u.d        34.96   1.080740
-#>k.a        45.40  14.363147
-#>k.d        48.00   8.746428
-#>q.a      1053.40 121.288087
-#>q.d      1797.20 452.147874
-#>w          10.02   2.046216
-#>tservice    6.40   0.000000
-```
+At this point in time, **cartools** focuses on freeway bottleneck
+merging, the lose of a traffic lane from two lanes to one. Two merging
+protocols are analyzed:
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date.
+1.  Zipper
+2.  Side-by-side
 
-You can also embed plots, for example:
+A more thorough introduction is available at
+![](http://pjossenbruggen.github.io/cartools).
 
-<img src  = "/Users/PJO/Desktop/Merge.pdf" width="100%" />
+## An Example
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub\!
+Click on the followiing to see an example of *speed volatity* on a
+time-space *t-x* trajectory:
+
+![](Merge.pdf)

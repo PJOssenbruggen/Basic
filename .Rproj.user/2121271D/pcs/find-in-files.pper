@@ -6,7 +6,7 @@
             "*.R"
         ],
         "path" : "~/Desktop/Basic",
-        "query" : "browse",
+        "query" : "save",
         "regex" : false
     }
 }

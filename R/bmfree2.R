@@ -6,7 +6,6 @@
 #' @param tstart simulation start time, a number
 #' @param tend simulation end time, a number
 #' @param xstart location (feet), a number
-#' @param browse logical for plotting where TRUE creates a plot
 #' @param step time-step size, a number
 #' @usage bmfree2(umn, usd, tstart, tend, xstart, step)
 # #' @examples

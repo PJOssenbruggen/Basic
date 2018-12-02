@@ -14,6 +14,8 @@ performance(sbs.summary,zipper.summary,sbs.prop.free,zipper.prop.free,size)
 \item{sbs.prop.free}{proportion free flow, a number}
 
 \item{zipper.prop.free}{proportion free flow, a number}
+
+\item{size}{sample zize, a number}
 }
 \value{
 The \code{performance} returns statistical summaries for two data sets.
