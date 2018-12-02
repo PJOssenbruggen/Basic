@@ -4,14 +4,7 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
+
 # cartools
 
 <!-- badges: start -->
@@ -36,26 +29,13 @@ library(cartools)
 ## basic example code
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-#>            mean         SD
-#>u.a        41.18   7.231666
-#>u.d        34.96   1.080740
-#>k.a        45.40  14.363147
-#>k.d        48.00   8.746428
-#>q.a      1053.40 121.288087
-#>q.d      1797.20 452.147874
-#>w          10.02   2.046216
-#>tservice    6.40   0.000000
-```
+What is special about using `cartools`? You can include R chunks like so:
 
 You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
 
-You can also embed plots, for example:
+An example of speed volatity on a time-space *t-x*  trajectory: 
 
-
-<img src  = "/Users/PJO/Desktop/Merge.pdf" width="100%" />
+![](Merge.pdf)
 
 
 In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!

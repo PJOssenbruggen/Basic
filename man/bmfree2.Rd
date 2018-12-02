@@ -19,8 +19,6 @@ bmfree2(umn, usd, tstart, tend, xstart, step)
 \item{xstart}{location (feet), a number}
 
 \item{step}{time-step size, a number}
-
-\item{browse}{logical for plotting where TRUE creates a plot}
 }
 \description{
 \code{bmfree2} returns a \code{T.} matrix of time \code{t}, speed \code{u} (fps)

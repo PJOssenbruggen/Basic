@@ -19,11 +19,10 @@ brktrials3setup <- function(nveh, umn, usd, tstart, tend, xstart, step, browse, 
   tseq     <- seq(tstart, tend, step)
   tlen     <- length(tseq)
   y        <- rep(0, tlen)
-  browser()
-  tux      <- bmfree2(umn, usd, tstart, tend, xstart, step, browse)
+  tux      <- bmfree2(umn, usd, tstart, tend, xstart, step)
   T.       <- cbind(tux, y)
   for(i in 2:nveh) {
-    tux     <- bmfree2(umn, usd, tstart, tend, xstart, step, browse)
+    tux     <- bmfree2(umn, usd, tstart, tend, xstart, step)
     tux     <- cbind(tux, y)
     u       <- as.numeric(tux[1,2])
     safe.hdwy <- rep(hsafe(u, leff), tlen)

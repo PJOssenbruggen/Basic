@@ -5,6 +5,7 @@
 #' @param zipper.summary, a matrix
 #' @param sbs.prop.free proportion free flow, a number
 #' @param zipper.prop.free proportion free flow, a number
+#' @param size sample zize, a number
 #' @usage performance(sbs.summary,zipper.summary,sbs.prop.free,zipper.prop.free,size)
 #' @export
 performance <- function(sbs.summary,zipper.summary,sbs.prop.free,zipper.prop.free,size) {
