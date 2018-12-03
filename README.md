@@ -1,15 +1,7 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+## cartools: Tools for understanding highway performance.
 
-# cartools
-
-<!-- badges: start -->
-
-<!-- badges: end -->
-
-**cartools:** Tools for understanding highway performance.
-
-## Installation
+### Installation
 
 You can install the released version of **cartools** from
 [CRAN](https://CRAN.R-project.org) with:
@@ -18,28 +10,23 @@ You can install the released version of **cartools** from
 install.packages("cartools")
 ```
 
-## Recommendation
+### Recommendation
 
-Download the latest version of **cartools** from GitHub using RStudio:
+To obtain the latest updates, use RStudio and download **cartools** from
+GitHub. Run the following:  
+1\. install.packages(“devtools”), 2.
+devtools::install\_github(“pjossenbuggen/Basic”), 3.
+*zipper.simulate*(5,5,53.1,5,-700,0.125,0,40,-500,14,1,1.333). See
+output below.
 
-1.  install.packages(“devtools”)
-2.  devtools::install\_github(“pjossenbuggen/Basic”)
-
-## State of development
+### State of development
 
 At this point in time, **cartools** focuses on freeway bottleneck
 merging, the lose of a traffic lane from two lanes to one. Two merging
-protocols are analyzed:
+protocols are analyzed: 1. *Zipper* 2. *Side-by-side*
 
-1.  Zipper
-2.  Side-by-side
+**cartools** vignette:
+![website](https://pjossenbruggen.github.io/cartools/index.html).
 
-A more thorough introduction is available at
-![](http://pjossenbruggen.github.io/cartools).
-
-## An Example
-
-Click on the followiing to see an example of *speed volatity* on a
-time-space *t-x* trajectory:
-
-![](Merge.pdf)
+*Speed volatity effects* on a time-space *t-x* trajectory:
+![](Merge.pdf).
