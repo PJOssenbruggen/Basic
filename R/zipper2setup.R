@@ -8,15 +8,14 @@
 #' @param tend end time, (seconds), a number
 #' @param xstart start location, (feet), a number
 #' @param step size in seconds, a number
-#' @param browse is TRUE to inspect plot and FALSE otherwise
 #' @param leff vehicle length in feet, a number
 #' @param kfactor density at time \code{t} = 0, a number
-#' @usage zipper2setup(nveh, umn, usd, tstart, tend, xstart, step, browse, leff, kfactor)
+#' @usage zipper2setup(nveh, umn, usd, tstart, tend, xstart, step, leff, kfactor)
 #' @examples
-#' zipper2setup(5, 53.1, 0, 0, 40, -700, 0.125, TRUE, 14, 1.333)
+#' zipper2setup(5, 53.1, 0, 0, 40, -700, 0.125, 14, 1.333)
 #' @export
 #'
-zipper2setup <- function(nveh, umn, usd, tstart, tend, xstart, step, browse, leff, kfactor) {
+zipper2setup <- function(nveh, umn, usd, tstart, tend, xstart, step,  leff, kfactor) {
   tseq     <- seq(tstart, tend, step)
   tlen     <- length(tseq)
   y        <- rep(0, tlen)

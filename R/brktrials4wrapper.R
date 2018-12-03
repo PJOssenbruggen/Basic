@@ -29,7 +29,7 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,t
   xlim  <- c(tstart,tend)
 #  print(data.frame(nveh1,nveh2,xstart1,xstart2,step,tstart,tend,xfunnel,leff))
   nveh <- nveh1 + nveh2
-  zippermerge(nveh, tstart, tend, xstart1, umn, leff, xfunnel, step, TRUE, kfactor)
+  zippermerge(nveh, tstart, tend, xstart1, umn, leff, xfunnel, step, kfactor)
   lst   <- brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,run,leff,xfunnel,kfactor)
   lane1 <- lst[[1]]
   lane2 <- lst[[2]]

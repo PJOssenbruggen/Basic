@@ -4,7 +4,7 @@
 \alias{zipper3wrapper}
 \title{\code{zipper3wrapper} produces \code{t-x} trajectory for vehicles traveling on parallel lanes that merge at a bottleneck.}
 \usage{
-zipper3wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,browse)
+zipper3wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff)
 }
 \arguments{
 \item{nveh1}{number of vehicles entering the bottleneck from lane 1, a number}
@@ -28,10 +28,6 @@ zipper3wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff
 \item{xfunnel}{location where the lane drop is located, a number}
 
 \item{leff}{vehicle length in feet, a number}
-
-\item{type}{TRUE to create plots or FALSE otherwise, a logical}
-
-\item{browse}{to inspect \code{fixviolation} to inspect plot or FALSE otherwise}
 }
 \value{
 The \code{zipper3wrapper}, a wrapper function for \code{bmfree3}, \code{xabparam} and

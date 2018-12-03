@@ -15,24 +15,20 @@
 #' @param tend upper time range of simulation, a number
 #' @param xfunnel location where the lane drop is located, a number
 #' @param leff vehicle length in feet, a number
-#' @param type TRUE to create plots or FALSE otherwise, a logical
-#' @param browse to inspect \code{fixviolation} to inspect plot or FALSE otherwise
-#' @usage zipper3wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,browse)
-# #'
+#' @usage zipper3wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff)
 #' @export
-zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,browse) {
+zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff) {
   #### STEP 1. Create lane 1 and 2 datasets ################################################################
   #set.seed(123)
   # set.seed(403)
   #set.seed(333)
   xlim  <- c(tstart,tend)
   print(data.frame(nveh1,nveh2,xstart1,xstart2,step,tstart,tend,xfunnel,leff))
-  zippermerge(nveh, tstart, tend, xstart, umn, leff, xfunnel, step, type)
-#  browser()
-  lst   <- zipper3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,type,leff,xfunnel,usd)
+  zippermerge(nveh, tstart, tend, xstart, umn, leff, xfunnel, step)
+  lst   <- zipper3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,leff,xfunnel,usd)
   lane1 <- lst[[1]]
   lane2 <- lst[[2]]
-  if(type == TRUE) {
+  if(TRUE) {
     par(mfrow = c(1,2), pty = "s")
     nclm    <- seq(2, nveh1*3, 3)
     min.    <- min(as.numeric(unlist(lane1[,nclm])), na.rm = TRUE)
@@ -45,7 +41,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
     tend.0 <- tend
     plot(tseq, lane1[,2], type = "l", xlab = "t, seconds", ylab = "x, feet",
          ylim=ylim, xlim=xlim, col = "blue", lwd = 2)
-    df     <- flow(lane1, tstart, tend, step, xfunnel, FALSE)[[2]]
+    df     <- flow(lane1, tstart, tend, step, xfunnel)[[2]]
     speeda   <- as.numeric(df[1])
     speedd   <- as.numeric(df[2])
     abline(v = 0, col = gray(0.8))
@@ -81,7 +77,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
     ylim    <- c(min., max.)
     plot(tseq, lane2[,2], type = "l", xlab = "t, seconds", ylab = "x, feet",
          ylim=ylim, xlim=xlim,col = "red", lwd = 2)
-    df      <- flow(lane2, tstart, tend, step, xfunnel, FALSE)[[2]]
+    df      <- flow(lane2, tstart, tend, step, xfunnel)[[2]]
     speeda   <- as.numeric(df[1])
     speedd   <- as.numeric(df[2])
     density <- as.numeric(5280/hsafe(umn*5280/3600,leff))
@@ -133,14 +129,14 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
     zone <- 2
     df1df2.fix    <- df1df2
     for(veh in 2:nveh) {
-      df1df2.fix  <- fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, type, browse = TRUE)
+      df1df2.fix  <- fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel)
       df1df2.fix  <- fixdf1df2(veh, df1df2.fix, df1df2)
       df1df2      <- df1df2.fix
     }
     # Zipper Merge plot
     xstart    <- xstart1
-    df1df2zip <- zippermerge(nveh, tstart, tend, xstart, umn, leff, xfunnel, step, type = TRUE)[,-1]
-    if(type == TRUE) {
+    df1df2zip <- zippermerge(nveh, tstart, tend, xstart, umn, leff, xfunnel, step)[,-1]
+    if(TRUE) {
       par(mfrow = c(1,1), pty = "s")
       tend <- tseq[tlen]
       xcol <- {}
@@ -158,7 +154,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
       axis(side = 3, at = tend/2, sub, tick = FALSE, line = -1)
       axis(side = 4, at = 0, labels = expression(x[0]))
       axis(side = 4, at = xfunnel, labels = expression(x[e]))
-      df    <- flow(df1df2zip, tstart, tend, step, xfunnel, FALSE)[[2]]
+      df    <- flow(df1df2zip, tstart, tend, step, xfunnel)[[2]]
       flow  <- as.numeric(df[3])
       speed <- round(as.numeric(df[4]),1)
       legend("topleft",
@@ -184,13 +180,12 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
         text(tend, max(as.numeric(df1df2[,xcol])), labels = lab, pos = 4, offset = 0.2, cex = 0.75)
       }
     }
-    if(browse == TRUE) browser()
 
     #### STEP 6. Flow Estimation
-    lst <- flow(df1df2 = df1df2, tstart, tend, step, xfunnel,TRUE)
+    lst <- flow(df1df2 = df1df2, tstart, tend, step, xfunnel)
     df1 <- lst[[1]]
     df2 <- lst[[2]]
-    if(type == TRUE) {
+    if(TRUE) {
       par(mfrow = c(1,2), pty = "s")
       plot(df1[,2], df1[,1], typ = "s", xlim = c(0,max(df1[,3])), ylim = c(1,nveh+0.1),
            ylab = "Vehicle", xlab = "t, seconds", col = "red", lwd = 2)
@@ -202,12 +197,12 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
       axis(side = 3, at = max(df1[,3])/2, sub, tick = FALSE, line = -1)
       legend("topleft", legend = c("A = arrival","D = departure"), lty = c(1,1), col = c("red","orange"), bty = "n")
     }
-    if(browse == TRUE) browser()
+
     #### STEP 7. Capacity Estimation
-    df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel,TRUE)
+    df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel)
     print(df1)
     tservice = abs(round(xfunnel/(5280/3600*umn),1))
-    if(type == TRUE) {
+    if(TRUE) {
       xlim <- c(0, 200)
       ylim <- c(0, 4000)
       plot(df1[,7], df1[,8], typ = "p", xlim, ylim, ylab = "q, vph",
@@ -245,7 +240,6 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
              cex = c(0.75,0.75,0.75,0.75)
       )
     }
-    if(browse == TRUE) browser()
     return(df1df2)
   }
   if(usd != 0) {
@@ -253,14 +247,14 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
     zone <- 2
     df1df2.fix    <- df1df2
     for(veh in 2:nveh) {
-      df1df2.fix  <- fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, type, browse = TRUE)
+      df1df2.fix  <- fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel)
       df1df2.fix  <- fixdf1df2(veh, df1df2.fix, df1df2)
       df1df2      <- df1df2.fix
     }
     # Bottleneck plot
     xstart    <- xstart1
-    df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel,TRUE)
-    if(type == TRUE) {
+    df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel)
+    if(TRUE) {
       tend <- tseq[tlen]
       xcol <- {}
       for(veh in 1:nveh) xcol <- c(xcol, 2 + 3 * (veh-1))
@@ -302,12 +296,12 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
         text(tend, max(as.numeric(df1df2[,xcol])), labels = lab, pos = 4, offset = 0.2, cex = 0.75)
       }
     }
-    if(browse == TRUE) browser()
+
     #### STEP 6. Flow Estimation ######################################################
-    lst <- flow(df1df2, tstart, tend, step, xfunnel,TRUE)
+    lst <- flow(df1df2, tstart, tend, step, xfunnel)
     df1 <- lst[[1]]
     df2 <- lst[[2]]
-    if(type == TRUE) {
+    if(TRUE) {
       par(mfrow = c(1,2), pty = "s")
       plot(df1[,2], df1[,1], typ = "s", xlim = c(0,max(df1[,3])), ylim = c(1,nveh+0.1),
            ylab = "Vehicle", xlab = "t, seconds", col = "red", lwd = 2)
@@ -323,7 +317,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
       u.d.mean.mph <- as.numeric(df2[2])
     }
     #### STEP 7. Capacity Estimation
-    df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel,TRUE)
+    df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel)
     tservice = abs(round(xfunnel/(5280/3600*umn),1))
     k.d.mn <- round(mean(df1[,7], na.rm = TRUE),0)
     q.d.mn <- round(mean(df1[,8], na.rm = TRUE),0)
@@ -341,7 +335,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
       w = w.mn, tservice)
     print(data.frame("Run"))
     print(run)
-    if(type == TRUE & !is.na(q.a.mn)) {
+    if(TRUE & !is.na(q.a.mn)) {
       xlim <- c(0, 200)
       ylim <- c(0, 4000)
       plot(df1[,10], df1[,11], typ = "p", xlim, ylim, ylab = "q, vph",
@@ -382,7 +376,6 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
     }
     return(run)
   }
-  if(browse == TRUE) browser()
 }
 ##############################################################################################
 

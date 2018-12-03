@@ -25,10 +25,10 @@ brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, 
   umn   <- as.numeric(umn)
   usd   <- as.numeric(usd)
 #  print(data.frame("brktrials3", umn, usd))
-  if(nveh1 > 0) lane1 <- zipper2setup(nveh1, umn, usd, tstart, tend, xstart1, step, browse, leff, kfactor) else
+  if(nveh1 > 0) lane1 <- zipper2setup(nveh1, umn, usd, tstart, tend, xstart1, step, leff, kfactor) else
     lane1 <- {}
   if(nveh2 > 0)  {
-    lane2 <- zipper2setup(nveh2, umn, usd, tstart, tend, xstart2, step, browse, leff, kfactor)
+    lane2 <- zipper2setup(nveh2, umn, usd, tstart, tend, xstart2, step,  leff, kfactor)
   } else
     lane2 <- {}
   if(nveh1 == 0 & nveh2 > 0) {

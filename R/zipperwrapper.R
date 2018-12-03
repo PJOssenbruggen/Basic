@@ -63,7 +63,7 @@ zipperwrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,
   print(dfcrit)
 
   #### STEP 6. Flow Estimation ######################################################
-  lst <- flow(df1df2, tstart, tend, step, xfunnel,TRUE)
+  lst <- flow(df1df2, tstart, tend, step, xfunnel)
   df1 <- lst[[1]]
   df2 <- lst[[2]]
   if(type == TRUE) {
@@ -82,7 +82,7 @@ zipperwrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,
     u.d.mean.mph <- as.numeric(df2[2])
   }
   #### STEP 7. Capacity Estimation
-  df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel,TRUE)
+  df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel)
   tservice = abs(round(xfunnel/(5280/3600*umn),1))
   if(type == TRUE) {
     xlim <- c(0, 200)

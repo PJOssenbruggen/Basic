@@ -9,13 +9,12 @@
 #' @param xfunnel location where the lane drop is located, a number
 #' @param leff vehicle length in feet, a number
 #' @param step size in seconds, a number
-#' @param browse TRUE to create plots or FALSE otherwise, a logical
 #' @param kfactor density at time \code{t} = 0, a number
-#' @usage zippermerge(nveh, tstart, tend, xstart, u, leff, xfunnel, step, browse, kfactor)
+#' @usage zippermerge(nveh, tstart, tend, xstart, u, leff, xfunnel, step, kfactor)
 # #' @examples
-# #' zippermerge(nveh, 0, 1.5, -700, 53.1, leff, xfunnel, step, TRUE, kfactor)
+# #' zippermerge(nveh, 0, 1.5, -700, 53.1, leff, xfunnel, step. kfactor)
 #' @export
-zippermerge <- function(nveh, tstart, tend, xstart, u, leff, xfunnel, step, browse, kfactor) {
+zippermerge <- function(nveh, tstart, tend, xstart, u, leff, xfunnel, step, kfactor) {
   tseq <- seq(tstart, tend, step)
   tlen <- length(tseq)
   k    <- as.numeric(5280/hsafe(u*5280/3600,leff))/kfactor
@@ -36,7 +35,7 @@ zippermerge <- function(nveh, tstart, tend, xstart, u, leff, xfunnel, step, brow
     df1df2. <- as.matrix(data.frame(u, x = x[,veh], y))
     df1df2  <- cbind(df1df2, df1df2.)
   }
-  if(browse == TRUE) {
+  if(FALSE) {
     pdf(file = "/Users/PJO/Desktop/ZipperMerge.pdf")
     ylim <- c(min(x),max(x))
     par(mfrow = c(1,1), pty = "s")

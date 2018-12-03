@@ -12,31 +12,27 @@
 #' @param tend upper time range of simulation, a number
 #' @param xfunnel location where the lane drop is located, a number
 #' @param leff vehicle length in feet, a number
-#' @param type TRUE to create plots or FALSE otherwise, a logical
-#' @param browse to inspect \code{fixviolation} to inspect plot or FALSE otherwise
 #' @param size sample size, a number
-#' @usage zippersimulate(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,browse,size)
+#' @usage zippersimulate(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,size)
 #' @export
-zippersimulate <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,browse,size) {
+zippersimulate <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,size) {
   input <- data.frame(nveh1,nveh2,umn,usd,xstart1,xstart2,
-                      step,tstart,tend,xfunnel,leff,type,browse)
+                      step,tstart,tend,xfunnel,leff)
   print(input)
   for(run in 1:size) {
     if(run == 1) output <- zipper3wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,
-                                step,tstart,tend,xfunnel,leff,type,browse) else {
+                                step,tstart,tend,xfunnel,leff) else {
                           output. <- zipper3wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,
-                                step,tstart,tend,xfunnel,leff,type,browse)
+                                step,tstart,tend,xfunnel,leff)
                                 output  <- rbind(output, output.)
                           }
   }
   print(output)
-  if(browse == TRUE) browser()
   outputruns <- rbind(outputruns, output)
   sum.out1   <- data.frame(colMeans(outputruns,na.rm=TRUE))
   sum.out2   <- data.frame(apply(outputruns,2,sd,na.rm=TRUE))
   sum.out    <- cbind(sum.out1,sum.out2)
   colnames(sum.out) <- c("mean","SD")
   print(sum.out)
-  if(browse == TRUE) browser()
   return(output)
 }

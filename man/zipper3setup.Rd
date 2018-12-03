@@ -4,7 +4,7 @@
 \alias{zipper3setup}
 \title{\code{zipper3setup} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck}
 \usage{
-zipper3setup(nveh, umn, usd, tstart, tend, xstart, step, type, leff)
+zipper3setup(nveh, umn, usd, tstart, tend, xstart, step, leff)
 }
 \arguments{
 \item{nveh}{number of vehicles entering the bottleneck, a number}
@@ -21,8 +21,6 @@ zipper3setup(nveh, umn, usd, tstart, tend, xstart, step, type, leff)
 
 \item{step}{size in seconds, a number}
 
-\item{type}{TRUE or FALSE, a logical}
-
 \item{leff}{vehicle length in feet, a number}
 }
 \value{
@@ -32,5 +30,5 @@ zipper3setup(nveh, umn, usd, tstart, tend, xstart, step, type, leff)
 \code{zipper3setup} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
 }
 \examples{
-zipper3setup(5, 68.4, 4.4, 0, 30, -700, 0.25, FALSE, 14)
+zipper3setup(5, 68.4, 4.4, 0, 30, -700, 0.25, 14)
 }

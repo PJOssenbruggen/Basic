@@ -8,14 +8,13 @@
 #' @param tend end time, (seconds), a number
 #' @param xstart start location, (feet), a number
 #' @param step size in seconds, a number
-#' @param type TRUE or FALSE, a logical
 #' @param leff vehicle length in feet, a number
-#' @usage zipper3setup(nveh, umn, usd, tstart, tend, xstart, step, type, leff)
+#' @usage zipper3setup(nveh, umn, usd, tstart, tend, xstart, step, leff)
 #' @examples
-#' zipper3setup(5, 68.4, 4.4, 0, 30, -700, 0.25, FALSE, 14)
+#' zipper3setup(5, 68.4, 4.4, 0, 30, -700, 0.25, 14)
 #' @export
 #'
-zipper3setup <- function(nveh, umn, usd, tstart, tend, xstart, step, type, leff) {
+zipper3setup <- function(nveh, umn, usd, tstart, tend, xstart, step, leff) {
   tseq     <- seq(tstart, tend, step)
   tlen     <- length(tseq)
   y        <- rep(0, tlen)
