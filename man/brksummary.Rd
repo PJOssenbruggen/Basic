@@ -4,7 +4,7 @@
 \alias{brksummary}
 \title{The function \code{brksummary} is a wrapper for  \code{accelpass} and \code{passplot}.}
 \usage{
-brksummary(k, tend, umn, usd, xstart, xfunnel, leff, lane, step)
+brksummary(k, tend, umn, usd, xstart, xfunnel, leff, lane, delt)
 }
 \arguments{
 \item{k}{traffic density (vehicles per mile, vpm), a number}
@@ -23,14 +23,11 @@ brksummary(k, tend, umn, usd, xstart, xfunnel, leff, lane, step)
 
 \item{lane}{number, a number}
 
-\item{step}{size in seconds, a number}
+\item{delt}{size in seconds, a number}
 }
 \value{
 \code{brksummary} contains a table of information used for \code{run} plot
 }
 \description{
 The function \code{brksummary} is a wrapper for  \code{accelpass} and \code{passplot}.
-}
-\examples{
-brksummary(50, 30, 41, 11, -1000, -500, 14, 0, 2)
 }

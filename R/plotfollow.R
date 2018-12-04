@@ -9,7 +9,7 @@
 plotfollow = function(L, Fw, t4) {
 # the deceleration of the lead vehicle and following vehicle headway affect the x trajectory
 # x trajectory spanning t1 to t2 using a xab trajectory.
-  step   <- 0.25
+  delt   <- 0.125
   t0  <- Fw[1,1]
   t3  <- Fw[1,4]
   xf0 <- Fw[3,1]
@@ -39,7 +39,7 @@ plotfollow = function(L, Fw, t4) {
   lty = 1
   lwd = 1
   col = gray(0)
-  trajectoryab(tstart, tend, ustart, uend, xstart, xend, step)
+  trajectoryab(tstart, tend, ustart, uend, xstart, xend, delt)
   if(t2 < t3) {
 # x trajectory spanning t1 to t3 using a xab trajectory.
     tstart <- Fw[1,2]
@@ -51,7 +51,7 @@ plotfollow = function(L, Fw, t4) {
     lty    <- 1
     lwd    <- 1
     col    <- gray(0)
-    trajectoryab(tstart, tend, ustart, uend, xstart, xend, step)
+    trajectoryab(tstart, tend, ustart, uend, xstart, xend, delt)
     Fw[1,3] <- Fw[1,4]
 
 # following vehicle trajectory follows a xab trajectory from t3 to t4
@@ -75,7 +75,7 @@ plotfollow = function(L, Fw, t4) {
     lty    <- 1
     lwd    <- 1
     col    <- gray(0)
-    trajectoryab(tstart, tend, ustart, uend, xstart, xend, step)
+    trajectoryab(tstart, tend, ustart, uend, xstart, xend, delt)
     Fw[1,3] <- Fw[1,4]
 # line between t2 and t4
     lines(c(t2,t4), c(xf2, xf2 + uend * (t4 - t2)), col = col)

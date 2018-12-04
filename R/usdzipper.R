@@ -10,8 +10,8 @@
 #' @param xstart start location for vehicle in lane 1 (feet), a number
 #' @param xend end location for vehicle in lane 1 (feet), a number
 #' @usage usdzipper(tstart, tend, umn, usd, xstart, xend)
-#' @examples
-#' usdzipper(0, 5, 41, 11.6, 0, 500)
+# #' @examples
+# #' usdzipper(0, 5, 41, 11.6, 0, 500)
 #' @export
 usdzipper  <- function(tstart, tend, umn, usd, xstart, xend)
 {
@@ -19,8 +19,8 @@ usdzipper  <- function(tstart, tend, umn, usd, xstart, xend)
 #  hist(mysample, col = gray(0.8))
   ustart <- sample(mysample[mysample > 50], 1)
   uend  <- sample(mysample[mysample <= 50], 1)
-  step  <- tend/1000
-  tseq  <- seq(0, tend, by = step)
+  delt  <- tend/1000
+  tseq  <- seq(0, tend, by = delt)
   u0    <- ustart * 5280/3600
   uend  <- uend * 5280/3600
   x0    <- xstart
@@ -30,7 +30,7 @@ usdzipper  <- function(tstart, tend, umn, usd, xstart, xend)
   dfab   <- xabparam(tstart, tend, ustart = u0, uend = uend, xstart = x0, xend = xend)
   a1     <- dfab[1]
   b1     <- dfab[2]
-  W      <- usd * sqrt(step) * rnorm(length(tseq),0,1)
+  W      <- usd * sqrt(delt) * rnorm(length(tseq),0,1)
   df1    <- data.frame(t = tseq,
                     u = uab(u0, a = a1, b = b1, tseq, t0),
                     x = xab(x0, u0,a = a1, b = b1, tseq, t0),
@@ -46,7 +46,7 @@ usdzipper  <- function(tstart, tend, umn, usd, xstart, xend)
   df1[1,6] <- x0
   for(i in 2:length(tseq)) {
     df1[i,5]  <- df1[i-1,2] + df1[i,4]
-    df1[i,6]  <- df1[i-1,3] + df1[i,5] * step
+    df1[i,6]  <- df1[i-1,3] + df1[i,5] * delt
   }
   ustart <- sample(mysample[mysample > 50], 1)
   uend  <- sample(mysample[mysample <= 50], 1)
@@ -72,7 +72,7 @@ usdzipper  <- function(tstart, tend, umn, usd, xstart, xend)
   df3[1,6] <- x0
   for(i in 2:length(tseq)) {
     df3[i,5]  <- df3[i-1,2] + df3[i,4]
-    df3[i,6]  <- df3[i-1,3] + df3[i,5] * step
+    df3[i,6]  <- df3[i-1,3] + df3[i,5] * delt
   }
   par(mfrow = c(1,2), pty = "s")
   plot(df1[,1],df1[,2],typ = "l", xlab = "t, seconds", ylab = expression(u[t]*", fps"),ylim=c(0,150))

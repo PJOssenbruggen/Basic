@@ -4,7 +4,7 @@
 \alias{findviolation}
 \title{\code{findviolation} determines if a zone violates the safe headway rule.}
 \usage{
-findviolation(tstart, tend, tend.0, df1, df2, step, leff)
+findviolation(tstart, tend, tend.0, df1, df2, delt, leff)
 }
 \arguments{
 \item{tstart}{start time, a number}
@@ -17,7 +17,7 @@ findviolation(tstart, tend, tend.0, df1, df2, step, leff)
 
 \item{df2}{following vehicle, a matrix}
 
-\item{step}{time step, a number}
+\item{delt}{time-step, a number}
 
 \item{leff}{vehicle length, a number}
 }

@@ -4,7 +4,7 @@
 \alias{zipper3}
 \title{\code{zipper3} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck}
 \usage{
-zipper3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,leff,xfunnel,usd)
+zipper3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,delta,leff,xfunnel,usd)
 }
 \arguments{
 \item{nveh1}{number of vehicles entering the bottleneck from lane 1, a number}
@@ -21,7 +21,7 @@ zipper3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,leff,xfunnel,usd)
 
 \item{xstart2}{start location of the first vehicle in lane 2, (feet), a number}
 
-\item{step}{size in seconds, a number}
+\item{delta}{size in seconds, a number}
 
 \item{leff}{vehicle length in feet, a number}
 
@@ -34,7 +34,4 @@ zipper3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,leff,xfunnel,usd)
 }
 \description{
 \code{zipper3} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck
-}
-\examples{
-zipper3(3, 3, 50.4,  0, 30, -700, -700, 0.25,  14, -500, 0)
 }

@@ -1,8 +1,8 @@
 #' The function \code{crossconflict} a graph showing driver conflict of two vehicles changing lanes.
 #'
 #' @usage crossconflict()
-#' @examples
-#' crossconflict()
+# #' @examples
+# #' crossconflict()
 #' @export
 crossconflict <- function() {
   x <- y <- 0

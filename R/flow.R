@@ -4,15 +4,15 @@
 #' @param df1df2 vehicle information from \code{brktrials4wrapper}, a matrix
 #' @param tstart start time, (seconds), a number
 #' @param tend end time, (seconds), a number
-#' @param step size in seconds, a number
+#' @param delt size in seconds, a number
 #' @param xfunnel upstream location of bottleneck taper, a number
-#' @usage flow(df1df2, tstart, tend, step, xfunnel)
+#' @usage flow(df1df2, tstart, tend, delt, xfunnel)
 # #' @examples
-# #' flow(df1df2, tstart, tend, step, xfunnel)
+# #' flow(df1df2, tstart, tend, delt, xfunnel)
 #' @export
-flow <- function(df1df2, tstart, tend, step, xfunnel) {
+flow <- function(df1df2, tstart, tend, delt, xfunnel) {
   nveh     <- dim(df1df2)[2]/3
-  t        <- seq(tstart,tend,step)
+  t        <- seq(tstart,tend,delt)
   df1df2   <- cbind(t, df1df2)
   ucol     <- seq(2, dim(df1df2)[2],3)
   u.df     <- df1df2[,ucol]

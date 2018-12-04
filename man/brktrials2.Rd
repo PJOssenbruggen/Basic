@@ -4,7 +4,7 @@
 \alias{brktrials2}
 \title{\code{brktrials2} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck}
 \usage{
-brktrials2(tend, umn, usd, xstart, xfunnel, leff, lane, step, type)
+brktrials2(tend, umn, usd, xstart, xfunnel, leff, lane, delt, type)
 }
 \arguments{
 \item{tend}{end time for a simulation run, a number}
@@ -21,7 +21,7 @@ brktrials2(tend, umn, usd, xstart, xfunnel, leff, lane, step, type)
 
 \item{lane}{a vector of \code{nveh} numbers, a vector}
 
-\item{step}{size in seconds, a number}
+\item{delt}{size in seconds, a number}
 
 \item{type}{0 no plots, 1 prediction plot, 2 all plots, a number}
 }

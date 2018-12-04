@@ -4,7 +4,7 @@
 \alias{zoneviolation}
 \title{\code{zoneviolation} produces \code{t-x} trajectory for vehicles traveling on parallel lanes that merge at a bottleneck.}
 \usage{
-zoneviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff)
+zoneviolation(veh, zone, df1df2, dfcrit, delt, tend.0, leff)
 }
 \arguments{
 \item{veh}{identifier, a number}
@@ -15,7 +15,7 @@ zoneviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff)
 
 \item{dfcrit}{a table of vehicle information, a matrix}
 
-\item{step}{time step, a number}
+\item{delt}{time-step, a number}
 
 \item{tend.0}{end time for over the long time range, a number}
 

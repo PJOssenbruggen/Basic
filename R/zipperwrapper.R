@@ -10,25 +10,25 @@
 #' @param usd speed standard deviation, a number
 #' @param xstart1 start location of the first vehicle in lane 1, (feet), a number
 #' @param xstart2 start location of the first vehicle in lane 2, (feet), a number
-#' @param step time step, a number
+#' @param delt time-step, a number
 #' @param tstart  vehicle crossovers are are permitted below this time, a number
 #' @param tend upper time range of simulation, a number
 #' @param xfunnel location where the lane drop is located, a number
 #' @param leff vehicle length in feet, a number
 #' @param type TRUE to create plots or FALSE otherwise, a logical
 #' @param browse to inspect \code{fixviolation} to inspect plot or FALSE otherwise
-#' @usage zipperwrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,browse)
+#' @usage zipperwrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,tstart,tend,xfunnel,leff,type,browse)
 # #' @examples
-# #' zipperwrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,browse)
+# #' zipperwrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,tstart,tend,xfunnel,leff,type,browse)
 #' @export
-zipperwrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,browse) {
+zipperwrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,tstart,tend,xfunnel,leff,type,browse) {
   #### STEP 1. Create lane 1 and 2 datasets ################################################################
   # set.seed(123)
   # set.seed(403)
   # set.seed(333)
   xlim  <- c(tstart,tend)
-  print(data.frame(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,type,browse))
-  df1df2 <- zippermerge(nveh, tstart, tend, xstart1, umn, leff, xfunnel, step, type)
+  print(data.frame(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,tstart,tend,xfunnel,leff,type,browse))
+  df1df2 <- zippermerge(nveh, tstart, tend, xstart1, umn, leff, xfunnel, delt, type)
   print(df1df2[1:10,])
 #  browser()
   #### STEP 2. Order vehicles by the times that they reach x = 0 ####################
@@ -44,26 +44,26 @@ zipperwrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,
   o        <- order(index2)
   index2   <- index2[o]
   lane2    <- df1df2[,index2]
-  lst      <- enterbottleneck(lane1,lane2,xfunnel,tend,step)
+  lst      <- enterbottleneck(lane1,lane2,xfunnel,tend,delt)
   dfcrit   <- lst[[1]]
   nveh     <- lst[[2]]
   print(dfcrit)
 
   #### STEP 3. Merge lane 1 and 2 data sets ##########################################
   tend.0 <- tend
-  tseq   <- seq(0, tend, step)
+  tseq   <- seq(0, tend, delt)
   tlen   <- length(tseq)
   df1df2 <- mergedata(lane1,lane2,tlen,dfcrit)
   # Zone violations
   for(veh in 1:(nveh)) {
     for(zone in 1:3) {
-      dfcrit <- zoneviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff)
+      dfcrit <- zoneviolation(veh, zone, df1df2, dfcrit, delt, tend.0, leff)
     }
   }
   print(dfcrit)
 
   #### STEP 6. Flow Estimation ######################################################
-  lst <- flow(df1df2, tstart, tend, step, xfunnel)
+  lst <- flow(df1df2, tstart, tend, delt, xfunnel)
   df1 <- lst[[1]]
   df2 <- lst[[2]]
   if(type == TRUE) {
@@ -82,7 +82,7 @@ zipperwrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,
     u.d.mean.mph <- as.numeric(df2[2])
   }
   #### STEP 7. Capacity Estimation
-  df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel)
+  df1    <- flow2(dfcrit, df1df2, tstart, tend, delt, xfunnel)
   tservice = abs(round(xfunnel/(5280/3600*umn),1))
   if(type == TRUE) {
     xlim <- c(0, 200)

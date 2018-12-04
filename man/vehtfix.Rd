@@ -4,7 +4,7 @@
 \alias{vehtfix}
 \title{\code{vehtfix} fixes \code{hsafe} violations for vehicle \code{veh}.}
 \usage{
-vehtfix(veh, nveh, df, tstart, tend, step, ufix, xfix)
+vehtfix(veh, nveh, df, tstart, tend, delt, ufix, xfix)
 }
 \arguments{
 \item{veh}{vehicle, a number}
@@ -17,7 +17,7 @@ vehtfix(veh, nveh, df, tstart, tend, step, ufix, xfix)
 
 \item{tend}{time, a number}
 
-\item{step}{size in seconds, a number}
+\item{delt}{size in seconds, a number}
 
 \item{ufix}{new speeds, a vector}
 

@@ -14,6 +14,3 @@ safecrossover2(umn, leff)
 \description{
 The function \code{safecrossover2}  driver conflict of vehicles changing lanes.
 }
-\examples{
-safecrossover2(67, 14)
-}

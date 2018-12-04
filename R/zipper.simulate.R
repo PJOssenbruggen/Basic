@@ -6,27 +6,27 @@
 #' @param umn start speed (mph) for vehicle in lane 1, a number
 #' @param usd speed standard deviation, a number
 #' @param xstart1 start location of the first vehicle in lane 1, (feet), a number
-#' @param step time step, a number
+#' @param delt time-step, a number
 #' @param tstart  vehicle crossovers are are permitted below this time, a number
 #' @param tend upper time range of simulation, a number
 #' @param xfunnel location where the lane drop is located, a number
 #' @param leff vehicle length in feet, a number
 #' @param size sample size, a number
 #' @param kfactor density at time \code{t} = 0, a number
-#' @usage zipper.simulate(nveh1,nveh2,umn,usd,xstart1,step,tstart,tend,xfunnel,leff,size,kfactor)
+#' @usage zipper.simulate(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,leff,size,kfactor)
 #' @export
-zipper.simulate <- function(nveh1,nveh2,umn,usd,xstart1,step,tstart,tend,xfunnel,leff,size,kfactor) {
+zipper.simulate <- function(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,leff,size,kfactor) {
   xstart2 <- xstart1 - 0.5 * hsafe(umn*5280/3600,leff)
   runname <- "ZIPPER"
   input <- data.frame(runname, nveh1,nveh2,umn,usd,xstart1,xstart2,kfactor,
-                      step,tstart,tend,xfunnel,leff,sample.size = size)
+                      delt,tstart,tend,xfunnel,leff,sample.size = size)
   for(run in 1:size) {
     print(data.frame("Run:", run))
-    if(run == 1) output <- brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,
-                                             step,tstart,tend,xfunnel,leff,run,kfactor) else {
-                                               output. <- brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,
-                                                                            step,tstart,tend,xfunnel,leff,run,kfactor)
-                                               output  <- rbind(output, output.)
+    if(run == 1) output <- brktrials4wrapper(
+      nveh1,nveh2,umn,usd,xstart1,xstart2,delt,tstart,tend,xfunnel,leff,run,kfactor) else {
+      output. <- brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,
+                delt,tstart,tend,xfunnel,leff,run,kfactor)
+                output  <- rbind(output, output.)
                                              }
   }
   sum.out1   <- data.frame(colMeans(output,na.rm=TRUE))

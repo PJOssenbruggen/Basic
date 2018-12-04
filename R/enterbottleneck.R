@@ -5,10 +5,10 @@
 #' @param lane2, a matrix
 #' @param xfunnel, a number
 #' @param tend upper time range of simulation, a number
-#' @param step time step, a number
-#' @usage enterbottleneck(lane1,lane2, xfunnel, tend, step)
+#' @param delt time-step, a number
+#' @usage enterbottleneck(lane1,lane2, xfunnel, tend, delt)
 #' @export
-enterbottleneck <- function(lane1, lane2, xfunnel, tend, step) {
+enterbottleneck <- function(lane1, lane2, xfunnel, tend, delt) {
   # order vehicles by the times that they reach x = 0
   nveh1     <- dim(lane1)[2]/3
   nveh2     <- dim(lane2)[2]/3
@@ -18,7 +18,7 @@ enterbottleneck <- function(lane1, lane2, xfunnel, tend, step) {
   id2       <- rep(2,nveh2)
   tcrit1    <- tcrit3 <- rep(0, nveh1)
   tcrit2    <- tcrit4 <- rep(0, nveh2)
-  tseq      <- t  <- seq(0, tend, step)
+  tseq      <- t  <- seq(0, tend, delt)
   lane1     <- cbind(t,lane1)
   lane2     <- cbind(t,lane2)
   tlen      <- length(tseq)

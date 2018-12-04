@@ -3,11 +3,11 @@
 #' @param lane1 from \code{brktrials3 <- lst[[1]]}, a matrix
 #' @param lane2 from \code{brktrials3 <- lst[[2]]}, a matrix
 #' @param tend end time, (seconds), a number
-#' @param step size in seconds, a number
+#' @param delt size in seconds, a number
 #' @param xfunnel, start location of the bottleneck, a number
-#' @usage plotlanes1and2(lane1, lane2, tend, step, xfunnel)
+#' @usage plotlanes1and2(lane1, lane2, tend, delt, xfunnel)
 #' @export
-plotlanes1and2 <- function(lane1, lane2, tend, step, xfunnel) {
+plotlanes1and2 <- function(lane1, lane2, tend, delt, xfunnel) {
   pdf(file = "/Users/PJO/Desktop/Lanes1_2.pdf")
   par(mfrow = c(1,2), pty = "s")
   tstart  <- 0
@@ -18,7 +18,7 @@ plotlanes1and2 <- function(lane1, lane2, tend, step, xfunnel) {
   min2    <- min(as.numeric(unlist(lane2)), na.rm = TRUE)
   max2    <- max(as.numeric(unlist(lane2)), na.rm = TRUE)
   ylim    <- c(min(min1,min2), max(max1,max2))
-  tseq    <- seq(tstart, tend, step)
+  tseq    <- seq(tstart, tend, delt)
   tend    <- max(tseq)
   x       <- lane1[,2]
   plot(tseq, x, type = "l", xlab = "t, seconds", ylab = "x, feet",

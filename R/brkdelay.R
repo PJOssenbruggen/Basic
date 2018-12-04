@@ -9,20 +9,20 @@
 #' @param xfunnel upstream location where the lane drop starts (feet), a number
 #' @param leff effective vehicle length(feet), a number
 #' @param lane a vector of \code{nveh} numbers, a vector
-#' @param step size in seconds, a number
-#' @usage brkdelay(niter, tend, umn, usd, xstart, xfunnel, leff, lane, step)
+#' @param delt size in seconds, a number
+#' @usage brkdelay(niter, tend, umn, usd, xstart, xfunnel, leff, lane, delt)
 # #' @examples
 # #' brkdelay(2, 30, 41, 11, xstart, -500, 14, lane, 0.5)
 #' @export
-brkdelay <- function(niter, tend, umn, usd, xstart, xfunnel, leff, lane, step) {
-  df   <- brktrials2(tend, umn, usd, xstart, xfunnel, leff, lane, step, type = 0)[[2]]
+brkdelay <- function(niter, tend, umn, usd, xstart, xfunnel, leff, lane, delt) {
+  df   <- brktrials2(tend, umn, usd, xstart, xfunnel, leff, lane, delt, type = 0)[[2]]
   tseq <- df[,1]
   udf  <- df[,seq(2,dim(df)[2],6)]
   u    <- rowMeans(udf)
   df.  <- cbind(t = tseq, u)
 
   for(i in 2:niter) {
-    df   <- brktrials2(tend, umn, usd, xstart, xfunnel, leff, lane, step, type = 0)[[2]]
+    df   <- brktrials2(tend, umn, usd, xstart, xfunnel, leff, lane, delt, type = 0)[[2]]
     udf  <- df[,seq(2,dim(df)[2],6)]
     u    <- rowMeans(udf)
     df.  <- cbind(df., u)

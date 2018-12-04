@@ -12,6 +12,3 @@ capacityplot(QUKtdayX)
 \description{
 The function \code{capacityplot} creates a \code{(k,Q*)} plot indicating the success rate of sustaining capacity \code{Q*}
 }
-\examples{
-\donttest{capacityplot(QUKtdayX)}
-}

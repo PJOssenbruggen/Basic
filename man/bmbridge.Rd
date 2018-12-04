@@ -5,7 +5,7 @@
 \title{The \code{bmbridge} function returns a \code{tux} matrix of time \code{t}, speed \code{u} (fps)
  and location \code{x} (feet) for upstream traffic.}
 \usage{
-bmbridge(umn, usd, tstart, tend, xstart, step, type)
+bmbridge(umn, usd, tstart, tend, xstart, delt, type)
 }
 \arguments{
 \item{umn}{mean speed (mph), a number}
@@ -18,7 +18,7 @@ bmbridge(umn, usd, tstart, tend, xstart, step, type)
 
 \item{xstart}{location (feet), a number}
 
-\item{step}{time-step size, a number}
+\item{delt}{time-step size, a number}
 
 \item{type}{logical for plotting where TRUE creates a plot}
 }

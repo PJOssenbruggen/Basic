@@ -19,10 +19,10 @@
 formqueue  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
   x1 <- x2 <- {}
   y1 <- y2 <- {}
-  step  <- tend/10
-  tseq  <- seq(0, 5*tend, by = step)
+  delt  <- tend/10
+  tseq  <- seq(0, 5*tend, by = delt)
   usd   <- usd * 5280/3600
-  W     <- usd * sqrt(step) * rnorm(length(tseq),0,1)
+  W     <- usd * sqrt(delt) * rnorm(length(tseq),0,1)
   x1    <- xstart + umn *5280/3600 * tseq
   for(i in 1:length(x1)) x1[i]    <- x1[i] + W[i]
   y1 <- rep(NA, length(tseq))

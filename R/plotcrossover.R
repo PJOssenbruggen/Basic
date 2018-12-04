@@ -3,8 +3,6 @@
 #' @param umn average speed in mph, a number
 #' @param leff effective vehicle length in feet, a number
 #' @usage plotcrossover(umn, leff)
-#' @examples
-#' \donttest{plotcrossover(67, 14)}
 #' @export
 plotcrossover <- function(umn, leff) {
   x <- y <- 0

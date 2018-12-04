@@ -4,7 +4,7 @@
 \alias{enterbottleneck}
 \title{\code{enterbottleneck} produces a data frame that lists the order vehicles enter the bottleneck at location \code{xfunnel}..}
 \usage{
-enterbottleneck(lane1,lane2, xfunnel, tend, step)
+enterbottleneck(lane1,lane2, xfunnel, tend, delt)
 }
 \arguments{
 \item{lane1, }{a matrix}
@@ -15,7 +15,7 @@ enterbottleneck(lane1,lane2, xfunnel, tend, step)
 
 \item{tend}{upper time range of simulation, a number}
 
-\item{step}{time step, a number}
+\item{delt}{time-step, a number}
 }
 \value{
 A list containing the table and number of vehicles \code{nveh}

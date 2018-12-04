@@ -6,24 +6,24 @@
 #' @param tstart simulation start time, a number
 #' @param tend simulation end time, a number
 #' @param xstart location (feet), a number
-#' @param step time-step size, a number
-#' @usage bmfree2(umn, usd, tstart, tend, xstart, step)
+#' @param delt time-step size, a number
+#' @usage bmfree2(umn, usd, tstart, tend, xstart, delt)
 # #' @examples
 # #' bmfree2(41, 11, 16.5, 30, 10, 0.25)
 #' @export
-bmfree2  <- function(umn, usd, tstart, tend, xstart, step) {
-  t     <- seq(tstart, tend, step)
+bmfree2  <- function(umn, usd, tstart, tend, xstart, delt) {
+  t     <- seq(tstart, tend, delt)
   N     <- length(t)
   W     <- numeric(N)
   usd.  <- usd
   usd   <- 5280/3600*usd
-  for(i in 2:(N)) W[i] <- W[i-1] + usd * sqrt(step) * rnorm(1)
+  for(i in 2:(N)) W[i] <- W[i-1] + usd * sqrt(delt) * rnorm(1)
   x     <- 5280/3600*umn
   y     <- 5280/3600*umn
   u     <- x + (W - (t - tstart)/(tend - tstart) * (W[N] - y + x))
   for(i in 1:N) if(u[i] <= 0) u[i] = 0
   x[1]  <- xstart
-  for(i in 2:N) x[i] <- x[i-1] + step * u[i-1]
+  for(i in 2:N) x[i] <- x[i-1] + delt * u[i-1]
   T.    <- as.matrix(data.frame(t, u, x))
     pdf(file = "/Users/PJO/Desktop/SVM.pdf")
     par(mfrow = c(1,2), pty = "s")
@@ -58,18 +58,18 @@ bmfree2  <- function(umn, usd, tstart, tend, xstart, step) {
 
     title(main = "Desire-Lines", sub = "Zipper Merge")
     # A second draw is made for a second vehicle and plotted.
-    t     <- seq(tstart, tend, step)
+    t     <- seq(tstart, tend, delt)
     N     <- length(t)
     W     <- numeric(N)
     usd   <- 5280/3600*usd
-    for(i in 2:(N)) W[i] <- W[i-1] + usd * sqrt(step) * rnorm(1)
+    for(i in 2:(N)) W[i] <- W[i-1] + usd * sqrt(delt) * rnorm(1)
     x     <- 5280/3600*umn
     y     <- 5280/3600*umn
     u     <- x + (W - (t - tstart)/(tend - tstart) * (W[N] - y + x))
     for(i in 1:N) if(u[i] <= 0) u[i] = 0
     x     <- rep(NA,N)
     x[1]  <- -800
-    for(i in 2:N) x[i] <- x[i-1] + step * u[i-1]
+    for(i in 2:N) x[i] <- x[i-1] + delt * u[i-1]
     lines(T.[,1], x, col = "red", lwd = 2)
     legend("topleft", legend = c("Lead vehicle","Following vehicle"),
            lwd = c(2,2), col = c("blue","red"), bty = "n")

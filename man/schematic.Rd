@@ -9,6 +9,3 @@ schematic()
 \description{
 The function \code{schematic} defines key features of a simple bottleneck
 }
-\examples{
-schematic()
-}

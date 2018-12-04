@@ -4,7 +4,7 @@
 \alias{plotlanes1and2}
 \title{\code{plotlanes1and2} creates \code{t-x} trajectories for lanes 1 and 2.}
 \usage{
-plotlanes1and2(lane1, lane2, tend, step, xfunnel)
+plotlanes1and2(lane1, lane2, tend, delt, xfunnel)
 }
 \arguments{
 \item{lane1}{from \code{brktrials3 <- lst[[1]]}, a matrix}
@@ -13,7 +13,7 @@ plotlanes1and2(lane1, lane2, tend, step, xfunnel)
 
 \item{tend}{end time, (seconds), a number}
 
-\item{step}{size in seconds, a number}
+\item{delt}{size in seconds, a number}
 
 \item{xfunnel, }{start location of the bottleneck, a number}
 }

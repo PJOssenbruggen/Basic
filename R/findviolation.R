@@ -6,17 +6,17 @@
 #' @param tend.0 end time for over the long time range, a number
 #' @param df1 leading vehicle, a matrix
 #' @param df2 following vehicle, a matrix
-#' @param step time step, a number
+#' @param delt time-step, a number
 #' @param leff vehicle length, a number
-#' @usage findviolation(tstart, tend, tend.0, df1, df2, step, leff)
+#' @usage findviolation(tstart, tend, tend.0, df1, df2, delt, leff)
 # #' @examples
-# #' findviolation(tstart, tend, tend.0, df1, df2, step, leff)
+# #' findviolation(tstart, tend, tend.0, df1, df2, delt, leff)
 #' @export
-findviolation <- function(tstart, tend, tend.0, df1, df2, step, leff) {
-  t        <- seq(0,tend.0,step)
+findviolation <- function(tstart, tend, tend.0, df1, df2, delt, leff) {
+  t        <- seq(0,tend.0,delt)
   df1      <- cbind(t, df1)
   df2      <- cbind(t, df2)
-  tseq     <- seq(tstart,tend,step)
+  tseq     <- seq(tstart,tend,delt)
   df1      <- df1[df1[,1] >= tstart & df1[,1] <= tend,]
   df2      <- df2[df2[,1] >= tstart & df2[,1] <= tend,]
   tlen     <- length(tseq)

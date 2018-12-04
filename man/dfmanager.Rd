@@ -4,7 +4,7 @@
 \alias{dfmanager}
 \title{\code{dfmanager} is a wrapper function for \code{brktrials2}}
 \usage{
-dfmanager(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step)
+dfmanager(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, delt)
 }
 \arguments{
 \item{nveh}{number of vehicles in the simulation, a number}
@@ -23,7 +23,7 @@ dfmanager(nveh, tend, umn, usd, xstart, xfunnel, leff, lane, step)
 
 \item{lane}{a vector of \code{nveh} numbers, a vector}
 
-\item{step}{size in seconds, a number}
+\item{delt}{size in seconds, a number}
 }
 \value{
 \code{dfmanager} returns  \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.

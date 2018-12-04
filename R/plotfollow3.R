@@ -13,7 +13,7 @@ plotfollow3 = function(cflist, vehicle, uf, kf, ub, leff, t4) {
   kf0    <- kf / 5280
   hf0    <- 2  / kf0
   ub0    <- ub * 5280 / 3600
-  step   <- 0.25
+  delta  <- 0.125
 #  print(data.frame(uf0, ub0, hf0))
 #  browser()
   LF     <- cflist[[1]]
@@ -37,7 +37,7 @@ plotfollow3 = function(cflist, vehicle, uf, kf, ub, leff, t4) {
   lty <- 1
   lwd <- 1
   col <- gray(0)
-  answer3 <- trajectoryab(tstart, tend, ustart, uend, xstart, xend, step)
+  answer3 <- trajectoryab(tstart, tend, ustart, uend, xstart, xend, )
   tseq <- answer3[2]
   useq <- answer3[3]
 # Find t1f
@@ -69,7 +69,7 @@ plotfollow3 = function(cflist, vehicle, uf, kf, ub, leff, t4) {
   lty    <- 1
   lwd    <- 1
   col    <- gray(0)
-  answer4 <- trajectoryab(tstart, tend, ustart, uend, xstart, xend, step)
+  answer4 <- trajectoryab(tstart, tend, ustart, uend, xstart, xend, )
   Fw[1,1]  <- tstart
   Fw[2,1]  <- ustart
   Fw[3,1]  <- xstart
@@ -121,7 +121,7 @@ plotfollow3 = function(cflist, vehicle, uf, kf, ub, leff, t4) {
   lty    <- 1
   lwd    <- 1
   col    <- gray(0)
-  answer5 <- trajectoryab(tstart, tend, ustart, uend, xstart, xend, step)
+  answer5 <- trajectoryab(tstart, tend, ustart, uend, xstart, xend, )
 # line between t2 and t4
   lines(c(tend, t4), c(xend, xend + uend * (t4 - tend)))
 # Find t5

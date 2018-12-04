@@ -12,6 +12,3 @@ speedplot(QUKtdayX)
 \description{
 A scatter plot of traffic data.
 }
-\examples{
-speedplot(QUKtdayX)
-}

@@ -7,22 +7,22 @@
 #' @param tstart start time, (seconds), a number
 #' @param tend end time, (seconds), a number
 #' @param xstart start location, (feet), a number
-#' @param step size in seconds, a number
+#' @param delt size in seconds, a number
 #' @param leff vehicle length in feet, a number
 #' @param kfactor density at time \code{t} = 0, a number
-#' @usage zipper2setup(nveh, umn, usd, tstart, tend, xstart, step, leff, kfactor)
-#' @examples
-#' zipper2setup(5, 53.1, 0, 0, 40, -700, 0.125, 14, 1.333)
+#' @usage zipper2setup(nveh, umn, usd, tstart, tend, xstart, delt, leff, kfactor)
+# #' @examples
+# #' zipper2setup(5, 53.1, 0, 0, 40, -700, 0.125, 14, 1.333)
 #' @export
 #'
-zipper2setup <- function(nveh, umn, usd, tstart, tend, xstart, step,  leff, kfactor) {
-  tseq     <- seq(tstart, tend, step)
+zipper2setup <- function(nveh, umn, usd, tstart, tend, xstart, delt,  leff, kfactor) {
+  tseq     <- seq(tstart, tend, delt)
   tlen     <- length(tseq)
   y        <- rep(0, tlen)
-  tux      <- bmfree2(umn, usd, tstart, tend, xstart, step)
+  tux      <- bmfree2(umn, usd, tstart, tend, xstart, delt)
   T.       <- cbind(tux, y)
   for(i in 2:nveh) {
-    tux     <- bmfree2(umn, usd, tstart, tend, xstart, step)
+    tux     <- bmfree2(umn, usd, tstart, tend, xstart, delt)
     tux     <- cbind(tux, y)
     u       <- as.numeric(tux[1,2])
     safe.hdwy <- rep(hsafe(u, leff), tlen)

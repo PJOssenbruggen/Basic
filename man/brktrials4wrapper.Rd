@@ -4,7 +4,7 @@
 \alias{brktrials4wrapper}
 \title{\code{brktrials4wrapper} produces \code{t-x} trajectory for vehicles traveling on parallel lanes that merge at a bottleneck.}
 \usage{
-brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,run,kfactor)
+brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,tstart,tend,xfunnel,leff,run,kfactor)
 }
 \arguments{
 \item{nveh1}{number of vehicles entering the bottleneck from lane 1, a number}
@@ -19,7 +19,7 @@ brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,l
 
 \item{xstart2}{start location of the first vehicle in lane 2, (feet), a number}
 
-\item{step}{time step, a number}
+\item{delt}{time-step, a number}
 
 \item{tstart}{vehicle crossovers are are permitted below this time, a number}
 

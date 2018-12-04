@@ -14,6 +14,3 @@ safecrossover(umn, leff)
 \description{
 The function \code{safecrossover} a graph showing driver conflict of two vehicles changing lanes.
 }
-\examples{
-safecrossover(67, 14)
-}

@@ -4,7 +4,7 @@
 \alias{accelpass}
 \title{The \code{accelpass} function estimates the relative locations of two vehicles where one passes the other.}
 \usage{
-accelpass(tend, umn, usd, xstart, xfunnel, leff, lane, step)
+accelpass(tend, umn, usd, xstart, xfunnel, leff, lane, delt)
 }
 \arguments{
 \item{tend}{end time for a simulation run, a number}
@@ -21,7 +21,7 @@ accelpass(tend, umn, usd, xstart, xfunnel, leff, lane, step)
 
 \item{lane}{number, a number}
 
-\item{step}{size in seconds, a number}
+\item{delt}{size in seconds, a number}
 }
 \value{
 \code{accelpass} uses a stochastic model to show the locations of vehicle accelerating to pass
@@ -29,7 +29,4 @@ another vehicle traveling side-by-side at the speed.
 }
 \description{
 The \code{accelpass} function estimates the relative locations of two vehicles where one passes the other.
-}
-\examples{
-accelpass(30, 41, 11, -1000, -500, 14, 1, 2)
 }

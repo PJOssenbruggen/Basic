@@ -5,15 +5,15 @@
 #' @param zone from \code{dfcrit} matrix for vehicle \code{veh}, a number
 #' @param df1df2 leading and following vehicle information, a matrix
 #' @param dfcrit critical times, a matrix
-#' @param step time step, a number
+#' @param delt time-step, a number
 #' @param tend.0 end time for over the long time range, a number
 #' @param leff effective vehicle lenght, a number
 #' @param xfunnel location where the lane drop is located, a number
-#' @usage fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel)
+#' @usage fixviolation(veh, zone, df1df2, dfcrit, delt, tend.0, leff, xfunnel)
 # #' @examples
-# #' fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel)
+# #' fixviolation(veh, zone, df1df2, dfcrit, delt, tend.0, leff, xfunnel)
 #' @export
-fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel) {
+fixviolation <- function(veh, zone, df1df2, dfcrit, delt, tend.0, leff, xfunnel) {
   # create df1 and df2
   ucol   <- 3*(veh-1) - 2
   xcol   <- 3*(veh-1) - 1
@@ -23,7 +23,7 @@ fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel)
   xcol.  <- 3*veh - 1
   ycol.  <- 3*veh
   df2    <- cbind(df1df2[,ucol.], df1df2[,xcol.], df1df2[,ycol.])
-  t      <- seq(0,tend.0,step)
+  t      <- seq(0,tend.0,delt)
   df1    <- cbind(t,df1)
   df2    <- cbind(t,df2)
   tcrit.  <- as.numeric(dfcrit[veh,4])
@@ -50,21 +50,21 @@ fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel)
   zone.df  <- NA
   tstart   <- as.numeric(dfcrit[veh,4])
   tend     <- as.numeric(dfcrit[veh,5])
-  X3       <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
-  tcrit3   <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
+  X3       <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], delt, leff)[,1]
+  tcrit3   <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], delt, leff)[1,6]
   tstart   <- as.numeric(dfcrit[veh,3])
   tend     <- as.numeric(dfcrit[veh,4])
-  X2       <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
-  tcrit2   <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
+  X2       <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], delt, leff)[,1]
+  tcrit2   <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], delt, leff)[1,6]
   crittable <- data.frame(t1 = as.numeric(dfcrit[veh,3]), tcrit2, sum.X2 = sum(X2), tcrit3, sum.X3 = sum(X3))
   if(sum(X2) == 0 & sum(X3) == 0) return(df2.fix[,-1])
   # Zone 2 df2.fix
   if(sum(X2) > 0) {
     fraction      <- seq(1,0,-0.001)
-    tseq          <- seq(tstart,tend,step)
+    tseq          <- seq(tstart,tend,delt)
     for(j in 1:length(fraction)) {
-      X        <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
-      tcrit    <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
+      X        <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], delt, leff)[,1]
+      tcrit    <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], delt, leff)[1,6]
       sum.X    <- sum(X)
       if(j == 1) {
         ustart   <- as.numeric(df2.fix[df2.fix[,1] == tstart,2])
@@ -88,15 +88,15 @@ fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel)
       ab      <- xabparam(tstart, tend, ustart, uend, xstart, xend)
       a       <- ab[1]
       b       <- ab[2]
-      tseq    <- seq(tstart,tend,step)
+      tseq    <- seq(tstart,tend,delt)
       t0      <- tstart
       x.fix   <- xab(xstart,ustart,a,b,t = tseq,t0)
       u.fix   <- uab(ustart,a,b,t = tseq,t0)
       # Zone 2
       df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= tend,2] <- u.fix
       df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= tend,3] <- x.fix
-      X       <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
-      tcrit   <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
+      X       <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], delt, leff)[,1]
+      tcrit   <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], delt, leff)[1,6]
       sum.X.rev  <- sum(X)
       ustart  <- u.fix[1]
       xstart  <- x.fix[1]
@@ -124,14 +124,14 @@ fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel)
       ustart  <- uend
       xstart  <- xend
     }
-    tseq    <- seq(0,tend.0,step)
+    tseq    <- seq(0,tend.0,delt)
     tlen    <- length(tseq)
     x2sight <- rep(NA,tlen)
     for(i in 1:tlen) x2sight[i] <- xstart + ustart * (tseq[i] - tstart)
-    viol    <- findviolation(tstart, tend.0, tend.0, df1[,-1], df2.fix[,-1], step, leff)
+    viol    <- findviolation(tstart, tend.0, tend.0, df1[,-1], df2.fix[,-1], delt, leff)
     df12    <- cbind(df1[,c(1:3)],df2.fix[,c(2,3)],x2sight)
     colnames(df12) <- c("t", "u1", "x1", "u2", "x2","x2sight")
-    tseq    <- seq(tstart,tend.0,step)
+    tseq    <- seq(tstart,tend.0,delt)
     dx2x1   <- df12[,3] - df12[,6]
     df12    <- cbind(df12,dx2x1)
     df12.   <- df12[df12[,1] > tstart,]
@@ -156,7 +156,7 @@ fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel)
         ab      <- xabparam(tstart, tend, ustart, uend, xstart, xend)
         a       <- ab[1]
         b       <- ab[2]
-        tseq    <- seq(tstart,tend,step)
+        tseq    <- seq(tstart,tend,delt)
         t0      <- tstart
         x.fix   <- xab(xstart,ustart,a,b,t = tseq,t0)
         u.fix   <- uab(ustart,a,b,t = tseq,t0)
@@ -170,7 +170,7 @@ fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel)
         df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= tend,2] <- u.fix
         df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= tend,3] <- x.fix
       }
-      tseq.   <- seq(test,tend.0,step)
+      tseq.   <- seq(test,tend.0,delt)
       tlen.   <- length(tseq.)
       if(test < tend.0) {
         u.fix   <- x.fix <- rep(NA,tlen.)
@@ -201,7 +201,7 @@ fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel)
     tstart   <- 0
     ustart   <- as.numeric(df2.fix[1,2])
     xstart   <- as.numeric(df2.fix[1,3])
-    tseq     <- seq(tstart,tend,step)
+    tseq     <- seq(tstart,tend,delt)
     ab       <- xabparam(tstart, tend, ustart, uend, xstart, xend)
     a        <- ab[1]
     b        <- ab[2]
@@ -219,15 +219,15 @@ fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel)
     tstart   <- 0
     ustart   <- as.numeric(df2.fix[1,2])
     xstart   <- as.numeric(df2.fix[1,3])
-    tseq     <- seq(tstart,tend,step)
+    tseq     <- seq(tstart,tend,delt)
     tlen     <- length(tseq)
-    X        <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
-    tcrit    <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
+    X        <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], delt, leff)[,1]
+    tcrit    <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], delt, leff)[1,6]
     ucrit    <- as.numeric(df1[df1[,1] == tcrit,2])
     xcrit    <- as.numeric(df1[df1[,1] == tcrit,3]) - hsafe(ucrit,leff)
     if(sum(X) > 0) {
       for(j in 1:length(fraction)) {
-        tseq     <- seq(tstart,tcrit,step)
+        tseq     <- seq(tstart,tcrit,delt)
         if(tcrit > tstart) {
           ab       <- xabparam(tstart, tcrit, ustart, ucrit, xstart, xcrit)
           a        <- ab[1]
@@ -238,7 +238,7 @@ fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel)
           df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= tcrit,2] <- u.fix
           df2.fix[df2.fix[,1] >= tstart & df2.fix[,1] <= tcrit,3] <- x.fix
         }
-        tseq       <- seq(tcrit,tend,step)
+        tseq       <- seq(tcrit,tend,delt)
         if(tcrit < tend) {
           ab       <- xabparam(tcrit, tend, ucrit, uend, xcrit, xend)
           a        <- ab[1]
@@ -249,8 +249,8 @@ fixviolation <- function(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel)
           df2.fix[df2.fix[,1] >= tcrit & df2.fix[,1] <= tend,2] <- u.fix
           df2.fix[df2.fix[,1] >= tcrit & df2.fix[,1] <= tend,3] <- x.fix
         }
-        X        <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[,1]
-        tcrit    <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], step, leff)[1,6]
+        X        <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], delt, leff)[,1]
+        tcrit    <- findviolation(tstart, tend, tend.0, df1[,-1], df2.fix[,-1], delt, leff)[1,6]
         ucrit    <- as.numeric(df1[df1[,1] == tcrit,2])
         xcrit    <- as.numeric(df1[df1[,1] == tcrit,3]) - 1.05 * hsafe(ucrit,leff)
         ustart   <- fraction[j] * ustart

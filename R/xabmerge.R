@@ -8,14 +8,14 @@
 #' @param df1 leading vehicle, a matrix
 #' @param df2 following vehicle, a matrix
 #' @param leff vehicle length, a number
-#' @param step time-step size, a number
+#' @param delt time-step size, a number
 #' @param k counter, a number
 #' @param type logical for plotting where TRUE creates a plot
-#' @usage xabmerge(df1, df2, leff, step, k, type)
+#' @usage xabmerge(df1, df2, leff, delt, k, type)
 # #' @examples
-# #' xabmerge(df1, df2, leff, step, k, type)
+# #' xabmerge(df1, df2, leff, delt, k, type)
 #' @export
-xabmerge <- function(df1, df2, leff, step, k, type) {
+xabmerge <- function(df1, df2, leff, delt, k, type) {
   # Adjust df2 if in violation of headway rule
   if(is.null(k)) {
     h.safe <- as.numeric(hsafe(df2[1,2], leff))
@@ -92,7 +92,7 @@ xabmerge <- function(df1, df2, leff, step, k, type) {
       uend <- as.numeric(df3[tlen,4])
       xend <- as.numeric(df3[tlen,3]) - as.numeric(df3[tlen,7])
     }
-    dfab <- data.frame(tstart, tend, ustart, uend, xstart, xend, step)
+    dfab <- data.frame(tstart, tend, ustart, uend, xstart, xend, delt)
     trj  <- trajectoryab(
                 tstart = tstart,
                 tend   = tend,
@@ -100,7 +100,7 @@ xabmerge <- function(df1, df2, leff, step, k, type) {
                 uend   = uend,
                 xstart = xstart,
                 xend   = xend,
-                step   = step)
+                delt   = delt)
     u.fix <- as.numeric(trj[[3]])
     x.fix <- as.numeric(trj[[4]])
     u     <- c(df3[df3[,1] < tstart,4], u.fix, df3[df3[,1] > tend,4])
@@ -113,7 +113,7 @@ xabmerge <- function(df1, df2, leff, step, k, type) {
   if(k == 0) {
     # print("Stop search")
     tstart <- tend <- ustart <- uend <- xstart <- xend <- NA
-    dfab <- data.frame(tstart, tend, ustart, uend, xstart, xend, step)
+    dfab <- data.frame(tstart, tend, ustart, uend, xstart, xend, delt)
     return(list(df3, k, dfab))
   }
   if(k == 2) {
@@ -135,7 +135,7 @@ xabmerge <- function(df1, df2, leff, step, k, type) {
       if(!is.null(tstart) & !is.null(tend)) break
     }
 #    browser()
-    dfab     <- data.frame(tstart, tend, ustart, uend, xstart, xend, step)
+    dfab     <- data.frame(tstart, tend, ustart, uend, xstart, xend, delt)
     tstart1  <- as.numeric(dfab[1])
     ustart1  <- as.numeric(dfab[3])
     xstart1  <- as.numeric(dfab[5])
@@ -154,7 +154,7 @@ xabmerge <- function(df1, df2, leff, step, k, type) {
       uend   = uend1,
       xstart = xstart1,
       xend   = xend1,
-      step   = step)
+      delt   = delt)
     t.fix1 <- as.numeric(trj1[[2]])
     u.fix1 <- as.numeric(trj1[[3]])
     x.fix1 <- as.numeric(trj1[[4]])
@@ -195,7 +195,7 @@ xabmerge <- function(df1, df2, leff, step, k, type) {
       uend   = uend,
       xstart = xstart,
       xend   = xend,
-      step   = step)
+      delt   = delt)
     t.fix2 <- as.numeric(trj2[[2]])
     u.fix2 <- as.numeric(trj2[[3]])
     x.fix2 <- as.numeric(trj2[[4]])

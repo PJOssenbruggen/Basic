@@ -4,7 +4,7 @@
 \alias{zipper.simulate}
 \title{\code{zipper.simulate} uses the law of large numbers to establish confidence intervals traffic performance measures.}
 \usage{
-zipper.simulate(nveh1,nveh2,umn,usd,xstart1,step,tstart,tend,xfunnel,leff,size,kfactor)
+zipper.simulate(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,leff,size,kfactor)
 }
 \arguments{
 \item{nveh1}{number of vehicles entering the bottleneck from lane 1, a number}
@@ -17,7 +17,7 @@ zipper.simulate(nveh1,nveh2,umn,usd,xstart1,step,tstart,tend,xfunnel,leff,size,k
 
 \item{xstart1}{start location of the first vehicle in lane 1, (feet), a number}
 
-\item{step}{time step, a number}
+\item{delt}{time-step, a number}
 
 \item{tstart}{vehicle crossovers are are permitted below this time, a number}
 

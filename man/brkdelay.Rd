@@ -4,7 +4,7 @@
 \alias{brkdelay}
 \title{\code{brkdelay} is a wrapper function for \code{brktrials2}.}
 \usage{
-brkdelay(niter, tend, umn, usd, xstart, xfunnel, leff, lane, step)
+brkdelay(niter, tend, umn, usd, xstart, xfunnel, leff, lane, delt)
 }
 \arguments{
 \item{niter}{number of iterations, a number}
@@ -23,7 +23,7 @@ brkdelay(niter, tend, umn, usd, xstart, xfunnel, leff, lane, step)
 
 \item{lane}{a vector of \code{nveh} numbers, a vector}
 
-\item{step}{size in seconds, a number}
+\item{delt}{size in seconds, a number}
 }
 \value{
 \code{brkdelay} returns  \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.

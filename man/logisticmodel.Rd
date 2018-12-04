@@ -12,14 +12,7 @@ logisticmodel(QUKtdayX, type)
 
 \item{type}{logical}
 }
-\value{
-If \code{type} is TRUE, plot a density-failure probability plot is created and a data frame is returned.
-If If \code{type} is FALSE, a data frame is returned.
-}
 \description{
 The function \code{logisticmodel} estimates the parameters of logistic regression model
 using a binomial formula and logit link function for data \code{QUKtdayX}.
-}
-\examples{
-\donttest{logisticmodel(QUKtdayX, TRUE)}
 }

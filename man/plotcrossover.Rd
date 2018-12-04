@@ -14,6 +14,3 @@ plotcrossover(umn, leff)
 \description{
 A \code{ggplot2} plot of crossover traffic data.
 }
-\examples{
-\donttest{plotcrossover(67, 14)}
-}

@@ -8,14 +8,14 @@
 #' @param u vehicle speed (mph), a number
 #' @param xfunnel location where the lane drop is located, a number
 #' @param leff vehicle length in feet, a number
-#' @param step size in seconds, a number
+#' @param delt size in seconds, a number
 #' @param kfactor density at time \code{t} = 0, a number
-#' @usage zippermerge(nveh, tstart, tend, xstart, u, leff, xfunnel, step, kfactor)
+#' @usage zippermerge(nveh, tstart, tend, xstart, u, leff, xfunnel, delt, kfactor)
 # #' @examples
-# #' zippermerge(nveh, 0, 1.5, -700, 53.1, leff, xfunnel, step. kfactor)
+# #' zippermerge(nveh, 0, 1.5, -700, 53.1, leff, xfunnel, delt, kfactor)
 #' @export
-zippermerge <- function(nveh, tstart, tend, xstart, u, leff, xfunnel, step, kfactor) {
-  tseq <- seq(tstart, tend, step)
+zippermerge <- function(nveh, tstart, tend, xstart, u, leff, xfunnel, delt, kfactor) {
+  tseq <- seq(tstart, tend, delt)
   tlen <- length(tseq)
   k    <- as.numeric(5280/hsafe(u*5280/3600,leff))/kfactor
   density <- round(k,0)

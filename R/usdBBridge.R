@@ -9,9 +9,6 @@
 #' @param T upper time range in minutes, a number
 #' @param N number of time-steps, a number
 #' @usage usdBBridge(umn, usd, N, T)
-#' @examples
-#' usdBBridge(41, 11, 90000, 15)
-#' usdBBridge(18.8, 3.9, 90000, 15)
 #' @export
 usdBBridge <- function(umn, usd, N, T) {
   W     <- numeric(N+1)

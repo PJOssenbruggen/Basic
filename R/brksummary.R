@@ -9,23 +9,23 @@
 #' @param xfunnel upstream location where the lane drop starts (feet), a number
 #' @param leff effective vehicle length(feet), a number
 #' @param lane number, a number
-#' @param step size in seconds, a number
-#' @usage brksummary(k, tend, umn, usd, xstart, xfunnel, leff, lane, step)
-#' @examples
-#' brksummary(50, 30, 41, 11, -1000, -500, 14, 0, 2)
+#' @param delt size in seconds, a number
+#' @usage brksummary(k, tend, umn, usd, xstart, xfunnel, leff, lane, delt)
+# #' @examples
+# #' brksummary(50, 30, 41, 11, -1000, -500, 14, 0, 2)
 #' @export
-brksummary <- function(k, tend, umn, usd, xstart, xfunnel, leff, lane, step) {
-# accelpass(tend, umn, usd, xstart, xfunnel, leff, lane, step)
-  df0 <- accelpass(30, 41, 11, -1000, -500,  14, 0, step)
+brksummary <- function(k, tend, umn, usd, xstart, xfunnel, leff, lane, delt) {
+# accelpass(tend, umn, usd, xstart, xfunnel, leff, lane, delt)
+  df0 <- accelpass(30, 41, 11, -1000, -500,  14, 0, delt)
   # vehicle 0 is ahead of vehicles 1 and 2. adjust x0
   l <- 5280/k
   tend.save <- tend
   df0[,3] <- rep(l, length(df0[,1])) + df0[,3]
   df0[,6] <- rep(l, length(df0[,1])) + df0[,6]
   df0 <- df0[,c(1,5,6,7,8)]
-  df1 <- accelpass(30, 41, 11, -1000, -500,  14, 1, step)
+  df1 <- accelpass(30, 41, 11, -1000, -500,  14, 1, delt)
   df1 <- df1[,c(1,5,6,7,8)]
-  df2 <- accelpass(30, 41, 11, -1000, -500,  14, 2, step)
+  df2 <- accelpass(30, 41, 11, -1000, -500,  14, 2, delt)
   df2 <- df2[,c(1,5,6,7,8)]
   df012   <- cbind(df0,df1,df2)
   df <- matrix(rep(NA,24), nrow = 4)
@@ -78,7 +78,7 @@ brksummary <- function(k, tend, umn, usd, xstart, xfunnel, leff, lane, step) {
   # veh 2 is the follower. Find xab between xstart and xfunnel
   tstart  <- 0
   tend    <- df[3,1]
-  tseq    <- seq(tstart, tend, step)
+  tseq    <- seq(tstart, tend, delt)
   index   <- seq(1, length(tseq))
   xseq    <- df012[index, 8]
   lines(df012[,1],df012[,13], col = "pink")
@@ -109,8 +109,8 @@ brksummary <- function(k, tend, umn, usd, xstart, xfunnel, leff, lane, step) {
   ab     <- xabparam(tstart, tend, ustart, uend, xstart, xend)
   x0     <- df[4,5]
   u0     <- df[4,3]
-  tab    <- seq(tstart, tend, step)
-  t.up   <- seq(0, tstart-step, step)
+  tab    <- seq(tstart, tend, delt)
+  t.up   <- seq(0, tstart-delt, delt)
   t0     <- df[4,1]
   xabfollow <- xab(x0,u0,a = ab[1],b = ab[2],t = tab,t0)
   uabfollow <- uab(u0,a = ab[1],b = ab[2],t = tab,t0)
@@ -121,8 +121,8 @@ brksummary <- function(k, tend, umn, usd, xstart, xfunnel, leff, lane, step) {
   umn    <- df[4,3]
   usd    <- usd * 5280/3600
   xstart <- df[4,6]
-  # acceldown(tstart, tend, umn, usd, xstart,  step)
-  dfdown <- acceldown(tstart, tend, umn, usd, xstart, step)
+  # acceldown(tstart, tend, umn, usd, xstart,  delt)
+  dfdown <- acceldown(tstart, tend, umn, usd, xstart, delt)
   lines(dfdown[,1], dfdown[,3], col = "red")
   # Output a data frame suitable for passplot(df, title)
   df12.  <- df012[,c(6:10)]

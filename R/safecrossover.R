@@ -3,8 +3,8 @@
 #' @param umn average speed in mph, a number
 #' @param leff effective vehicle length in feet, a number
 #' @usage safecrossover(umn, leff)
-#' @examples
-#' safecrossover(67, 14)
+# #' @examples
+# #' safecrossover(67, 14)
 #' @export
 safecrossover <- function(umn, leff) {
   x <- y <- 0

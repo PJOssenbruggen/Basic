@@ -10,16 +10,14 @@
 #' @param xfunnel upstream location where the lane drop starts (feet), a number
 #' @param leff effective vehicle length(feet), a number
 #' @usage freeflowpass(tstart, tend, umn, usd, xstart, xfunnel, leff)
-#' @examples
-#' freeflowpass(0, 10, 41, 0, -1000, -500, 14)
 #' @export
 freeflowpass  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
   x1 <- x2 <- {}
   y1 <- y2 <- {}
-  step  <- tend/10
-  tseq  <- seq(0, 5*tend, by = step)
+  delt  <- tend/10
+  tseq  <- seq(0, 5*tend, by = delt)
   usd   <- usd * 5280/3600
-  W     <- usd * sqrt(step) * rnorm(length(tseq),0,1)
+  W     <- usd * sqrt(delt) * rnorm(length(tseq),0,1)
   x1    <- xstart + umn *5280/3600 * tseq
   for(i in 1:length(x1)) x1[i]    <- x1[i] + W[i]
   y1    <- rep(NA, length(tseq))
@@ -38,14 +36,14 @@ freeflowpass  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
   df2     <- data.frame(t = tseq., u2 = rep(umn*5280/3600), x2 = x2., y2 = rep(6,length(tseq.)))
   tstart2 <- max(tseq[x1 <= -500])
   tend2   <- max(tseq[x1 <= 0])
-  tseq2   <- seq(tstart2, tend2, step)
+  tseq2   <- seq(tstart2, tend2, delt)
   xstart2 <- max(x2.)
   ustart2 <- uend2 <- umn*5280/3600
   xstart2 <- max(x2.)
   xend2   <- x1[tseq == tend2] + hsafe(uend2, leff)
   df2bk   <- data.frame(tstart2,tend2,ustart2,uend2,xstart2,xend2)
   ab      <- xabparam(tstart2, tend2, ustart2, uend2, xstart2, xend2)
-  tseq3   <- seq(tstart2, tend2, step)
+  tseq3   <- seq(tstart2, tend2, delt)
   x2..    <- xab(xstart2, ustart2,  ab[1], ab[2], tseq3, tstart2)
   u2..    <- uab(ustart2,  ab[1], ab[2], tseq3, tstart2)
   y2..    <- rep(NA, length(x2..))
@@ -55,7 +53,7 @@ freeflowpass  <- function(tstart, tend, umn, usd, xstart, xfunnel, leff) {
   df2     <- rbind(df2, df2..[-1,])
   tstart3 <- tend2
   tend3   <- 5*tend
-  tseq3   <- seq(tstart3, tend3, step)
+  tseq3   <- seq(tstart3, tend3, delt)
   x2..    <- max(x2..) + umn *5280/3600 * (tseq3[-1] - min(tseq3))
   x2      <- c(x2, x2..[-1])
   df2...  <- data.frame(t = tseq3[-1], u2 = rep(umn *5280/3600 ,length(tseq3[-1])), x2 = x2.., y2 = rep(NA, length(tseq3[-1])))

@@ -7,10 +7,10 @@
 #' @param uend speed, a number
 #' @param xstart location, a number
 #' @param xend location, a number
-#' @param step line type, a number
-#' @usage trajectoryab(tstart, tend, ustart, uend, xstart, xend, step)
+#' @param delt line type, a number
+#' @usage trajectoryab(tstart, tend, ustart, uend, xstart, xend, delt)
 #' @export
-trajectoryab <- function(tstart, tend, ustart, uend, xstart, xend, step) {
+trajectoryab <- function(tstart, tend, ustart, uend, xstart, xend, delt) {
   start  <- as.numeric(tstart)
   tend   <- as.numeric(tend)
   ustart <- as.numeric(ustart)
@@ -30,7 +30,7 @@ trajectoryab <- function(tstart, tend, ustart, uend, xstart, xend, step) {
 # Warning messages:
 #  1: In get(object, envir = currentEnv, inherits = TRUE) :
 #    restarting interrupted promise evaluation
-  tseq <- seq(tstart, tend, by = step)
+  tseq <- seq(tstart, tend, by = delt)
   tlen <- length(tseq)
   xseq <- rep(NA, tlen)
   useq <- rep(NA, tlen)

@@ -4,7 +4,7 @@
 \alias{zippermerge}
 \title{\code{zippermerge} produces \code{t-x} trajectory for vehicles traveling on parallel lanes that merge at a bottleneck.}
 \usage{
-zippermerge(nveh, tstart, tend, xstart, u, leff, xfunnel, step, kfactor)
+zippermerge(nveh, tstart, tend, xstart, u, leff, xfunnel, delt, kfactor)
 }
 \arguments{
 \item{nveh}{number of vehicles, a number}
@@ -21,7 +21,7 @@ zippermerge(nveh, tstart, tend, xstart, u, leff, xfunnel, step, kfactor)
 
 \item{xfunnel}{location where the lane drop is located, a number}
 
-\item{step}{size in seconds, a number}
+\item{delt}{size in seconds, a number}
 
 \item{kfactor}{density at time \code{t} = 0, a number}
 }

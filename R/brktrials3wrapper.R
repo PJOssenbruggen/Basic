@@ -9,24 +9,24 @@
 #' @param tend end time, (seconds), a number
 #' @param xstart1 start location of the first vehicle in lane 1, (feet), a number
 #' @param xstart2 start location of the first vehicle in lane 2, (feet), a number
-#' @param step size in seconds, a number
+#' @param delt time-step size in seconds, a number
 #' @param run number, a number
 #' @param leff vehicle length in feet, a number
 #' @param xfunnel upstream location of bottleneck taper, a number
 #' @param kfactor density at time \code{t} = 0, a number
-#' @usage brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,run,leff,xfunnel,kfactor)
+#' @usage brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,delt,run,leff,xfunnel,kfactor)
 # #' @examples
 # #' brktrials3wrapper(3, 3, 50.4, 0, 0, 30, -700, -700, 0.25, TRUE,  14, -500)
 #' @export
-brktrials3wrapper <- function(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,run,leff,xfunnel,kfactor) {
+brktrials3wrapper <- function(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,delt,run,leff,xfunnel,kfactor) {
   tend.0  <- tend
-  tseq    <- seq(tstart,tend,step)
+  tseq    <- seq(tstart,tend,delt)
   tlen    <- length(tseq)
   ### Arrival Analyzer: brktrials3 ######################################################################################
-  lst     <- brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,leff,xfunnel,usd,kfactor)
+  lst     <- brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,delt,leff,xfunnel,usd,kfactor)
   lane1   <- lst[[1]]
   lane2   <- lst[[2]]
-  lst     <- enterbottleneck(lane1,lane2, xfunnel, tend, step)
+  lst     <- enterbottleneck(lane1,lane2, xfunnel, tend, delt)
   dfcrit  <- lst[[1]]
   # Lane 1 and 2 Desire-Line Trajectories ################################################################################
   par(mfrow = c(1,2), pty = "s")
@@ -111,13 +111,13 @@ brktrials3wrapper <- function(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,st
   zone <- 2
   dfcrit1 <- dfcrit[as.numeric(dfcrit[,1]) == 1,]
   for(veh in 2:nveh1) {
-    lane1.fix  <- fixviolation(veh, zone, lane1, dfcrit1, step, tend.0, leff, xfunnel)
+    lane1.fix  <- fixviolation(veh, zone, lane1, dfcrit1, delt, tend.0, leff, xfunnel)
     lane1.fix  <- fixdf1df2(veh, lane1.fix, lane1)
     lane1      <- lane1.fix
   }
   dfcrit2 <- dfcrit[as.numeric(dfcrit[,1]) == 2,]
   for(veh in 2:nveh2) {
-    lane2.fix  <- fixviolation(veh, zone, lane2, dfcrit2, step, tend.0, leff, xfunnel)
+    lane2.fix  <- fixviolation(veh, zone, lane2, dfcrit2, delt, tend.0, leff, xfunnel)
     lane2.fix  <- fixdf1df2(veh, lane2.fix, lane2)
     lane2      <- lane2.fix
   }

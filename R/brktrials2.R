@@ -8,13 +8,13 @@
 #' @param xfunnel upstream location where the lane drop starts (feet), a number
 #' @param leff effective vehicle length(feet), a number
 #' @param lane a vector of \code{nveh} numbers, a vector
-#' @param step size in seconds, a number
+#' @param delt size in seconds, a number
 #' @param type 0 no plots, 1 prediction plot, 2 all plots, a number
-#' @usage brktrials2(tend, umn, usd, xstart, xfunnel, leff, lane, step, type)
+#' @usage brktrials2(tend, umn, usd, xstart, xfunnel, leff, lane, delt, type)
 #' @examples
 #' brktrials2(30, 41, 11, xstart, -500, 14, lane, 0.5, 1)
 #' @export
-brktrials2 <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step, type) {
+brktrials2 <- function(tend, umn, usd, xstart, xfunnel, leff, lane, delt, type) {
   if(type != 0) {
     if(type == 2) {
       # layout(matrix(c(1,1,2,3,4,4,5,5), 4,2, byrow = TRUE))
@@ -25,14 +25,14 @@ brktrials2 <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step, type) 
   }
   tend.save  <- tend
   lane.      <- lane
-  tseq       <- seq(0,tend,step)
+  tseq       <- seq(0,tend,delt)
   tlen       <- length(tseq)
   nveh       <- length(lane)
   tstart     <- 0
   # 1. store bmfree2 output in a data frame "df = nveh * tux matrices".
   # df. = tux: tlen by  6 matrix. colnames(tux) = t, u, x, y, lane, vehicle
   for(veh in 1:nveh) {
-    df.     <- bmfree2(umn, usd, tstart, tend, xstart[veh], step)
+    df.     <- bmfree2(umn, usd, tstart, tend, xstart[veh], delt)
     vehicle <- rep(veh, tlen)
     y       <- rep(NA, tlen)
     lane    <- rep(lane.[veh], tlen)
@@ -216,7 +216,7 @@ brktrials2 <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step, type) 
         x0              <- xstartab
         u0              <- ustartab
         t0              <- tstartab
-        tseq            <- seq(tstartab, tendab, step)
+        tseq            <- seq(tstartab, tendab, delt)
         xmab <- uab  <- yab  <- {}
         for(j in 1:length(tseq)) {
           xmab <- c(xmab, xab(x0,u0,a,b,t = tseq[j],t0))
@@ -226,13 +226,12 @@ brktrials2 <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step, type) 
         xabpoints <- rbind(data.frame(t = tstartab, u = ustartab, x = xstartab),
                            data.frame(t = tendab, u = uendab, x = xendab)
         )
-#        browser()
         if(type != 0) lines(tseq, xmab, lwd = 1)
         tstart  <- tendab
         xstart  <- xmab[length(xmab)]
         umn     <- 3600/5280*uab[length(uab)]
         if(tstart < tend) {
-          tux     <- bmfree2(umn, usd, tstart, tend, xstart, step)
+          tux     <- bmfree2(umn, usd, tstart, tend, xstart, delt)
           if(type != 0) lines(tux[,1],tux[,3])
           tuxlead <- vehdf(veh = vehorder[i - 1], nveh, df)
           tuxlead <- tuxlead[tuxlead[,1] >= tstart,]

@@ -4,7 +4,7 @@
 \alias{flow2}
 \title{\code{flow2} is an algorithm for estimating the flow and density}
 \usage{
-flow2(dfcrit, df1df2, tstart, tend, step, xfunnel)
+flow2(dfcrit, df1df2, tstart, tend, delt, xfunnel)
 }
 \arguments{
 \item{dfcrit}{times when vehicles arrive at bottleneck by lane, a matrix}
@@ -15,7 +15,7 @@ flow2(dfcrit, df1df2, tstart, tend, step, xfunnel)
 
 \item{tend}{end time, (seconds), a number}
 
-\item{step}{size in seconds, a number}
+\item{delt}{size in seconds, a number}
 
 \item{xfunnel}{upstream location of bottleneck taper, a number}
 }

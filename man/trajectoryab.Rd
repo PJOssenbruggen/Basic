@@ -5,7 +5,7 @@
 \title{\code{trajectoryab} fits a second-order velocity model and produces a \code{t-x} trajectory
 for \code{vehicle = i} where \code{i = 3,4, ..., nveh}.}
 \usage{
-trajectoryab(tstart, tend, ustart, uend, xstart, xend, step)
+trajectoryab(tstart, tend, ustart, uend, xstart, xend, delt)
 }
 \arguments{
 \item{tstart}{time, a number}
@@ -20,7 +20,7 @@ trajectoryab(tstart, tend, ustart, uend, xstart, xend, step)
 
 \item{xend}{location, a number}
 
-\item{step}{line type, a number}
+\item{delt}{line type, a number}
 }
 \description{
 \code{trajectoryab} fits a second-order velocity model and produces a \code{t-x} trajectory

@@ -8,27 +8,27 @@
 #' @param tend end time, (seconds), a number
 #' @param xstart1 start location of the first vehicle in lane 1, (feet), a number
 #' @param xstart2 start location of the first vehicle in lane 2, (feet), a number
-#' @param step size in seconds, a number
+#' @param delt size in seconds, a number
 #' @param leff vehicle length in feet, a number
 #' @param xfunnel upstream location of bottleneck taper, a number
 #' @param usd speed standard deviation, a number
 #' @param kfactor density at time \code{t} = 0, a number
-#' @usage brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,leff,xfunnel,usd,kfactor)
-#' @examples
-#' brktrials3(5, 5, 53.1,  0, 40, -700, -700, 0.25, 14, -500, 0, 1.333)
+#' @usage brktrials3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,delt,leff,xfunnel,usd,kfactor)
+# #' @examples
+# #' brktrials3(5, 5, 53.1,  0, 40, -700, -700, 0.25, 14, -500, 0, 1.333)
 #' @export
-brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, step, leff, xfunnel, usd, kfactor) {
-  tseq  <- seq(tstart, tend, step)
+brktrials3 <- function(nveh1, nveh2, umn, tstart, tend, xstart1, xstart2, delt, leff, xfunnel, usd, kfactor) {
+  tseq  <- seq(tstart, tend, delt)
   tlen  <- length(tseq)
   y     <- rep(0, tlen)
   nveh  <- nveh1 + nveh2
   umn   <- as.numeric(umn)
   usd   <- as.numeric(usd)
 #  print(data.frame("brktrials3", umn, usd))
-  if(nveh1 > 0) lane1 <- zipper2setup(nveh1, umn, usd, tstart, tend, xstart1, step, leff, kfactor) else
+  if(nveh1 > 0) lane1 <- zipper2setup(nveh1, umn, usd, tstart, tend, xstart1, delt, leff, kfactor) else
     lane1 <- {}
   if(nveh2 > 0)  {
-    lane2 <- zipper2setup(nveh2, umn, usd, tstart, tend, xstart2, step,  leff, kfactor)
+    lane2 <- zipper2setup(nveh2, umn, usd, tstart, tend, xstart2, delt,  leff, kfactor)
   } else
     lane2 <- {}
   if(nveh1 == 0 & nveh2 > 0) {

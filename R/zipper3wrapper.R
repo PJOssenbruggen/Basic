@@ -10,22 +10,23 @@
 #' @param usd speed standard deviation, a number
 #' @param xstart1 start location of the first vehicle in lane 1, (feet), a number
 #' @param xstart2 start location of the first vehicle in lane 2, (feet), a number
-#' @param step time step, a number
+#' @param delt time-step, a number
 #' @param tstart  vehicle crossovers are are permitted below this time, a number
 #' @param tend upper time range of simulation, a number
 #' @param xfunnel location where the lane drop is located, a number
 #' @param leff vehicle length in feet, a number
-#' @usage zipper3wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff)
+#' @usage zipper3wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,tstart,tend,xfunnel,leff)
 #' @export
-zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff) {
+zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,tstart,tend,xfunnel,leff) {
   #### STEP 1. Create lane 1 and 2 datasets ################################################################
   #set.seed(123)
   # set.seed(403)
   #set.seed(333)
   xlim  <- c(tstart,tend)
-  print(data.frame(nveh1,nveh2,xstart1,xstart2,step,tstart,tend,xfunnel,leff))
-  zippermerge(nveh, tstart, tend, xstart, umn, leff, xfunnel, step)
-  lst   <- zipper3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,step,leff,xfunnel,usd)
+  print(data.frame(nveh1,nveh2,xstart1,xstart2,delt,tstart,tend,xfunnel,leff))
+  browser()
+  zippermerge(nveh, tstart, tend, xstart, umn, leff, xfunnel, delt)
+  lst   <- zipper3(nveh1,nveh2,umn,tstart,tend,xstart1,xstart2,delt,leff,xfunnel,usd)
   lane1 <- lst[[1]]
   lane2 <- lst[[2]]
   if(TRUE) {
@@ -35,13 +36,13 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
     max.    <- max(as.numeric(unlist(lane1[,nclm])), na.rm = TRUE)
     ylim    <- c(min., max.)
     # Lane 1
-    tseq   <- seq(0, tend, step)
+    tseq   <- seq(0, tend, delt)
     tlen   <- length(tseq)
     tend   <- tseq[tlen]
     tend.0 <- tend
     plot(tseq, lane1[,2], type = "l", xlab = "t, seconds", ylab = "x, feet",
          ylim=ylim, xlim=xlim, col = "blue", lwd = 2)
-    df     <- flow(lane1, tstart, tend, step, xfunnel)[[2]]
+    df     <- flow(lane1, tstart, tend, delt, xfunnel)[[2]]
     speeda   <- as.numeric(df[1])
     speedd   <- as.numeric(df[2])
     abline(v = 0, col = gray(0.8))
@@ -77,7 +78,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
     ylim    <- c(min., max.)
     plot(tseq, lane2[,2], type = "l", xlab = "t, seconds", ylab = "x, feet",
          ylim=ylim, xlim=xlim,col = "red", lwd = 2)
-    df      <- flow(lane2, tstart, tend, step, xfunnel)[[2]]
+    df      <- flow(lane2, tstart, tend, delt, xfunnel)[[2]]
     speeda   <- as.numeric(df[1])
     speedd   <- as.numeric(df[2])
     density <- as.numeric(5280/hsafe(umn*5280/3600,leff))
@@ -107,19 +108,20 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
            ),
            cex = c(0.75,0.75,0.75))
   }
+
   #### STEP 2. Order vehicles by the times that they reach x = 0 ####################
-  lst    <- enterbottleneck(lane1,lane2,xfunnel,tend,step)
+  lst    <- enterbottleneck(lane1,lane2,xfunnel,tend,delt)
   dfcrit <- lst[[1]]
   nveh   <- lst[[2]]
   #### STEP 3. Merge lane 1 and 2 data sets ##########################################
   tend.0 <- tend
-  tseq   <- seq(0, tend, step)
+  tseq   <- seq(0, tend, delt)
   tlen   <- length(tseq)
   df1df2 <- mergedata(lane1,lane2,tlen,dfcrit)
   # Zone violations
   for(veh in 1:(nveh)) {
     for(zone in 1:3) {
-      dfcrit <- zoneviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff)
+      dfcrit <- zoneviolation(veh, zone, df1df2, dfcrit, delt, tend.0, leff)
     }
   }
   print(dfcrit)
@@ -129,13 +131,13 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
     zone <- 2
     df1df2.fix    <- df1df2
     for(veh in 2:nveh) {
-      df1df2.fix  <- fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel)
+      df1df2.fix  <- fixviolation(veh, zone, df1df2, dfcrit, delt, tend.0, leff, xfunnel)
       df1df2.fix  <- fixdf1df2(veh, df1df2.fix, df1df2)
       df1df2      <- df1df2.fix
     }
     # Zipper Merge plot
     xstart    <- xstart1
-    df1df2zip <- zippermerge(nveh, tstart, tend, xstart, umn, leff, xfunnel, step)[,-1]
+    df1df2zip <- zippermerge(nveh, tstart, tend, xstart, umn, leff, xfunnel, delt)[,-1]
     if(TRUE) {
       par(mfrow = c(1,1), pty = "s")
       tend <- tseq[tlen]
@@ -154,7 +156,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
       axis(side = 3, at = tend/2, sub, tick = FALSE, line = -1)
       axis(side = 4, at = 0, labels = expression(x[0]))
       axis(side = 4, at = xfunnel, labels = expression(x[e]))
-      df    <- flow(df1df2zip, tstart, tend, step, xfunnel)[[2]]
+      df    <- flow(df1df2zip, tstart, tend, delt, xfunnel)[[2]]
       flow  <- as.numeric(df[3])
       speed <- round(as.numeric(df[4]),1)
       legend("topleft",
@@ -182,7 +184,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
     }
 
     #### STEP 6. Flow Estimation
-    lst <- flow(df1df2 = df1df2, tstart, tend, step, xfunnel)
+    lst <- flow(df1df2 = df1df2, tstart, tend, delt, xfunnel)
     df1 <- lst[[1]]
     df2 <- lst[[2]]
     if(TRUE) {
@@ -199,7 +201,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
     }
 
     #### STEP 7. Capacity Estimation
-    df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel)
+    df1    <- flow2(dfcrit, df1df2, tstart, tend, delt, xfunnel)
     print(df1)
     tservice = abs(round(xfunnel/(5280/3600*umn),1))
     if(TRUE) {
@@ -247,13 +249,13 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
     zone <- 2
     df1df2.fix    <- df1df2
     for(veh in 2:nveh) {
-      df1df2.fix  <- fixviolation(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel)
+      df1df2.fix  <- fixviolation(veh, zone, df1df2, dfcrit, delt, tend.0, leff, xfunnel)
       df1df2.fix  <- fixdf1df2(veh, df1df2.fix, df1df2)
       df1df2      <- df1df2.fix
     }
     # Bottleneck plot
     xstart    <- xstart1
-    df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel)
+    df1    <- flow2(dfcrit, df1df2, tstart, tend, delt, xfunnel)
     if(TRUE) {
       tend <- tseq[tlen]
       xcol <- {}
@@ -298,7 +300,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
     }
 
     #### STEP 6. Flow Estimation ######################################################
-    lst <- flow(df1df2, tstart, tend, step, xfunnel)
+    lst <- flow(df1df2, tstart, tend, delt, xfunnel)
     df1 <- lst[[1]]
     df2 <- lst[[2]]
     if(TRUE) {
@@ -317,7 +319,7 @@ zipper3wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend
       u.d.mean.mph <- as.numeric(df2[2])
     }
     #### STEP 7. Capacity Estimation
-    df1    <- flow2(dfcrit, df1df2, tstart, tend, step, xfunnel)
+    df1    <- flow2(dfcrit, df1df2, tstart, tend, delt, xfunnel)
     tservice = abs(round(xfunnel/(5280/3600*umn),1))
     k.d.mn <- round(mean(df1[,7], na.rm = TRUE),0)
     q.d.mn <- round(mean(df1[,8], na.rm = TRUE),0)

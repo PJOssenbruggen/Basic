@@ -4,7 +4,7 @@
 \alias{merge}
 \title{\code{merge} produces \code{t-x} trajectories for a pair of lead and following vehicles.}
 \usage{
-merge(df1,df2,leff,step,ylim)
+merge(df1,df2,leff,delt,ylim)
 }
 \arguments{
 \item{df1}{leading vehicle, a matrix}
@@ -13,7 +13,7 @@ merge(df1,df2,leff,step,ylim)
 
 \item{leff}{vehicle length, a number}
 
-\item{step}{time-step size, a number}
+\item{delt}{time-step size, a number}
 
 \item{ylim}{for plot, a vector}
 }

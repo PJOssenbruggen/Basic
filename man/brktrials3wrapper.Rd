@@ -4,7 +4,7 @@
 \alias{brktrials3wrapper}
 \title{\code{brktrials3wrapper} produces \code{t-x} trajectories for lead and following vehicles at a bottleneck}
 \usage{
-brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,run,leff,xfunnel,kfactor)
+brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,delt,run,leff,xfunnel,kfactor)
 }
 \arguments{
 \item{nveh1}{number of vehicles entering the bottleneck from lane 1, a number}
@@ -23,7 +23,7 @@ brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,step,run,leff,
 
 \item{xstart2}{start location of the first vehicle in lane 2, (feet), a number}
 
-\item{step}{size in seconds, a number}
+\item{delt}{time-step size in seconds, a number}
 
 \item{run}{number, a number}
 

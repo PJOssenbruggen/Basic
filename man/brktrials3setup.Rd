@@ -4,7 +4,7 @@
 \alias{brktrials3setup}
 \title{\code{brktrials3setup} produces a \code{T.} matrix for \code{nveh} vehicles.}
 \usage{
-brktrials3setup(nveh, umn, usd, tstart, tend, xstart, step, browse, leff)
+brktrials3setup(nveh, umn, usd, tstart, tend, xstart, delt, browse, leff)
 }
 \arguments{
 \item{nveh}{number of vehicles entering the bottleneck, a number}
@@ -19,7 +19,7 @@ brktrials3setup(nveh, umn, usd, tstart, tend, xstart, step, browse, leff)
 
 \item{xstart}{start location, (feet), a number}
 
-\item{step}{size in seconds, a number}
+\item{delt}{time-step in seconds, a number}
 
 \item{browse}{is TRUE to inspect plot and FALSE otherwise}
 
@@ -30,7 +30,4 @@ brktrials3setup(nveh, umn, usd, tstart, tend, xstart, step, browse, leff)
 }
 \description{
 \code{brktrials3setup} produces a \code{T.} matrix for \code{nveh} vehicles.
-}
-\examples{
-brktrials3setup(5, 53.1, 0, 0, 40, -700, 0.125, FALSE, 14)
 }

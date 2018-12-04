@@ -6,26 +6,28 @@
 #' @param umn start speed (mph) for vehicle in lane 1, a number
 #' @param usd speed standard deviation, a number
 #' @param xstart1 start location of the first vehicle in lane 1, (feet), a number
-#' @param xstart2 start location of the first vehicle in lane 2, (feet), a number
-#' @param step time step, a number
+#' @param delt time-step, a number
 #' @param tstart  vehicle crossovers are are permitted below this time, a number
 #' @param tend upper time range of simulation, a number
 #' @param xfunnel location where the lane drop is located, a number
 #' @param leff vehicle length in feet, a number
 #' @param size sample size, a number
-#' @usage zippersimulate(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,size)
+#' @param kfactor density at time \code{t} = 0, a number
+#' @usage zippersimulate(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,leff,size,kfactor)
 #' @export
-zippersimulate <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,size) {
-  input <- data.frame(nveh1,nveh2,umn,usd,xstart1,xstart2,
-                      step,tstart,tend,xfunnel,leff)
+zippersimulate <- function(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,leff,size,kfactor) {
+  xstart2 <- xstart1 - hsafe(umn*5280/3600,leff) / 2
+  runname <- "Zipper"
+  input <- data.frame(runname,nveh1,nveh2,umn,usd,xstart1,xstart2,xfunnel,leff,kfactor,sample.size = size)
   print(input)
   for(run in 1:size) {
-    if(run == 1) output <- zipper3wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,
-                                step,tstart,tend,xfunnel,leff) else {
-                          output. <- zipper3wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,
-                                step,tstart,tend,xfunnel,leff)
-                                output  <- rbind(output, output.)
-                          }
+    print(data.frame("Run:", run))
+    if(run == 1) output <- brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,
+                             tstart,tend,xfunnel,leff,run,kfactor) else {
+                             output. <- brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,
+                                  tstart,tend,xfunnel,leff,run,kfactor)
+                             output  <- rbind(output, output.)
+                             }
   }
   print(output)
   outputruns <- rbind(outputruns, output)

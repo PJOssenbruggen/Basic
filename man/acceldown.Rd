@@ -4,7 +4,7 @@
 \alias{acceldown}
 \title{The \code{acceldown} function estimates the relative locations of a vehicle downstream of a bottleneck.}
 \usage{
-acceldown(tstart, tend, umn, usd, xstart,  step)
+acceldown(tstart, tend, umn, usd, xstart,  delt)
 }
 \arguments{
 \item{tstart}{start time in seconds, a number}
@@ -17,14 +17,11 @@ acceldown(tstart, tend, umn, usd, xstart,  step)
 
 \item{xstart}{start location of the vehicle (feet), a number}
 
-\item{step}{size in seconds, a number}
+\item{delt}{size in seconds, a number}
 }
 \value{
 \code{acceldown} uses a stochastic model to show the location of the vehicle after it merges at a bottleneck.
 }
 \description{
 The \code{acceldown} function estimates the relative locations of a vehicle downstream of a bottleneck.
-}
-\examples{
-acceldown(8.75, 33.25, 47.59, 16.133, -70.36, 0.25)
 }

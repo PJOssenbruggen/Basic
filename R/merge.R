@@ -8,13 +8,13 @@
 #' @param df1 leading vehicle, a matrix
 #' @param df2 following vehicle, a matrix
 #' @param leff vehicle length, a number
-#' @param step time-step size, a number
+#' @param delt time-step size, a number
 #' @param ylim for plot, a vector
-#' @usage merge(df1,df2,leff,step,ylim)
+#' @usage merge(df1,df2,leff,delt,ylim)
 # #' @examples
-# #' merge(df1,df2,leff,step,ylim)
+# #' merge(df1,df2,leff,delt,ylim)
 #' @export
-merge <- function(df1, df2,leff,step,ylim) {
+merge <- function(df1, df2,leff,delt,ylim) {
   plot(df1[,1],df1[,3], typ  = "l", ylim = ylim,
        xlab = "t, seconds", ylab = expression(x[t]*", feet"))
   lines(df2[,1],df2[,3], lty = 2, col = "orange", lwd = 3)
@@ -24,7 +24,7 @@ merge <- function(df1, df2,leff,step,ylim) {
   df1 <- df1[,c(1,2,3)]
   df2 <- df2[,c(1,2,3)]
   for(i in 1:5) {
-    lst <- xabmerge(df1,df2,leff,step,k, TRUE)
+    lst <- xabmerge(df1,df2,leff,delt,k, TRUE)
     df3 <- lst[[1]]
     k   <- lst[[2]]
     if(k == 0) {
@@ -45,7 +45,7 @@ merge <- function(df1, df2,leff,step,ylim) {
       points(tstart,xstart)
       points(tend,xend)
       df2    <- df3[,c(1,4,5)]
-      tseq   <- seq(tstart, tend, step)
+      tseq   <- seq(tstart, tend, delt)
       useq   <- df3[tstart <= df3[,1] & df3[,1] <= tend,4]
       xseq   <- df3[tstart <= df3[,1] & df3[,1] <= tend,5]
       lines(tseq, xseq, lwd = 2)

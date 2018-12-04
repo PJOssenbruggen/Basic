@@ -5,7 +5,7 @@
 \title{\code{bmfree2} returns a \code{T.} matrix of time \code{t}, speed \code{u} (fps)
  and location \code{x} (feet) using a Brownian Motion Bridge model for one vehicle..}
 \usage{
-bmfree2(umn, usd, tstart, tend, xstart, step)
+bmfree2(umn, usd, tstart, tend, xstart, delt)
 }
 \arguments{
 \item{umn}{mean speed (mph), a number}
@@ -18,7 +18,7 @@ bmfree2(umn, usd, tstart, tend, xstart, step)
 
 \item{xstart}{location (feet), a number}
 
-\item{step}{time-step size, a number}
+\item{delt}{time-step size, a number}
 }
 \description{
 \code{bmfree2} returns a \code{T.} matrix of time \code{t}, speed \code{u} (fps)

@@ -4,7 +4,7 @@
 \alias{zippersimulate}
 \title{\code{zippersimulate} uses the law of large numbers to establish confidence intervals traffic performance measures.}
 \usage{
-zippersimulate(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff,size)
+zippersimulate(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,leff,size,kfactor)
 }
 \arguments{
 \item{nveh1}{number of vehicles entering the bottleneck from lane 1, a number}
@@ -17,9 +17,7 @@ zippersimulate(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff
 
 \item{xstart1}{start location of the first vehicle in lane 1, (feet), a number}
 
-\item{xstart2}{start location of the first vehicle in lane 2, (feet), a number}
-
-\item{step}{time step, a number}
+\item{delt}{time-step, a number}
 
 \item{tstart}{vehicle crossovers are are permitted below this time, a number}
 
@@ -30,6 +28,8 @@ zippersimulate(nveh1,nveh2,umn,usd,xstart1,xstart2,step,tstart,tend,xfunnel,leff
 \item{leff}{vehicle length in feet, a number}
 
 \item{size}{sample size, a number}
+
+\item{kfactor}{density at time \code{t} = 0, a number}
 }
 \value{
 The \code{zippersimulate} runs \code{zipper3wrapper} \code{size} times.

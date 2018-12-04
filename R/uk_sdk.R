@@ -4,8 +4,6 @@
 #' @param type logical
 #' @return If \code{type} is TRUE, plot a density-speed plot is created and a data frame is returned.
 #' If If \code{type} is FALSE,  a data frame is returned.
-#' @examples
-#' \donttest{uk_sdk(QUKtdayX, TRUE)}
 #' @export
 uk_sdk <- function(QUKtdayX, type) {
   quk1 <- QUKtdayX[,c(1,2,3)]

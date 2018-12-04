@@ -7,11 +7,11 @@
 #' @param uend speed, a number
 #' @param xstart location, a number
 #' @param xend location, a number
-#' @param step line type, a number
+#' @param delt line type, a number
 #' @param type TRUE to create plots or FALSE otherwise, a logical
-#' @usage trajectoryab3(tstart, tend, ustart, uend, xstart, xend, step,type)
+#' @usage trajectoryab3(tstart, tend, ustart, uend, xstart, xend, delt,type)
 #' @export
-trajectoryab3 <- function(tstart, tend, ustart, uend, xstart, xend, step, type) {
+trajectoryab3 <- function(tstart, tend, ustart, uend, xstart, xend, delt, type) {
   start  <- as.numeric(tstart)
   tend   <- as.numeric(tend)
   ustart <- as.numeric(ustart)
@@ -30,9 +30,9 @@ trajectoryab3 <- function(tstart, tend, ustart, uend, xstart, xend, step, type) 
   # Warning messages:
   #  1: In get(object, envir = currentEnv, inherits = TRUE) :
   #    restarting interrupted promise evaluation
-  #  print(data.frame("trajectoryab3", tstart, tend, step))
+  #  print(data.frame("trajectoryab3", tstart, tend, delt))
 
-  tseq <- seq(tstart, tend, by = step)
+  tseq <- seq(tstart, tend, by = delt)
   tlen <- length(tseq)
   xseq <- rep(NA, tlen)
   useq <- rep(NA, tlen)

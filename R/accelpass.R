@@ -9,24 +9,24 @@
 #' @param xfunnel upstream location where the lane drop starts (feet), a number
 #' @param leff effective vehicle length(feet), a number
 #' @param lane number, a number
-#' @param step size in seconds, a number
-#' @usage accelpass(tend, umn, usd, xstart, xfunnel, leff, lane, step)
-#' @examples
-#' accelpass(30, 41, 11, -1000, -500, 14, 1, 2)
+#' @param delt size in seconds, a number
+#' @usage accelpass(tend, umn, usd, xstart, xfunnel, leff, lane, delt)
+# #' @examples
+# #' accelpass(30, 41, 11, -1000, -500, 14, 1, 2)
 #' @export
-accelpass  <- function(tend, umn, usd, xstart, xfunnel, leff, lane, step) {
+accelpass  <- function(tend, umn, usd, xstart, xfunnel, leff, lane, delt) {
   xdet  <- {}
   ydet  <- {}
-  tseq  <- seq(0, tend, by = step)
+  tseq  <- seq(0, tend, by = delt)
   usd   <- usd * 5280/3600
-  W     <- usd * sqrt(step) * rnorm(length(tseq),0,1)
+  W     <- usd * sqrt(delt) * rnorm(length(tseq),0,1)
   xdet  <- xstart + umn *5280/3600 * tseq
   # Brownian motion of speed
   udet  <- rep(umn*5280/3600, length(tseq))
   u     <- udet + W
   x     <- rep(NA, length(tseq))
   x[1]  <- xdet[1]
-  for(i in 2:length(x)) x[i]  <- x[i-1] + u[i]* step
+  for(i in 2:length(x)) x[i]  <- x[i-1] + u[i]* delt
   y     <- rep(NA, length(tseq))
   if(lane == 1 | lane == 0) for(i in 1:length(x)) {
       if(x[i] > 0) y[i] = 0

@@ -4,7 +4,7 @@
 \alias{brkdelay3}
 \title{\code{brkdelay3} is a wrapper function for \code{brktrials3}.}
 \usage{
-brkdelay3(niter, nveh, tstart, tend, umn, usd, xstart, xfunnel, leff, step)
+brkdelay3(niter, nveh, tstart, tend, umn, usd, xstart, xfunnel, leff, delt)
 }
 \arguments{
 \item{niter}{number of iterations, a number}
@@ -25,7 +25,7 @@ brkdelay3(niter, nveh, tstart, tend, umn, usd, xstart, xfunnel, leff, step)
 
 \item{leff}{effective vehicle length(feet), a number}
 
-\item{step}{size in seconds, a number}
+\item{delt}{size in seconds, a number}
 }
 \value{
 \code{brkdelay3} returns  \code{t-x} trajectories of \code{nveh} vehicles at a bottleneck.

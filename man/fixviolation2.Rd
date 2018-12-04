@@ -4,7 +4,7 @@
 \alias{fixviolation2}
 \title{\code{fixviolation2} produces of a safe headways for a following vehicle}
 \usage{
-fixviolation2(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, browse)
+fixviolation2(veh, zone, df1df2, dfcrit, delt, tend.0, leff, xfunnel, browse)
 }
 \arguments{
 \item{veh}{vehicle, a number}
@@ -15,7 +15,7 @@ fixviolation2(veh, zone, df1df2, dfcrit, step, tend.0, leff, xfunnel, browse)
 
 \item{dfcrit}{critical time, a matrix}
 
-\item{step}{time step, a number}
+\item{delt}{time step, a number}
 
 \item{tend.0}{end time for over the long time range, a number}
 

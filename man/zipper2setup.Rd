@@ -4,7 +4,7 @@
 \alias{zipper2setup}
 \title{\code{zipper2setup} produces a \code{T.} matrix for \code{nveh} vehicles.}
 \usage{
-zipper2setup(nveh, umn, usd, tstart, tend, xstart, step, leff, kfactor)
+zipper2setup(nveh, umn, usd, tstart, tend, xstart, delt, leff, kfactor)
 }
 \arguments{
 \item{nveh}{number of vehicles entering the bottleneck, a number}
@@ -19,7 +19,7 @@ zipper2setup(nveh, umn, usd, tstart, tend, xstart, step, leff, kfactor)
 
 \item{xstart}{start location, (feet), a number}
 
-\item{step}{size in seconds, a number}
+\item{delt}{size in seconds, a number}
 
 \item{leff}{vehicle length in feet, a number}
 
@@ -30,7 +30,4 @@ zipper2setup(nveh, umn, usd, tstart, tend, xstart, step, leff, kfactor)
 }
 \description{
 \code{zipper2setup} produces a \code{T.} matrix for \code{nveh} vehicles.
-}
-\examples{
-zipper2setup(5, 53.1, 0, 0, 40, -700, 0.125, 14, 1.333)
 }

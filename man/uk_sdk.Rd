@@ -18,6 +18,3 @@ If If \code{type} is FALSE,  a data frame is returned.
 \description{
 A speed volatility model.
 }
-\examples{
-\donttest{uk_sdk(QUKtdayX, TRUE)}
-}

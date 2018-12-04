@@ -9,6 +9,3 @@ crossconflict()
 \description{
 The function \code{crossconflict} a graph showing driver conflict of two vehicles changing lanes.
 }
-\examples{
-crossconflict()
-}

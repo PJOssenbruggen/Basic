@@ -4,7 +4,7 @@
 \alias{flow}
 \title{\code{flow} is an algorithm for estimating the flow and density}
 \usage{
-flow(df1df2, tstart, tend, step, xfunnel)
+flow(df1df2, tstart, tend, delt, xfunnel)
 }
 \arguments{
 \item{df1df2}{vehicle information from \code{brktrials4wrapper}, a matrix}
@@ -13,7 +13,7 @@ flow(df1df2, tstart, tend, step, xfunnel)
 
 \item{tend}{end time, (seconds), a number}
 
-\item{step}{size in seconds, a number}
+\item{delt}{size in seconds, a number}
 
 \item{xfunnel}{upstream location of bottleneck taper, a number}
 }

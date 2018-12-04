@@ -4,7 +4,7 @@
 \alias{xabmerge3}
 \title{\code{xabmerge3} produces \code{t-x} trajectories for a pair of lead and following vehicles.}
 \usage{
-xabmerge3(df1, df2, leff, step, k, type)
+xabmerge3(df1, df2, leff, delt, k, type)
 }
 \arguments{
 \item{df1}{leading vehicle, a matrix}
@@ -13,7 +13,7 @@ xabmerge3(df1, df2, leff, step, k, type)
 
 \item{leff}{vehicle length, a number}
 
-\item{step}{time-step size, a number}
+\item{delt}{time-step size, a number}
 
 \item{k}{counter, a number}
 
