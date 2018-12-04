@@ -6,7 +6,7 @@
             "*.R"
         ],
         "path" : "~/Desktop/Basic",
-        "query" : "donttest",
+        "query" : "zippersimulte",
         "regex" : true
     }
 }
