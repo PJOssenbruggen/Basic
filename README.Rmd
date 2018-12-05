@@ -11,13 +11,15 @@ install.packages("cartools")
 ```
 ### Recommendation
 To obtain the latest updates, use RStudio and download **cartools** from GitHub. Run the following:   
-1. install.packages("devtools"),
-2. devtools::install_github("pjossenbuggen/Basic"),
-3. _zipper.simulate_(5,5,53.1,5,-700,0.125,0,40,-500,14,1,1.333). See output below.
+
+1. install.packages("devtools").
+
+2. devtools::install_github("pjossenbuggen/Basic").
+
+3. _zipper.simulate_(5,5,53.1,5,-700,0.125,0,40,-500,14,1,1.333). 
+To see the results, click on Merge.pdf above. A time-location trajectory $t-x$ is shown.
 
 ### State of development
-At this point in time, **cartools** focuses on freeway bottleneck merging, the lose of a traffic lane from two lanes to one. Two merging protocols are analyzed: 1. _Zipper_ 2. _Side-by-side_
+At this point in time, **cartools** focuses on freeway bottleneck merging, the lose of a traffic lane from two lanes to one, and the effects of speed volatility on performance. Two merging protocols are analyzed: 1. _Zipper_ 2. _Side-by-side_.
 
-**cartools** vignette: ![website](https://pjossenbruggen.github.io/cartools/index.html).
-
-_Speed volatity effects_ on a time-space *t-x*  trajectory: ![](Merge.pdf). 
+For the **cartools** vignette, click on: https://pjossenbruggen.github.io/cartools/index.html. 
