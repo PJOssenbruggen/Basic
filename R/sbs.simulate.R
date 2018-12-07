@@ -19,6 +19,7 @@ sbs.simulate <- function(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,le
   xstart2 <- xstart1
   runname <- "SBS"
   input <- data.frame(runname,nveh1,nveh2,umn,usd,xstart1,xstart2,xfunnel,leff,kfactor,sample.size = size)
+  print(input)
   for(run in 1:size) {
     print(data.frame("Run:", run))
     if(run == 1) output <- brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,
@@ -30,9 +31,10 @@ sbs.simulate <- function(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,le
   }
   sum.out1   <- data.frame(colMeans(output,na.rm=TRUE))
   sum.out2   <- data.frame(apply(output,2,sd,na.rm=TRUE))
+  sbs.output <- output
+  save(sbs.output, file = "/Users/PJO/Desktop/SBSOutput.rda")
   sbs.summary<- cbind(sum.out1,sum.out2)
   colnames(sbs.summary) <- c("mean","SD")
-  print(input)
   print(sbs.summary)
   spdl <- spdu <- {}
   k <- 0
