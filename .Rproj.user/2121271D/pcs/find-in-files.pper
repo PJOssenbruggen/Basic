@@ -6,7 +6,7 @@
             "*.R"
         ],
         "path" : "~/Desktop/Basic",
-        "query" : "cartoolsstartdata.rda",
+        "query" : "step",
         "regex" : true
     }
 }
