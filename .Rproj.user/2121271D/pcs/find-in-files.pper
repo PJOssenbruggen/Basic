@@ -6,7 +6,7 @@
             "*.R"
         ],
         "path" : "~/Desktop/Basic",
-        "query" : "zippersimulte",
+        "query" : "cartoolsstartdata.rda",
         "regex" : true
     }
 }
