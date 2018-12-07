@@ -2,18 +2,22 @@
 % Please edit documentation in R/anova.R
 \name{anova}
 \alias{anova}
-\title{\code{anova} uses the law of large numbers to establish confidence intervals traffic performance measures.}
+\title{\code{anova} returns \code{ANOVA} results, boxplot and \code{Q-Q} plot.}
 \usage{
-anova(zipper.output, sbs.output)
+anova(zip, sbs, colnum, figtitle)
 }
 \arguments{
-\item{zipper.output}{output from \code{zipper.simulate}, a data frame}
+\item{zip}{output from \code{zipper.simulate}, a data frame}
 
-\item{sbs.output}{output from \code{sbs.simulate}, a data.frame}
+\item{sbs}{output from \code{sbs.simulate}, a data.frame}
+
+\item{colnum}{column number of interest, a number}
+
+\item{figtitle, }{plot title, character string}
 }
 \value{
 The \code{anova} runs \code{brktrials4wrapper} \code{size} times.
 }
 \description{
-\code{anova} uses the law of large numbers to establish confidence intervals traffic performance measures.
+\code{anova} returns \code{ANOVA} results, boxplot and \code{Q-Q} plot.
 }

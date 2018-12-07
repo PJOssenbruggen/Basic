@@ -32,7 +32,7 @@ zipper.simulate(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,leff,size,k
 \item{kfactor}{density at time \code{t} = 0, a number}
 }
 \value{
-The \code{zipper.simulate} runs \code{brktrials4wrapper} \code{size} times.
+The \code{zipper.simulate} returns a list of output.
 }
 \description{
 \code{zipper.simulate} uses the law of large numbers to establish confidence intervals traffic performance measures.

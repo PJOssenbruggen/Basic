@@ -87,7 +87,6 @@ factorialdesign2 <- function(zipper.output2.5, sbs.output2.5,zipper.output5, sbs
   print(summary.lm(fmq2))
   print(alias(fmq2))
   browser()
-
   rq         <- resid(fmq1)
   qqnorm(rq, ylab = "q residuals")
   qqline(rq)

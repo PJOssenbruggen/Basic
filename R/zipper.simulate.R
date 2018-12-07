@@ -1,6 +1,6 @@
 #' \code{zipper.simulate} uses the law of large numbers to establish confidence intervals traffic performance measures.
 #'
-#' @return The \code{zipper.simulate} runs \code{brktrials4wrapper} \code{size} times.
+#' @return The \code{zipper.simulate} returns a list of output.
 #' @param nveh1 number of vehicles entering the bottleneck from lane 1, a number
 #' @param nveh2 number of vehicles entering the bottleneck from lane 2, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
@@ -27,16 +27,14 @@ zipper.simulate <- function(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel
       output. <- brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,
                 delt,tstart,tend,xfunnel,leff,run,kfactor)
                 output  <- rbind(output, output.)
-                                             }
+              }
   }
   sum.out1   <- data.frame(colMeans(output,na.rm = TRUE))
   sum.out2   <- data.frame(apply(output,2,sd,na.rm = TRUE))
-  zipper.output <- output
-  save(zipper.output, file = "/Users/PJO/Desktop/ZipperOutput.rda")
-  zipper.summary<- cbind(sum.out1,sum.out2)
-  colnames(zipper.summary) <- c("mean","SD")
+  summary<- cbind(sum.out1,sum.out2)
+  colnames(summary) <- c("mean","SD")
   print(input)
-  print(zipper.summary)
+  print(summary)
   spdl <- spdu <- {}
   k <- 0
   m <- 0
@@ -46,7 +44,7 @@ zipper.simulate <- function(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel
     if(output[i,2] >= 50) spdu <- c(spdu, output[i,2])
     if(output[i,2] <= 25) spdl <- c(spdl, output[i,2])
   }
-  zipper.prop.free <- k/size
-  zipper.prop.slow <- m/size
-  save(zipper.summary, zipper.prop.free, zipper.prop.slow, file = "/Users/PJO/Desktop/ZipperPerformance.rda")
+  prop.free <- k/size
+  prop.slow <- m/size
+  return(list(input,summary,output, prop.free, prop.slow))
 }

@@ -1,6 +1,6 @@
 #' \code{sbs.simulate} uses the law of large numbers to establish confidence intervals traffic performance measures.
 #'
-#' @return The \code{sbs.simulate} runs \code{brktrials4wrapper} \code{size} times.
+#' @return The \code{sbs.simulate} returns a list of output.
 #' @param nveh1 number of vehicles entering the bottleneck from lane 1, a number
 #' @param nveh2 number of vehicles entering the bottleneck from lane 2, a number
 #' @param umn start speed (mph) for vehicle in lane 1, a number
@@ -31,11 +31,9 @@ sbs.simulate <- function(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,le
   }
   sum.out1   <- data.frame(colMeans(output,na.rm=TRUE))
   sum.out2   <- data.frame(apply(output,2,sd,na.rm=TRUE))
-  sbs.output <- output
-  save(sbs.output, file = "/Users/PJO/Desktop/SBSOutput.rda")
-  sbs.summary<- cbind(sum.out1,sum.out2)
-  colnames(sbs.summary) <- c("mean","SD")
-  print(sbs.summary)
+  summary<- cbind(sum.out1,sum.out2)
+  colnames(summary) <- c("mean","SD")
+  print(summary)
   spdl <- spdu <- {}
   k <- 0
   m <- 0
@@ -45,7 +43,7 @@ sbs.simulate <- function(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,le
     if(output[i,2] >= 50) spdu <- c(spdu, output[i,2])
     if(output[i,2] <= 25) spdl <- c(spdl, output[i,2])
   }
-  sbs.prop.free <- k/size
-  sbs.prop.slow <- m/size
-  save(sbs.summary, sbs.prop.free, sbs.prop.slow, file = "/Users/PJO/Desktop/SBSPerformance.rda")
+  prop.free <- k/size
+  prop.slow <- m/size
+  return(list(input,summary,output, prop.free, prop.slow))
 }

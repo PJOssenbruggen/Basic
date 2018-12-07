@@ -32,7 +32,7 @@ sbs.simulate(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,leff,size,kfac
 \item{kfactor}{density at time \code{t} = 0, a number}
 }
 \value{
-The \code{sbs.simulate} runs \code{brktrials4wrapper} \code{size} times.
+The \code{sbs.simulate} returns a list of output.
 }
 \description{
 \code{sbs.simulate} uses the law of large numbers to establish confidence intervals traffic performance measures.
