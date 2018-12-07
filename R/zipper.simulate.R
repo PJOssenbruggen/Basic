@@ -29,8 +29,10 @@ zipper.simulate <- function(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel
                 output  <- rbind(output, output.)
                                              }
   }
-  sum.out1   <- data.frame(colMeans(output,na.rm=TRUE))
-  sum.out2   <- data.frame(apply(output,2,sd,na.rm=TRUE))
+  sum.out1   <- data.frame(colMeans(output,na.rm = TRUE))
+  sum.out2   <- data.frame(apply(output,2,sd,na.rm = TRUE))
+  zipper.output <- output
+  save(zipper.output, file = "/Users/PJO/Desktop/ZipperOutput.rda")
   zipper.summary<- cbind(sum.out1,sum.out2)
   colnames(zipper.summary) <- c("mean","SD")
   print(input)
