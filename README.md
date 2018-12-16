@@ -19,7 +19,9 @@ GitHub. Run the following:
 
 2.  devtools::install\_github(“pjossenbuggen/Basic”).
 
-3.  *zipper.simulate*(5,5,53.1,5,-700,0.125,0,40,-500,14,1,1.333). To
+3.  library(cartools)
+
+4.  *zipper.simulate*(5,5,53.1,5,-700,0.125,0,40,-500,14,1,1.333). To
     see the results, click on Merge.pdf above. A time-location
     trajectory \(t-x\) is shown.
 
