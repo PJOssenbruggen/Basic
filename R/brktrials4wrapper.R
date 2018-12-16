@@ -171,7 +171,6 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,tstart,t
       u.a.mean.mph <- round(mean(as.numeric(df1[,9])),1)
       u.d.mean.mph <- round(mean(as.numeric(df1[,12])),1)
       legend("topleft",
-      #       title = "",
              legend = c(
                expression(""),
                bquote(u[0] == .(umn)),
@@ -196,6 +195,8 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,tstart,t
         text(tend, max(as.numeric(df1df2[,xcol])), labels = lab, pos = 4, offset = 0.2, cex = 0.75)
       }
       dev.off()
+      tdf1df2 <- cbind(tseq, df1df2)
+      save(tdf1df2, file = "/Users/PJO/Desktop/Basic/data/tdf1df2.rda")
     }
 #### STEP 6. Flow Estimation ######################################################
     lst <- flow(df1df2, tstart, tend, delt, xfunnel)

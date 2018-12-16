@@ -18,12 +18,15 @@
 zipper.simulate <- function(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,leff,size,kfactor) {
   xstart2 <- xstart1 - 0.5 * hsafe(umn*5280/3600,leff)
   runname <- "ZIPPER"
-  input <- data.frame(runname, nveh1,nveh2,umn,usd,xstart1,xstart2,kfactor,
+  input   <- data.frame(runname, nveh1,nveh2,umn,usd,xstart1,xstart2,kfactor,
                       delt,tstart,tend,xfunnel,leff,sample.size = size)
   for(run in 1:size) {
     print(data.frame("Run:", run))
-    if(run == 1) output <- brktrials4wrapper(
-      nveh1,nveh2,umn,usd,xstart1,xstart2,delt,tstart,tend,xfunnel,leff,run,kfactor) else {
+    if(run == 1) output <- {
+      brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,
+                        delt,tstart,tend,xfunnel,leff,run,kfactor)
+    }
+     else {
       output. <- brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,
                 delt,tstart,tend,xfunnel,leff,run,kfactor)
                 output  <- rbind(output, output.)
