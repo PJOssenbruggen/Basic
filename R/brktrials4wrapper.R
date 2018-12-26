@@ -204,14 +204,14 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,tstart,t
     df2 <- lst[[2]]
 #### STEP 7. Capacity Estimation
     kq     <- flow2(dfcrit, df1df2, tstart, tend, delt, xfunnel)
-    tservice = abs(round(xfunnel/(5280/3600*umn),1))
+    tservice <- abs(round(xfunnel/(5280/3600*umn),1))
     k.d.mn <- round(mean(kq[,7], na.rm = TRUE),0)
     q.d.mn <- round(mean(kq[,8], na.rm = TRUE),0)
     k.a.mn <- round(mean(kq[,10], na.rm = TRUE),0)
     q.a.mn <- round(mean(kq[,11], na.rm = TRUE),0)
     w.mn   <- round(mean(kq[,6], na.rm = TRUE),1)
-    u.a.mean.mph <- round(mean(as.numeric(kq[,9])),1)
-    u.d.mean.mph <- round(mean(as.numeric(kq[,12])),1)
+    u.a.mean.mph <- round(mean(as.numeric(kq[,9])),2)
+    u.d.mean.mph <- round(mean(as.numeric(kq[,12])),2)
       if(run == 1) {
         pdf(file = "/Users/PJO/Desktop/QueueAnalyzer.pdf")
         par(mfrow = c(1,2), pty = "s")
@@ -275,7 +275,7 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,tstart,t
       k.a = k.a.mn, k.d = k.d.mn,
       q.a = q.a.mn, q.d =  q.d.mn,
       w = w.mn, tservice)
-    return(run.df)
+    return(list(run.df, kq))
   }
 }
 # END ##############################################################################################

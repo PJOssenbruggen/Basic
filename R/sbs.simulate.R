@@ -18,25 +18,32 @@
 sbs.simulate <- function(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,leff,size,kfactor) {
   xstart2 <- xstart1
   runname <- "SBS"
-  input <- data.frame(runname,nveh1,nveh2,umn,usd,xstart1,xstart2,xfunnel,leff,kfactor,sample.size = size)
+  input   <- data.frame(runname,nveh1,nveh2,umn,usd,xstart1,xstart2,xfunnel,leff,kfactor,sample.size = size)
   print(input)
   for(run in 1:size) {
     print(data.frame("Run:", run))
-    if(run == 1) output <- brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,
-                        tstart,tend,xfunnel,leff,run,kfactor) else {
-                        output. <- brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,
-                        tstart,tend,xfunnel,leff,run,kfactor)
-                        output  <- rbind(output, output.)
-                        }
+    if(run == 1) {
+      lst    <- brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,
+                                  tstart,tend,xfunnel,leff,run,kfactor)
+      output <- lst[[1]]
+      kq     <- lst[[2]]
+    } else {
+      lst    <- brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,
+                                  tstart,tend,xfunnel,leff,run,kfactor)
+      output. <- lst[[1]]
+      kq.     <- lst[[2]]
+      output  <- rbind(output, output.)
+      kq      <- rbind(kq, kq.)
+    }
   }
   sum.out1   <- data.frame(colMeans(output,na.rm=TRUE))
   sum.out2   <- data.frame(apply(output,2,sd,na.rm=TRUE))
-  summary<- cbind(sum.out1,sum.out2)
+  summary    <- cbind(sum.out1,sum.out2)
   colnames(summary) <- c("mean","SD")
   print(summary)
   spdl <- spdu <- {}
-  k <- 0
-  m <- 0
+  k    <- 0
+  m    <- 0
   for(i in 1:size) {
     if(output[i,2] >= 50) k <- k + 1
     if(output[i,2] <= 20) m <- m + 1
@@ -45,5 +52,5 @@ sbs.simulate <- function(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,le
   }
   prop.free <- k/size
   prop.slow <- m/size
-  return(list(input,summary,output, prop.free, prop.slow))
+  return(list(input,summary,output, prop.free, prop.slow, kq[,c(1,4,5,9,12)]))
 }

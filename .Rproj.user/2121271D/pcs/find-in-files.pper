@@ -6,7 +6,7 @@
             "*.R"
         ],
         "path" : "~/Desktop/Basic",
-        "query" : "run1zipper",
+        "query" : "browser",
         "regex" : true
     }
 }
