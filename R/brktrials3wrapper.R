@@ -16,7 +16,7 @@
 #' @param kfactor density at time \code{t} = 0, a number
 #' @usage brktrials3wrapper(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,delt,run,leff,xfunnel,kfactor)
 # #' @examples
-# #' brktrials3wrapper(3, 3, 50.4, 0, 0, 30, -700, -700, 0.25, TRUE,  14, -500)
+# #' brktrials3wrapper(5, 5, 53.1, 5, 0, 40, -700, -700, 0.125, TRUE,  14, -500, 4/3)
 #' @export
 brktrials3wrapper <- function(nveh1,nveh2,umn,usd,tstart,tend,xstart1,xstart2,delt,run,leff,xfunnel,kfactor) {
   tend.0  <- tend
