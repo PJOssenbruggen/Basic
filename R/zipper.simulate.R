@@ -16,6 +16,7 @@
 #' @usage zipper.simulate(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,leff,size,kfactor)
 #' @export
 zipper.simulate <- function(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,leff,size,kfactor) {
+  set.seed(123)
   xstart2 <- xstart1 - 0.5 * hsafe(umn*5280/3600,leff)
   runname <- "ZIPPER"
   input   <- data.frame(runname, nveh1,nveh2,umn,usd,xstart1,xstart2,kfactor,
@@ -28,6 +29,8 @@ zipper.simulate <- function(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel
                                   tstart,tend,xfunnel,leff,run,kfactor)
       output <- lst[[1]]
       kq     <- lst[[2]]
+      tdf1df2<- lst[[3]]
+      save(tdf1df2, file = "/Users/PJO/Desktop/Zipper/tdf1df2.rda")
     } else {
       lst    <- brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,
                                   tstart,tend,xfunnel,leff,run,kfactor)

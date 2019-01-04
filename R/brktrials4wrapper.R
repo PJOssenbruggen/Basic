@@ -275,7 +275,7 @@ brktrials4wrapper  <- function(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,tstart,t
       k.a = k.a.mn, k.d = k.d.mn,
       q.a = q.a.mn, q.d =  q.d.mn,
       w = w.mn, tservice)
-    return(list(run.df, kq))
+    return(list(run.df, kq, tdf1df2))
   }
 }
 # END ##############################################################################################

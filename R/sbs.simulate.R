@@ -16,6 +16,7 @@
 #' @usage sbs.simulate(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,leff,size,kfactor)
 #' @export
 sbs.simulate <- function(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,leff,size,kfactor) {
+  set.seed(123)
   xstart2 <- xstart1
   runname <- "SBS"
   input   <- data.frame(runname,nveh1,nveh2,umn,usd,xstart1,xstart2,xfunnel,leff,kfactor,sample.size = size)
@@ -27,6 +28,8 @@ sbs.simulate <- function(nveh1,nveh2,umn,usd,xstart1,delt,tstart,tend,xfunnel,le
                                   tstart,tend,xfunnel,leff,run,kfactor)
       output <- lst[[1]]
       kq     <- lst[[2]]
+      tdf1df2<- lst[[3]]
+      save(tdf1df2, file = "/Users/PJO/Desktop/SBS/tdf1df2.rda")
     } else {
       lst    <- brktrials4wrapper(nveh1,nveh2,umn,usd,xstart1,xstart2,delt,
                                   tstart,tend,xfunnel,leff,run,kfactor)
